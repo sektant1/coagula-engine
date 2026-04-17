@@ -51,4 +51,11 @@ void ShaderProgram::SetUniform(const std::string &name, float v0, float v1, floa
     auto location = GetUniformLocation(name);
     glUniform4f(location, v0, v1, v2, v3);
 }
+
+void ShaderProgram::SetUniform(const std::string &name, const mat4 &mat)
+{
+    auto location = GetUniformLocation(name);
+    glUniformMatrix4fv(location, 1, GL_FALSE, value_ptr(mat));
+}
+
 }  // namespace ENG

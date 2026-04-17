@@ -4,6 +4,8 @@
 
 #include <GL/glew.h>
 
+#include "Types.h"
+
 namespace ENG
 {
 class ShaderProgram
@@ -23,6 +25,7 @@ public:
     void SetUniform(const std::string &name, float v0, float v1);
     void SetUniform(const std::string &name, float v0, float v1, float v2);
     void SetUniform(const std::string &name, float v0, float v1, float v2, float v3);
+    void SetUniform(const std::string &name, const mat4 &mat);
 
 private:
     std::unordered_map<std::string, GLint> m_uniformLocationCache;

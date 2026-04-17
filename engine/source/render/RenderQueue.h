@@ -2,6 +2,8 @@
 
 #include <vector>
 
+#include "Types.h"
+
 namespace ENG
 {
 class Mesh;
@@ -12,6 +14,7 @@ struct RenderCommand
 {
     Mesh     *mesh     = nullptr;
     Material *material = nullptr;
+    mat4      modelMatrix;
 };
 
 class RenderQueue

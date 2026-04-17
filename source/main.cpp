@@ -1,15 +1,13 @@
-#include <iostream>
-
 #include "ENG.h"
-#include "Lab.h"
+#include "Game.h"
 
 int main()
 {
-    Lab *lab = new Lab();
+    Game *game = new Game();
 
     ENG::Engine &engine = ENG::Engine::GetInstance();
 
-    engine.SetApplication(lab);
+    engine.SetApplication(game);
 
     if (engine.Init(1920, 1080)) {
         engine.Run();

@@ -17,7 +17,7 @@ struct MeshData
     std::vector<u32> indices;
     VertexLayout     layout;
 
-    std::unique_ptr<Mesh> buildMesh();
+    std::shared_ptr<Mesh> buildMesh();
 };
 
 class Builder

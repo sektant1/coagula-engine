@@ -7,9 +7,9 @@
 namespace ENG
 {
 
-std::unique_ptr<Mesh> MeshData::buildMesh()
+std::shared_ptr<Mesh> MeshData::buildMesh()
 {
-    return std::make_unique<Mesh>(layout, vertices, indices);
+    return std::make_shared<Mesh>(layout, vertices, indices);
 }
 
 MeshData Builder::CreateRectangle(f32 width, f32 height)

@@ -1,5 +1,4 @@
 #pragma once
-#include <memory>
 
 #include "ENG.h"
 
@@ -11,9 +10,5 @@ public:
     void Destroy() override;
 
 private:
-    ENG::Material              m_material;
-    std::unique_ptr<ENG::Mesh> m_mesh;
-    float                      m_offsetX = 0.0F;
-    float                      m_offsetY = 0.0F;
-    float                      m_angle   = 0.0F;
+    ENG::Scene m_scene;
 };

@@ -13,12 +13,12 @@ class Material
 public:
     void SetShaderProgram(const std::shared_ptr<ShaderProgram> &shaderProgram);
 
-    void SetParam(const std::string &name, float value);
-    void SetParam(const std::string &name, float v0, float v1);
-    void SetParam(const std::string &name, float v0, float v1, float v2);
-    void SetParam(const std::string &name, float v0, float v1, float v2, float v3);
-
-    void Bind();
+    void           SetParam(const std::string &name, float value);
+    void           SetParam(const std::string &name, float v0, float v1);
+    void           SetParam(const std::string &name, float v0, float v1, float v2);
+    void           SetParam(const std::string &name, float v0, float v1, float v2, float v3);
+    void           Bind();
+    ShaderProgram *GetShaderProgram();
 
 private:
     std::shared_ptr<ShaderProgram>                                          m_shaderProgram;

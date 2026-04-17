@@ -61,20 +61,22 @@ void Lab::Update(ENG::f32 deltaTime)
     m_time += deltaTime * m_timeScale;
     // grab window size from the current GLFW context
     GLFWwindow *window = glfwGetCurrentContext();
-    int         w = 1, h = 1;
-    if (window) {
-        glfwGetFramebufferSize(window, &w, &h);
+    int         width  = 1;
+    int         height = 1;
+    if (window != nullptr) {
+        glfwGetFramebufferSize(window, &width, &height);
     }
 
     // mouse position (in window coords, Y flipped to match OpenGL)
-    double mx = 0.0, my = 0.0;
-    if (window) {
+    double mx = 0.0;
+    double my = 0.0;
+    if (window != nullptr) {
         glfwGetCursorPos(window, &mx, &my);
-        my = (double)h - my;  // flip Y so origin is bottom-left like Shadertoy
+        my = (double)height - my;  // flip Y so origin is bottom-left like Shadertoy
     }
 
     m_material.SetParam("iTime", m_time);
-    m_material.SetParam("iResolution", (ENG::f32)w, (ENG::f32)h);
+    m_material.SetParam("iResolution", (ENG::f32)width, (ENG::f32)height);
     m_material.SetParam("iMouse", (ENG::f32)mx, (ENG::f32)my, 0.0F, 0.0F);
 
     ENG::RenderCommand command;

@@ -59,5 +59,11 @@ bin
 vcpkg_installed
 c++.md
 opengl.md
+.claude
+.remember
+CLAUDE.md
+PLAN.md
+*.zip
+
 
 lessons/
