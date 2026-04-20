@@ -54,6 +54,13 @@ void PlayerControllerComponent::Update(f32 deltaTime)
     if (inputManager.IsKeyPressed(GLFW_KEY_D)) {
         position += right * m_moveSpeed * deltaTime;
     }
+    // Vertical noclip: world-up axis, independent of pitch -> predictable flight.
+    if (inputManager.IsKeyPressed(GLFW_KEY_SPACE)) {
+        position += vec3(0.0F, 1.0F, 0.0F) * m_moveSpeed * deltaTime;
+    }
+    if (inputManager.IsKeyPressed(GLFW_KEY_LEFT_CONTROL)) {
+        position -= vec3(0.0F, 1.0F, 0.0F) * m_moveSpeed * deltaTime;
+    }
     m_owner->SetPosition(position);
 }
 }  // namespace ENG

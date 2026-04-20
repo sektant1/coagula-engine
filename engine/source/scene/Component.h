@@ -10,9 +10,9 @@ class GameObject;
 class Component
 {
 public:
-    virtual ~Component()                = default;
-    virtual void  Update(f32 deltaTime) = 0;
-    virtual usize GetTypeId() const     = 0;
+    virtual ~Component()                              = default;
+    virtual void                Update(f32 deltaTime) = 0;
+    [[nodiscard]] virtual usize GetTypeId() const     = 0;
 
     GameObject *GetOwner();
 

@@ -127,7 +127,7 @@ bool Scene::SetParent(GameObject *obj, GameObject *parent)
             if (it == m_objects.end()) {
                 std::unique_ptr<GameObject> objHolder(obj);
                 parent->m_children.push_back(std::move(objHolder));
-                obj->m_parent;
+                obj->m_parent = parent;
 
                 result = true;
             } else {

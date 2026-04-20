@@ -1,5 +1,7 @@
 #include "scene/components/CameraComponent.h"
 
+#include "Engine.h"
+#include "GLFW/glfw3.h"
 #include "Types.h"
 #include "scene/GameObject.h"
 
