@@ -24,6 +24,7 @@ class Builder
 {
 public:
     static MeshData CreateRectangle(f32 width, f32 height);
+    static MeshData CreateCube(f32 width, f32 height);
     static MeshData CreateTriangle(f32 size);
     static MeshData CreateFullscreenQuad();
 };

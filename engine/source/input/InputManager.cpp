@@ -24,4 +24,41 @@ bool InputManager::IsKeyPressed(int key)
     return m_keys[key];
 }
 
+void InputManager::SetMouseButtonPressed(int button, bool pressed)
+{
+    if (button < 0 | button >= static_cast<int>(m_keys.size())) {
+        return;
+    }
+    m_mouseKeys[button] = pressed;
+}
+
+bool InputManager::IsMouseButtonPressed(int button)
+{
+    if (button < 0 | button >= static_cast<int>(m_keys.size())) {
+        return false;
+    }
+
+    return m_mouseKeys[button];
+}
+
+void InputManager::SetMousePositionOld(const vec2 &pos)
+{
+    m_mousePositionOld = pos;
+}
+
+const vec2 InputManager::GetMousePositionOld() const
+{
+    return m_mousePositionOld;
+}
+
+void InputManager::SetMousePositionCurrent(const vec2 &pos)
+{
+    m_mousePositionCurrent = pos;
+}
+
+const vec2 InputManager::GetMousePositionCurrent() const
+{
+    return m_mousePositionCurrent;
+}
+
 }  // namespace ENG

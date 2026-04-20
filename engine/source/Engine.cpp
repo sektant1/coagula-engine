@@ -22,6 +22,26 @@ void KeyCallback(GLFWwindow *window, int key, int, int action, int)
     }
 }
 
+void MouseButtonCallback(GLFWwindow *window, int button, int action, int mods)
+{
+    auto &inputManager = ENG::Engine::GetInstance().GetInputManager();
+    if (action == GLFW_PRESS) {
+        inputManager.SetMouseButtonPressed(button, true);
+    } else if (action == GLFW_RELEASE) {
+        inputManager.SetMouseButtonPressed(button, false);
+    }
+}
+
+void CursorPositionCallback(GLFWwindow *window, f64 xpos, f64 ypos)
+{
+    auto &inputManager = ENG::Engine::GetInstance().GetInputManager();
+
+    inputManager.SetMousePositionOld(inputManager.GetMousePositionCurrent());
+
+    vec2 currentPos(static_cast<f32>(xpos), static_cast<f32>(ypos));
+    inputManager.SetMousePositionCurrent(currentPos);
+}
+
 Engine &Engine::GetInstance()
 {
     static Engine instance;
@@ -57,6 +77,8 @@ bool Engine::Init(int width, int height)
     LOG_INFO("Window created (%dx%d)", width, height);
 
     glfwSetKeyCallback(m_window, KeyCallback);
+    glfwSetMouseButtonCallback(m_window, MouseButtonCallback);
+    glfwSetCursorPosCallback(m_window, CursorPositionCallback);
 
     glfwMakeContextCurrent(m_window);
 
@@ -67,6 +89,7 @@ bool Engine::Init(int width, int height)
     }
     LOG_INFO("GLEW initialized (GL %s)", reinterpret_cast<const char *>(glGetString(GL_VERSION)));
 
+    m_graphicsAPI.Init();
     bool appOk = m_application->Init();
     if (!appOk) {
         LOG_ERROR("Application Init failed");
@@ -120,6 +143,8 @@ void Engine::Run()
         m_renderQueue.Draw(m_graphicsAPI, cameraData);
 
         glfwSwapBuffers(m_window);
+
+        m_inputManager.SetMousePositionOld(m_inputManager.GetMousePositionCurrent());
     }
 }
 

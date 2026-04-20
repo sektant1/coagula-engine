@@ -10,7 +10,15 @@ void CameraComponent::Update(f32 deltaTime) {}
 
 mat4 CameraComponent::GetViewMatrix() const
 {
-    return inverse(m_owner->GetWorldTransform());
+    mat4 mat = mat4(1.0F);
+    mat      = mat4_cast(m_owner->GetRotation());
+    mat[3]   = vec4(m_owner->GetPosition(), 1.0F);
+
+    if (m_owner->GetParent() != nullptr) {
+        mat = m_owner->GetParent()->GetWorldTransform() * mat;
+    }
+
+    return inverse(mat);
 }
 
 mat4 CameraComponent::GetProjectionMatrix(f32 aspect) const

@@ -1,6 +1,6 @@
-#include <memory>
-
 #include "TestObject.h"
+
+#include <memory>
 
 #include "GLFW/glfw3.h"
 #include "render/Material.h"
@@ -10,7 +10,6 @@ TestObject::TestObject()
 {
     LOG_INFO("TestObject constructing");
 
-    // load shaders
     ENG::FileReader vertShader("assets/shaders/lab.vert");
     ENG::FileReader fragShader("assets/shaders/lab.frag");
     std::string     vertexShaderSource   = vertShader.ReadToString();
@@ -31,10 +30,10 @@ TestObject::TestObject()
     auto material = std::make_shared<ENG::Material>();
     material->SetShaderProgram(shaderProgram);
 
-    auto mesh_data = ENG::Builder::CreateRectangle(1.0F, 1.0F);
-    auto mesh      = mesh_data.buildMesh();
+    auto mesh = ENG::Builder::CreateCube(1.0F, 1.0F).buildMesh();
 
     AddComponent(new ENG::MeshComponent(material, mesh));
+
     LOG_INFO("TestObject constructed");
 }
 
@@ -42,6 +41,7 @@ void TestObject::Update(ENG::f32 deltaTime)
 {
     ENG::GameObject::Update(deltaTime);
 
+#if 0
     auto position = GetPosition();
 
     auto &input = ENG::Engine::GetInstance().GetInputManager();
@@ -57,6 +57,6 @@ void TestObject::Update(ENG::f32 deltaTime)
     if (input.IsKeyPressed(GLFW_KEY_D)) {
         position.x += 1.0F * deltaTime;
     }
-
     SetPosition(position);
+#endif
 }

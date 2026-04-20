@@ -44,12 +44,12 @@ void GameObject::SetPosition(const vec3 &pos)
     m_position = pos;
 }
 
-const vec3 &GameObject::GetRotation() const
+const quat &GameObject::GetRotation() const
 {
     return m_rotation;
 }
 
-void GameObject::SetRotation(const vec3 &rot)
+void GameObject::SetRotation(const quat &rot)
 {
     m_rotation = rot;
 }
@@ -72,9 +72,10 @@ mat4 GameObject::GetLocalTransform() const
     mat = translate(mat, m_position);
 
     // Rotation
-    mat = rotate(mat, m_rotation.x, vec3(1.0f, 0.0f, 0.0f));  // X Axis
-    mat = rotate(mat, m_rotation.y, vec3(0.0f, 1.0f, 0.0f));  // Y Axis
-    mat = rotate(mat, m_rotation.z, vec3(0.0f, 0.0f, 1.0f));  // Z Axis
+    // mat = rotate(mat, m_rotation.x, vec3(1.0f, 0.0f, 0.0f));  // X Axis
+    // mat = rotate(mat, m_rotation.y, vec3(0.0f, 1.0f, 0.0f));  // Y Axis
+    // mat = rotate(mat, m_rotation.z, vec3(0.0f, 0.0f, 1.0f));  // Z Axis
+    mat = mat * mat4_cast(m_rotation);
 
     // Scale
     mat = scale(mat, m_scale);

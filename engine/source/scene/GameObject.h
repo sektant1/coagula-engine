@@ -38,8 +38,8 @@ public:
     const vec3 &GetPosition() const;
     void        SetPosition(const vec3 &pos);
 
-    void        SetRotation(const vec3 &rot);
-    const vec3 &GetRotation() const;
+    void        SetRotation(const quat &rot);
+    const quat &GetRotation() const;
 
     const vec3 &GetScale() const;
     void        SetScale(const vec3 &pos);
@@ -59,7 +59,7 @@ private:
     bool        m_isAlive = true;
 
     vec3 m_position = vec3(0.0f);
-    vec3 m_rotation = vec3(0.0f);
+    quat m_rotation = quat(1.0f, 0.0f, 0.0f, 0.0f);
     vec3 m_scale    = vec3(1.0f);
 
     friend class Scene;

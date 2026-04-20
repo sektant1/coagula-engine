@@ -15,5 +15,7 @@
 #include "scene/Component.h"
 #include "scene/GameObject.h"
 #include "scene/Scene.h"
+#include "scene/components/CameraComponent.h"
 #include "scene/components/MeshComponent.h"
+#include "scene/components/PlayerControllerComponent.h"
 #include "utils/FileReader.h"

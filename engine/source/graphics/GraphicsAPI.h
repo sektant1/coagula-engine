@@ -15,6 +15,8 @@ class Mesh;
 class GraphicsAPI
 {
 public:
+    bool Init();
+
     std::shared_ptr<ShaderProgram> CreateShaderProgram(const std::string &vertexSource,
                                                        const std::string &fragmentSource);
 

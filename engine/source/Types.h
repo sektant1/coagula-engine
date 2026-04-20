@@ -55,6 +55,7 @@ using mat4 = glm::mat4;
 
 using quat = glm::quat;
 
+using glm::angleAxis;
 using glm::cross;
 using glm::degrees;
 using glm::distance;
