@@ -12,25 +12,12 @@
 #include "scene/components/MeshComponent.h"
 #include "scene/components/PlayerControllerComponent.h"
 
-#define STB_IMAGE_IMPLEMENTATION
-#include <stb_image.h>
-
 bool Game::Init()
 {
     LOG_INFO("Game::Init");
 
-    auto                         &fs   = ENG::Engine::GetInstance().GetFileSystem();
-    auto                          path = fs.GetAssetsFolder() / "textures/brick.png";
-    std::shared_ptr<ENG::Texture> texture;
-
-    int            width, height, channels;
-    unsigned char *data = stbi_load(path.string().c_str(), &width, &height, &channels, 0);
-
-    if (data) {
-        texture = std::make_shared<ENG::Texture>(width, height, channels, data);
-        LOG_INFO("Image loaded");
-        stbi_image_free(data);
-    }
+    auto &fs      = ENG::Engine::GetInstance().GetFileSystem();
+    auto  texture = ENG::Texture::Load("textures/brick.png");
 
     m_scene = new ENG::Scene();
 
@@ -48,10 +35,8 @@ bool Game::Init()
 
     m_scene->CreateObject<TestObject>("TestObject");
 
-    ENG::FileReader vertShader("assets/shaders/lab.vert");
-    ENG::FileReader fragShader("assets/shaders/lab.frag");
-    std::string     vertexShaderSource   = vertShader.ReadToString();
-    std::string     fragmentShaderSource = fragShader.ReadToString();
+    std::string vertexShaderSource   = fs.LoadAssetFileText("shaders/vertex.glsl");
+    std::string fragmentShaderSource = fs.LoadAssetFileText("shaders/fragment.glsl");
 
     if (vertexShaderSource.empty() || fragmentShaderSource.empty()) {
         LOG_ERROR("Game shader source is empty (vert=%zu frag=%zu bytes)",

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "graphics/GraphicsAPI.h"
 
 namespace ENG
@@ -11,6 +13,10 @@ public:
     ~Texture();
 
     [[nodiscard]] GLuint GetID() const;
+
+    void Init(int width, int height, int numChannels, unsigned char *data);
+
+    static std::shared_ptr<Texture> Load(const std::string &path);
 
 private:
     int    m_width       = 0;
