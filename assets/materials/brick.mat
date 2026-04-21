@@ -4,14 +4,8 @@
         "fragment": "shaders/fragment.glsl"
     },
     "params": {
-        "float": [
-            {"name":"roughness", "value":0.5}
-        ],
-        "float2": [
-            {"name":"uvOffset", "value0":0.0, "value1": 0.0}
-        ],
         "textures": [
-            {"name":"brickTexture", "path":"textures/brick.png"}
+            {"name":"baseColorTexture", "path":"textures/brick.png"}
         ]
     }
 }

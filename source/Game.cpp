@@ -5,10 +5,12 @@
 #include "Engine.h"
 #include "GLFW/glfw3.h"
 #include "TestObject.h"
+#include "Types.h"
 #include "render/Builder.h"
 #include "render/Material.h"
 #include "scene/Scene.h"
 #include "scene/components/CameraComponent.h"
+#include "scene/components/LightComponent.h"
 #include "scene/components/MeshComponent.h"
 #include "scene/components/PlayerControllerComponent.h"
 
@@ -38,7 +40,8 @@ bool Game::Init()
     auto material = ENG::Material::Load("materials/brick.mat");
 
     // Build cube once -> single GPU upload. Shared across all instances below.
-    auto mesh    = ENG::Builder::CreateCube(1.0F, 1.0F).buildMesh();
+    auto mesh = ENG::Mesh::CreateCube();
+
     auto objectA = m_scene->CreateObject("ObjectA");
     objectA->AddComponent(new ENG::MeshComponent(material, mesh));
     objectA->SetPosition(ENG::vec3(0.0F, 2.0F, 0.0F));
@@ -77,6 +80,12 @@ bool Game::Init()
 
     suzanneObj->AddComponent(new ENG::MeshComponent(suzanneMaterial, suzanneMesh));
     suzanneObj->SetPosition(ENG::vec3(0.0F, 0.0F, -5.0F));
+
+    auto light          = m_scene->CreateObject("Light");
+    auto lightComponent = new ENG::LightComponent();
+    lightComponent->SetColor(ENG::vec3(1.0f));
+    light->AddComponent(lightComponent);
+    light->SetPosition(ENG::vec3(0.0f, 5.0f, 0.0f));
 
     ENG::Engine::GetInstance().SetScene(m_scene);
 

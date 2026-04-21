@@ -5,6 +5,7 @@
 #include <type_traits>
 #include <vector>
 
+#include "Common.h"
 #include "Types.h"
 #include "scene/GameObject.h"
 
@@ -32,6 +33,11 @@ public:
     bool        SetParent(GameObject *obj, GameObject *parent);
     void        SetMainCamera(GameObject *camera);
     GameObject *GetMainCamera();
+
+    std::vector<LightData> CollectLight();
+
+private:
+    void CollectLightsRecursive(GameObject *obj, std::vector<LightData> &out);
 
 private:
     std::vector<std::unique_ptr<GameObject>> m_objects;

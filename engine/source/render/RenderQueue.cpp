@@ -1,5 +1,6 @@
 #include "render/RenderQueue.h"
 
+#include "Common.h"
 #include "Log.h"
 #include "graphics/GraphicsAPI.h"
 #include "graphics/ShaderProgram.h"
@@ -19,7 +20,7 @@ void RenderQueue::Submit(const RenderCommand &command)
     m_commands.push_back(command);
 }
 
-void RenderQueue::Draw(GraphicsAPI &graphicsAPI, const CameraData &cameraData)
+void RenderQueue::Draw(GraphicsAPI &graphicsAPI, const CameraData &cameraData, const std::vector<LightData> &lights)
 {
     for (auto &command : m_commands) {
         if (!command.material) {
@@ -35,6 +36,12 @@ void RenderQueue::Draw(GraphicsAPI &graphicsAPI, const CameraData &cameraData)
         program->SetUniform("uModel", command.modelMatrix);
         program->SetUniform("uView", cameraData.viewMatrix);
         program->SetUniform("uProjection", cameraData.projectionMatrix);
+        if (!lights.empty()) {
+            auto &light = lights[0];
+            program->SetUniform("uLight.color", light.color);
+            program->SetUniform("uLight.position", light.position);
+        }
+
         graphicsAPI.BindMesh(command.mesh);
         graphicsAPI.DrawMesh(command.mesh);
     }

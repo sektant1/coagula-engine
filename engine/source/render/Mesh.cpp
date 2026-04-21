@@ -50,6 +50,94 @@ Mesh::Mesh(const VertexLayout &layout, const std::vector<float> &vertices, const
         "Mesh created (VAO=%u VBO=%u EBO=%u verts=%zu indices=%zu)", m_VAO, m_VBO, m_EBO, m_vertexCount, m_indexCount);
 }
 
+std::shared_ptr<Mesh> Mesh::CreateCube()
+{
+    // clang-format off
+    std::vector<f32> vertices = {
+        // Front face (+Z)
+        0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,  0.0f, 0.0f, 1.0f,
+        -0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f,0.0f, 0.0f, 0.0f, 1.0f,
+        0.5f, -0.5f, 0.5f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+
+        // Top face (+Y)
+        0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+        -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,0.0f, 1.0f, 0.0f,
+        -0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+        0.5f, 0.5f, 0.5f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f,  0.0f, 1.0f, 0.0f,
+
+        // Right face (+X)
+        0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+        0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,  1.0f, 0.0f, 0.0f,
+        0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+        0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f,1.0f, 0.0f, 0.0f,
+
+        // Left face (-X)
+        -0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,  -1.0f, 0.0f, 0.0f,
+        -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,-1.0f, 0.0f, 0.0f,
+        -0.5f, -0.5f, 0.5f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, -1.0f, 0.0f, 0.0f,
+
+        // Bottom face (-Y)
+        0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,  0.0f, -1.0f, 0.0f,
+        -0.5f, -0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, -1.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,0.0f, -1.0f, 0.0f,
+        0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, -1.0f, 0.0f,
+
+        // Back face (-Z)
+        -0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, -1.0f,
+        0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,  0.0f, 0.0f, -1.0f,
+        0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f,
+        -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f,0.0f, 0.0f, -1.0f,
+    };
+    // clang-format on
+
+    // clang-format off
+    std::vector<uint32_t> indices = {
+        // front face
+        0, 1, 2,
+        0, 2, 3,
+        // top face
+        4, 5, 6,
+        4, 6, 7,
+        // right face
+        8, 9, 10,
+        8, 10, 11,
+        // left face
+        12, 13, 14,
+        12, 14, 15,
+        // bottom face
+        16, 17, 18,
+        16, 18, 19,
+        // back face
+        20, 21, 22,
+        20, 22, 23
+    };
+
+    // clang-format off
+
+    VertexLayout layout;
+
+    // Postion
+    layout.elements.push_back({VertexElement::PositionIndex, 3, GL_FLOAT, 0});
+
+    // Color
+    layout.elements.push_back({VertexElement::ColorIndex, 3, GL_FLOAT, sizeof(f32) * 3});
+
+    // UV
+    layout.elements.push_back({VertexElement::UVIndex, 2, GL_FLOAT, sizeof(f32) * 6});
+
+    // Normal
+    layout.elements.push_back({VertexElement::NormalIndex, 3, GL_FLOAT, sizeof(f32) * 8});
+
+    layout.stride = sizeof(f32) * 11;
+
+    auto result = std::make_shared<Mesh>(layout, vertices, indices);
+    
+    return result;
+
+}
+
 Mesh::Mesh(const VertexLayout &layout, const std::vector<float> &vertices)
 {
     m_vertexLayout = layout;
@@ -129,7 +217,7 @@ std::shared_ptr<Mesh> Mesh::Load(const str &path)
             }
 
             VertexLayout    vertexLayout;
-            cgltf_accessor *accessors[3] = {nullptr, nullptr, nullptr};
+            cgltf_accessor *accessors[4] = {nullptr, nullptr, nullptr};
 
             for (cgltf_size ai = 0; ai < primitive.attributes_count; ++ai) {
                 auto &attr = primitive.attributes[ai];
@@ -166,6 +254,12 @@ std::shared_ptr<Mesh> Mesh::Load(const str &path)
 
                         element.index = VertexElement::UVIndex;
                         element.size  = 2;
+                    } break;
+                    case cgltf_attribute_type_normal: {
+                        accessors[VertexElement::NormalIndex] = acc;
+
+                        element.index = VertexElement::NormalIndex;
+                        element.size  = 3;
                     } break;
                     default:
                         continue;

@@ -16,9 +16,6 @@ MeshData Builder::CreateCube(f32 width, f32 height)
 {
     MeshData data;
 
-    f32 halfW = 0.5F;
-    f32 halfH = 0.5F;
-
     // clang-format off
     data.vertices = {
         // Front face

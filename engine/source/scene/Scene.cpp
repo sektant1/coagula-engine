@@ -1,11 +1,14 @@
 #include <algorithm>
 #include <memory>
 #include <utility>
+#include <vector>
 
 #include "scene/Scene.h"
 
+#include "Common.h"
 #include "Log.h"
 #include "scene/GameObject.h"
+#include "scene/components/LightComponent.h"
 
 namespace ENG
 {
@@ -30,6 +33,29 @@ void Scene::SetMainCamera(GameObject *camera)
 GameObject *Scene::GetMainCamera()
 {
     return m_mainCamera;
+}
+
+std::vector<LightData> Scene::CollectLight()
+{
+    std::vector<LightData> lights;
+    for (auto &obj : m_objects) {
+        CollectLightsRecursive(obj.get(), lights);
+    }
+    return lights;
+}
+
+void Scene::CollectLightsRecursive(GameObject *obj, std::vector<LightData> &out)
+{
+    if (auto light = obj->GetComponent<LightComponent>()) {
+        LightData data;
+        data.color    = light->GetColor();
+        data.position = obj->GetWorldPosition();
+        out.push_back(data);
+    }
+
+    for (auto &child : obj->m_children) {
+        CollectLightsRecursive(child.get(), out);
+    }
 }
 
 void Scene::Clear()

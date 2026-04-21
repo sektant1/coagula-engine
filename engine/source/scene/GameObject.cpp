@@ -64,6 +64,12 @@ void GameObject::SetScale(const vec3 &pos)
     m_scale = pos;
 }
 
+vec3 GameObject::GetWorldPosition() const
+{
+    vec4 hom = GetWorldTransform() * vec4(0.0F, 0.0F, 0.0F, 1.0F);
+    return vec3(hom) / hom.w;
+}
+
 mat4 GameObject::GetLocalTransform() const
 {
     mat4 mat = mat4(1.0F);

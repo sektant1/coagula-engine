@@ -47,6 +47,8 @@ public:
     mat4 GetLocalTransform() const;
     mat4 GetWorldTransform() const;
 
+    vec3 GetWorldPosition() const;
+
 protected:
     GameObject() = default;
 

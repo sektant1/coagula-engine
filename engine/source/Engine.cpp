@@ -1,8 +1,10 @@
 #include <chrono>
+#include <vector>
 
 #include "Engine.h"
 
 #include "Application.h"
+#include "Common.h"
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 #include "Log.h"
@@ -121,7 +123,8 @@ void Engine::Run()
         m_graphicsAPI.SetClearColor(1.0F, 1.0F, 1.0F, 1.0F);
         m_graphicsAPI.ClearBuffers();
 
-        CameraData cameraData;
+        CameraData             cameraData;
+        std::vector<LightData> lights;
 
         int width  = 0;
         int height = 0;
@@ -138,9 +141,11 @@ void Engine::Run()
                     cameraData.projectionMatrix = cameraComponent->GetProjectionMatrix(aspect);
                 }
             }
+
+            lights = m_currentScene->CollectLight();
         }
 
-        m_renderQueue.Draw(m_graphicsAPI, cameraData);
+        m_renderQueue.Draw(m_graphicsAPI, cameraData, lights);
 
         glfwSwapBuffers(m_window);
 
