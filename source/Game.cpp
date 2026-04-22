@@ -104,6 +104,9 @@ bool Game::Init()
         anim->Play("shoot", false);
     }
 
+    auto knight = ENG::GameObject::LoadGLTF("models/knight/knight.gltf");
+    knight->SetPosition(ENG::vec3(0.75f, -0.5f, -0.75f));
+
     auto light          = m_scene->CreateObject("Light");
     auto lightComponent = new ENG::LightComponent();
     lightComponent->SetColor(ENG::vec3(1.0f));

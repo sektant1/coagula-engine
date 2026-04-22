@@ -416,7 +416,7 @@ GameObject *GameObject::LoadGLTF(const std::string &path)
 
     for (cgltf_size i = 0; i < scene->nodes_count; ++i)
     {
-        auto node = scene->nodes[0];
+        auto node = scene->nodes[i];
         ParseGLTFNode(node, resultObject, relativeFolderPath);
     }
 
