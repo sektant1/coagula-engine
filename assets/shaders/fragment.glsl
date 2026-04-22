@@ -28,7 +28,7 @@ void main()
 
     // specular
     vec3 viewDir = normalize(uCameraPos - vFragPos);
-    vec3 reflectDir = reflect(-lightDir, norm);
+    vec3 reflectDir = reflect(-lightDir, normal);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32.0);
     float specularStrenght = 0.5;
     vec3 specular = specularStrenght * spec * uLight.color;

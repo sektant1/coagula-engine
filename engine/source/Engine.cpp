@@ -91,7 +91,8 @@ bool Engine::Init(int width, int height)
 
     glfwMakeContextCurrent(m_window);
 
-    if (!glewInit() != GLEW_OK)
+    glewExperimental = GL_TRUE;
+    if (glewInit() != GLEW_OK)
     {
         LOG_ERROR("Failed to initialize GLEW");
         glfwTerminate();
