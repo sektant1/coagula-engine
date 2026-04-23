@@ -2,6 +2,8 @@
 
 #include <btBulletCollisionCommon.h>
 
+#include "Types.h"
+
 namespace COA
 {
 Collider::~Collider()
@@ -17,10 +19,10 @@ btCollisionShape *Collider::GetShape()
     return m_shape;
 }
 
-BoxCollider::BoxCollider(const glm::vec3 &extents)
+BoxCollider::BoxCollider(const vec3 &extents)
 {
-    glm::vec3 halfExtents = extents * 0.5f;
-    m_shape               = new btBoxShape(btVector3(halfExtents.x, halfExtents.y, halfExtents.z));
+    vec3 halfExtents = extents * 0.5f;
+    m_shape          = new btBoxShape(btVector3(halfExtents.x, halfExtents.y, halfExtents.z));
 }
 
 SphereCollider::SphereCollider(float radius)
@@ -33,4 +35,3 @@ CapsuleCollider::CapsuleCollider(float radius, float height)
     m_shape = new btCapsuleShape(btScalar(radius), btScalar(height));
 }
 }  // namespace COA
-

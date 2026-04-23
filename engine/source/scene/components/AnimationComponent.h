@@ -51,8 +51,8 @@ namespace COA
  */
 struct KeyFrameVec3
 {
-    float     time  = 0.0f;               ///< Keyframe timestamp in seconds.
-    glm::vec3 value = glm::vec3(0.0f);   ///< Vec3 value at this keyframe.
+    float     time  = 0.0f;             ///< Keyframe timestamp in seconds.
+    glm::vec3 value = glm::vec3(0.0f);  ///< Vec3 value at this keyframe.
 };
 
 /**
@@ -61,7 +61,7 @@ struct KeyFrameVec3
 struct KeyFrameQuat
 {
     float     time  = 0.0f;                               ///< Keyframe timestamp in seconds.
-    glm::quat value = glm::quat(1.0f, 0.0f, 0.0f, 0.0f); ///< Unit quaternion at this keyframe.
+    glm::quat value = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);  ///< Unit quaternion at this keyframe.
 };
 
 /**
@@ -86,7 +86,7 @@ struct AnimationClip
     std::string                 name;             ///< Clip identifier (matches GLTF animation name).
     float                       duration = 0.0f;  ///< Total clip length in seconds.
     bool                        looping  = true;  ///< Whether playback wraps at the end.
-    std::vector<TransformTrack> tracks;            ///< Per-node animation channels.
+    std::vector<TransformTrack> tracks;           ///< Per-node animation channels.
 };
 
 /**
@@ -131,6 +131,8 @@ public:
      */
     void RegisterClip(const std::string &name, const std::shared_ptr<AnimationClip> &clip);
 
+    bool IsPlaying();
+
     /**
      * @brief Start playing a registered clip by name.
      *
@@ -158,13 +160,14 @@ private:
     void BuildBindings();
 
 private:
-    AnimationClip *m_clip      = nullptr; ///< Active clip (non-owning); may be nullptr.
-    float          m_time      = 0.0f;    ///< Current playback position in seconds.
-    bool           m_looping   = true;    ///< Whether to wrap at the end of the clip.
-    bool           m_isPlaying = false;   ///< False until Play() is called.
+    AnimationClip *m_clip      = nullptr;  ///< Active clip (non-owning); may be nullptr.
+    float          m_time      = 0.0f;     ///< Current playback position in seconds.
+    bool           m_looping   = true;     ///< Whether to wrap at the end of the clip.
+    bool           m_isPlaying = false;    ///< False until Play() is called.
 
-    std::unordered_map<std::string, std::shared_ptr<AnimationClip>>  m_clips;    ///< Registered clips by name.
-    std::unordered_map<GameObject *, std::unique_ptr<ObjectBinding>> m_bindings; ///< Track-to-object bindings built at play time.
+    std::unordered_map<std::string, std::shared_ptr<AnimationClip>> m_clips;  ///< Registered clips by name.
+    std::unordered_map<GameObject *, std::unique_ptr<ObjectBinding>>
+        m_bindings;  ///< Track-to-object bindings built at play time.
 };
 
 }  // namespace COA

@@ -8,32 +8,38 @@
 namespace COA
 {
 
+void PlayerControllerComponent::Init()
+{
+    m_kinematicController = std::make_unique<KinematicCharacterController>(0.4F, 1.2F, m_owner->GetWorldPosition());
+}
+
 void PlayerControllerComponent::Update(f32 deltaTime)
 {
     auto &inputManager = Engine::GetInstance().GetInputManager();
 
     auto rotation = m_owner->GetRotation();
 
-    if (inputManager.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT)) {
+    if (inputManager.IsMousePositionChanged())
+    {
         const auto &oldPos     = inputManager.GetMousePositionOld();
         const auto &currentPos = inputManager.GetMousePositionCurrent();
 
         f32 deltaX = currentPos.x - oldPos.x;
         f32 deltaY = currentPos.y - oldPos.y;
 
-        // rotation.y -= deltaX * m_sensitivity * deltaTime;
-        // rotation.x -= deltaY * m_sensitivity * deltaTime;
+        // Yaw
+        float yDeltaAngle = -deltaX * m_sensitivity * deltaTime;
+        m_yRot += yDeltaAngle;
+        glm::quat yRot = glm::angleAxis(glm::radians(m_yRot), glm::vec3(0, 1, 0));
 
-        f32  yAngle = -deltaX * m_sensitivity * deltaTime;
-        quat yRot   = angleAxis(yAngle, vec3(0.0f, 1.0f, 0.0f));
+        // Pitch
+        float xDeltaAngle = -deltaY * m_sensitivity * deltaTime;
+        m_xRot += xDeltaAngle;
+        m_xRot         = std::clamp(m_xRot, -89.0f, 89.0f);
+        glm::quat xRot = glm::angleAxis(glm::radians(m_xRot), glm::vec3(1, 0, 0));
 
-        f32  xAngle = -deltaY * m_sensitivity * deltaTime;
-        vec3 right  = rotation * vec3(1.0f, 0.0f, 0.0f);
-        quat xRot   = angleAxis(xAngle, right);
-
-        quat deltaRot = yRot * xRot;
-        rotation      = normalize(deltaRot * rotation);
-
+        // Final rotation
+        rotation = glm::normalize(yRot * xRot);
         m_owner->SetRotation(rotation);
     }
 
@@ -42,25 +48,35 @@ void PlayerControllerComponent::Update(f32 deltaTime)
 
     auto position = m_owner->GetPosition();
 
-    if (inputManager.IsKeyPressed(GLFW_KEY_W)) {
-        position += front * m_moveSpeed * deltaTime;
+    vec3 move(0.0f);
+    if (inputManager.IsKeyPressed(GLFW_KEY_A))
+    {
+        move -= right;
+    } else if (inputManager.IsKeyPressed(GLFW_KEY_D))
+    {
+        move += right;
     }
-    if (inputManager.IsKeyPressed(GLFW_KEY_A)) {
-        position -= right * m_moveSpeed * deltaTime;
+    if (inputManager.IsKeyPressed(GLFW_KEY_W))
+    {
+        move += front;
+    } else if (inputManager.IsKeyPressed(GLFW_KEY_S))
+    {
+        move -= front;
     }
-    if (inputManager.IsKeyPressed(GLFW_KEY_S)) {
-        position -= front * m_moveSpeed * deltaTime;
+
+    if (glm::dot(move, move) > 0)
+    {
+        move = glm::normalize(move);
     }
-    if (inputManager.IsKeyPressed(GLFW_KEY_D)) {
-        position += right * m_moveSpeed * deltaTime;
+    m_kinematicController->Walk(move * m_moveSpeed * deltaTime);
+
+    if (inputManager.IsKeyPressed(GLFW_KEY_SPACE))
+    {
+        m_kinematicController->Jump(vec3(0.0f, 5.0f, 0.0f));
     }
-    // Vertical noclip: world-up axis, independent of pitch -> predictable flight.
-    if (inputManager.IsKeyPressed(GLFW_KEY_SPACE)) {
-        position += vec3(0.0F, 1.0F, 0.0F) * m_moveSpeed * deltaTime;
-    }
-    if (inputManager.IsKeyPressed(GLFW_KEY_LEFT_CONTROL)) {
-        position -= vec3(0.0F, 1.0F, 0.0F) * m_moveSpeed * deltaTime;
-    }
-    m_owner->SetPosition(position);
+
+    // Sync scene object with physics controller
+    m_owner->SetPosition(m_kinematicController->GetPosition());
 }
+
 }  // namespace COA

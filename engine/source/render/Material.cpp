@@ -50,10 +50,17 @@ std::shared_ptr<Material> Material::Load(const str &path)
 {
     auto contents = Engine::GetInstance().GetFileSystem().LoadAssetFileText(path);
     if (contents.empty()) {
+        LOG_ERROR("Material::Load empty or missing file '%s'", path.c_str());
         return nullptr;
     }
 
-    nlohmann::json            json = nlohmann::json::parse(contents);
+    nlohmann::json json;
+    try {
+        json = nlohmann::json::parse(contents);
+    } catch (const nlohmann::json::parse_error &e) {
+        LOG_ERROR("Material::Load JSON parse error in '%s': %s", path.c_str(), e.what());
+        return nullptr;
+    }
     std::shared_ptr<Material> result;
 
     if (json.contains("shader")) {
@@ -69,6 +76,9 @@ std::shared_ptr<Material> Material::Load(const str &path)
         auto  shaderProgram = graphicsAPI.CreateShaderProgram(vertexSource, fragmentSource);
 
         if (!shaderProgram) {
+            LOG_ERROR("Material::Load shader program creation failed (vert='%s' frag='%s')",
+                      vertexPath.c_str(),
+                      fragmentPath.c_str());
             return nullptr;
         }
 

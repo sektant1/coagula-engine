@@ -7,19 +7,11 @@ project(coagula-engine)
 
 find_program(CCACHE_PROGRAM ccache)
 if(CCACHE_PROGRAM)
-  set(CMAKE_C_COMPILER_LAUNCHER   ${CCACHE_PROGRAM})
+  set(CMAKE_C_COMPILER_LAUNCHER ${CCACHE_PROGRAM})
   set(CMAKE_CXX_COMPILER_LAUNCHER ${CCACHE_PROGRAM})
 endif()
 
-set(PROJECT_SOURCE_FILES
-    source/main.cpp
-    source/Game.h
-    source/Game.cpp
-    source/TestObject.h
-    source/TestObject.cpp
-    source/LabObject.h
-    source/LabObject.cpp)
-
+set(PROJECT_SOURCE_FILES source/main.cpp source/Game.h source/Game.cpp source/Player.h source/Player.cpp)
 # Add the application
 include_directories(source)
 include_directories(engine/thirdparty/glew/include)
@@ -34,12 +26,14 @@ include_directories(engine/source)
 include_directories(engine/thirdparty/stb_image)
 target_link_libraries(${PROJECT_NAME} Engine)
 
-configure_file("scripts/build_config.sh" "${CMAKE_BINARY_DIR}/build_config.sh" @ONLY)
+configure_file("scripts/build_config.sh" "${CMAKE_BINARY_DIR}/build_config.sh"
+               @ONLY)
 
 # Doxygen documentation target
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
-  configure_file("${CMAKE_SOURCE_DIR}/Doxyfile.in" "${CMAKE_BINARY_DIR}/Doxyfile" @ONLY)
+  configure_file("${CMAKE_SOURCE_DIR}/Doxyfile.in"
+                 "${CMAKE_BINARY_DIR}/Doxyfile" @ONLY)
   add_custom_target(
     engine-docs
     COMMAND ${DOXYGEN_EXECUTABLE} "${CMAKE_BINARY_DIR}/Doxyfile"

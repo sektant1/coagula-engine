@@ -40,6 +40,47 @@ namespace COA
 {
 class Scene;
 
+struct ObjectCreatorBase
+{
+    virtual ~ObjectCreatorBase()           = default;
+    virtual GameObject *CreateGameObject() = 0;
+};
+
+template<typename T>
+struct ObjectCreator : ObjectCreatorBase
+{
+    GameObject *CreateGameObject() override { return new T(); }
+};
+
+class GameObjectFactory
+{
+public:
+    static GameObjectFactory &GetInstance()
+    {
+        static GameObjectFactory instance;
+        return instance;
+    }
+
+    template<typename T>
+    void RegisterObject(const std::string &name)
+    {
+        m_creators.emplace(name, std::make_unique<ObjectCreator<T>>());
+    }
+
+    GameObject *CreateGameObject(const std::string &typeName)
+    {
+        auto iter = m_creators.find(typeName);
+        if (iter == m_creators.end())
+        {
+            return nullptr;
+        }
+        return iter->second->CreateGameObject();
+    }
+
+private:
+    std::unordered_map<std::string, std::unique_ptr<ObjectCreatorBase>> m_creators;
+};
+
 /**
  * @brief Node in the scene graph: a named transform that owns components and children.
  *
@@ -51,19 +92,23 @@ class GameObject
 public:
     virtual ~GameObject() = default;
 
+    virtual void LoadProperties(const nlohmann::json &json) {}
+
+    virtual void Init() {}
+
     /**
      * @brief Update this object and all its components and children recursively.
      * @param deltaTime Seconds since the previous frame.
      */
     virtual void Update(f32 deltaTime);
 
-    const str &GetName() const;          ///< Returns the object's display name.
-    void       SetName(const str &name); ///< Sets the display name (used by FindChildByName).
+    const str &GetName() const;           ///< Returns the object's display name.
+    void       SetName(const str &name);  ///< Sets the display name (used by FindChildByName).
 
-    GameObject *GetParent(); ///< Returns the parent node, or nullptr for root objects.
+    GameObject *GetParent();  ///< Returns the parent node, or nullptr for root objects.
 
-    bool IsAlive() const;       ///< Returns false after MarkForDestroy() is called.
-    void MarkForDestroy();      ///< Flag this object for removal at end of frame.
+    bool IsAlive() const;   ///< Returns false after MarkForDestroy() is called.
+    void MarkForDestroy();  ///< Flag this object for removal at end of frame.
 
     /**
      * @brief Attach a component to this object (takes ownership).
@@ -102,8 +147,8 @@ public:
     /// Returns the Scene that owns this object.
     Scene *GetScene();
 
-    void SetActive(bool active); ///< Show/hide this object (and stop Update calls).
-    bool IsActive() const;       ///< Returns false if the object is hidden.
+    void SetActive(bool active);  ///< Show/hide this object (and stop Update calls).
+    bool IsActive() const;        ///< Returns false if the object is hidden.
 
     /// @name Local Transform
     /// Position, rotation, and scale are all relative to the parent object.
@@ -139,6 +184,10 @@ public:
     vec3 GetWorldPosition() const;
     /// @}
 
+    void SetWorldPosition(const vec3 &pos);
+    quat GetWorldRotation();
+    void SetWorldRotation(const quat &rot);
+
     /**
      * @brief Load a GLTF / GLB file and build a matching GameObject hierarchy.
      *
@@ -148,7 +197,7 @@ public:
      * @param path Filesystem path to the .gltf or .glb file.
      * @return Root of the loaded hierarchy (heap-allocated, caller takes ownership).
      */
-    static GameObject *LoadGLTF(const std::string &path);
+    static GameObject *LoadGLTF(const std::string &path, Scene *scene);
 
     /**
      * @brief Depth-first search for a child with the given name.
@@ -164,17 +213,24 @@ private:
     std::vector<std::unique_ptr<GameObject>> m_children;    ///< Owned child nodes.
     std::vector<std::unique_ptr<Component>>  m_components;  ///< Owned component list.
 
-    str         m_name;           ///< Display name (used for lookup and logging).
-    GameObject *m_parent  = nullptr; ///< Non-owning back-pointer to parent node.
-    Scene      *m_scene   = nullptr; ///< Non-owning back-pointer to owning Scene.
-    bool        m_isAlive = true;    ///< Cleared by MarkForDestroy(); Scene prunes dead objects.
+    str         m_name;               ///< Display name (used for lookup and logging).
+    GameObject *m_parent  = nullptr;  ///< Non-owning back-pointer to parent node.
+    Scene      *m_scene   = nullptr;  ///< Non-owning back-pointer to owning Scene.
+    bool        m_isAlive = true;     ///< Cleared by MarkForDestroy(); Scene prunes dead objects.
 
-    vec3 m_position = vec3(0.0f);              ///< Local position relative to parent.
-    quat m_rotation = quat(1.0f, 0.0f, 0.0f, 0.0f); ///< Local rotation as a unit quaternion.
-    vec3 m_scale    = vec3(1.0f);              ///< Local scale per axis.
-    bool m_active   = true;                    ///< When false, Update() and rendering are skipped.
+    vec3 m_position = vec3(0.0f);                    ///< Local position relative to parent.
+    quat m_rotation = quat(1.0f, 0.0f, 0.0f, 0.0f);  ///< Local rotation as a unit quaternion.
+    vec3 m_scale    = vec3(1.0f);                    ///< Local scale per axis.
+    bool m_active   = true;                          ///< When false, Update() and rendering are skipped.
 
     friend class Scene;
 };
+
+#define GAMEOBJECT(ObjectClass) \
+public: \
+    static void Register() \
+    { \
+        COA::GameObjectFactory::GetInstance().RegisterObject<ObjectClass>(std::string(#ObjectClass)); \
+    }
 
 }  // namespace COA

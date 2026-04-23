@@ -63,4 +63,3 @@ btDiscreteDynamicsWorld *PhysicsManager::GetWorld()
     return m_world.get();
 }
 }  // namespace COA
-

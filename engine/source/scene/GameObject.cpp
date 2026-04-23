@@ -175,6 +175,45 @@ mat4 GameObject::GetWorldTransform() const
     }
 }
 
+void GameObject::SetWorldPosition(const vec3 &pos)
+{
+    if (m_parent)
+    {
+        mat4 parentWorld    = m_parent->GetWorldTransform();
+        mat4 invParentWorld = inverse(parentWorld);
+        vec4 localPos       = invParentWorld * vec4(pos, 1.0F);
+        SetPosition(vec3(localPos) / localPos.w);
+    } else
+    {
+        SetPosition(pos);
+    }
+}
+
+void GameObject::SetWorldRotation(const quat &rot)
+{
+    if (m_parent)
+    {
+        quat parentWorldRot    = m_parent->GetWorldRotation();
+        quat invParentWorldRot = inverse(parentWorldRot);
+        quat newLocalRot       = invParentWorldRot * rot;
+        SetRotation(newLocalRot);
+    } else
+    {
+        SetRotation(rot);
+    }
+}
+
+quat GameObject::GetWorldRotation()
+{
+    if (m_parent)
+    {
+        return m_parent->GetWorldRotation() * m_rotation;
+    } else
+    {
+        return m_rotation;
+    }
+}
+
 auto readFloats = [](const cgltf_accessor *acc, cgltf_size i, float *out, int n)
 {
     std::fill(out, out + n, 0.0f);
@@ -383,20 +422,28 @@ void ParseGLTFNode(cgltf_node *node, GameObject *parent, const std::filesystem::
     }
 }
 
-GameObject *GameObject::LoadGLTF(const std::string &path)
+GameObject *GameObject::LoadGLTF(const std::string &path, Scene *gameScene)
 {
     auto contents = Engine::GetInstance().GetFileSystem().LoadAssetFileText(path);
     if (contents.empty())
     {
+        LOG_ERROR("LoadGLTF empty or missing file '%s'", path.c_str());
+        return nullptr;
+    }
+
+    if (!gameScene)
+    {
+        LOG_ERROR("LoadGLTF called with null scene (path='%s')", path.c_str());
         return nullptr;
     }
 
     cgltf_options options = {};
     cgltf_data   *data    = nullptr;
-    cgltf_result  res     = cgltf_parse(&options, contents.data(), contents.size(), &data);
 
+    cgltf_result res = cgltf_parse(&options, contents.data(), contents.size(), &data);
     if (res != cgltf_result_success)
     {
+        LOG_ERROR("LoadGLTF cgltf_parse failed (code=%d) for '%s'", static_cast<int>(res), path.c_str());
         return nullptr;
     }
 
@@ -405,14 +452,14 @@ GameObject *GameObject::LoadGLTF(const std::string &path)
     auto relativeFolderPath = std::filesystem::path(path).remove_filename();
 
     res = cgltf_load_buffers(&options, data, fullFolderPath.string().c_str());
-
     if (res != cgltf_result_success)
     {
+        LOG_ERROR("LoadGLTF cgltf_load_buffers failed (code=%d) for '%s'", static_cast<int>(res), path.c_str());
         cgltf_free(data);
         return nullptr;
     }
 
-    auto resultObject = Engine::GetInstance().GetScene()->CreateObject("Result");
+    auto resultObject = gameScene->CreateObject("Result");
     auto scene        = &data->scenes[0];
 
     for (cgltf_size i = 0; i < scene->nodes_count; ++i)

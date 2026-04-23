@@ -9,9 +9,8 @@ public:
     void Update(float deltaTime) override;
     void Destroy() override;
 
+    void RegisterTypes() override;
+
 private:
-    COA::Scene      *m_scene         = nullptr;
-    COA::GameObject *m_mainCamera    = nullptr;
-    COA::GameObject *m_altCamera     = nullptr;
-    bool             m_toggleKeyPrev = false;
+    std::shared_ptr<COA::Scene> m_scene;
 };

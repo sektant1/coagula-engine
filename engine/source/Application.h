@@ -41,6 +41,8 @@ public:
      */
     virtual bool Init() = 0;
 
+    virtual void RegisterTypes() = 0;
+
     /**
      * @brief Called every frame by Engine::Run() with the elapsed time.
      * @param deltaTime Seconds since the previous frame. Use this to make

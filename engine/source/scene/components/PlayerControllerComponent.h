@@ -6,13 +6,14 @@
  * Attach to a GameObject that also has a CameraComponent. Each frame Update()
  * reads keyboard (WASD) and mouse-delta input from the Engine's InputManager
  * and moves / rotates the owner accordingly.
- *
- * @see InputManager, CameraComponent
- */
+ * @see InputManager, CameraComponent */
 
 #pragma once
 
+#include <memory>
+
 #include "Types.h"
+#include "physics/KinematicCharacterController.h"
 #include "scene/Component.h"
 
 namespace COA
@@ -33,11 +34,17 @@ public:
      * @brief Process input and update the owner's transform.
      * @param deltaTime Seconds elapsed since the last frame.
      */
+    void Init() override;
+
     void Update(f32 deltaTime) override;
 
 private:
-    f32 m_sensitivity = 1.5F;  ///< Mouse-look sensitivity multiplier (degrees per pixel).
-    f32 m_moveSpeed   = 1.0F;  ///< Translation speed in world units per second.
+    f32 m_sensitivity = 15.0F;  ///< Mouse-look sensitivity multiplier (degrees per pixel).
+    f32 m_moveSpeed   = 5.0F;   ///< Translation speed in world units per second.
+    f32 m_yRot        = 0.0f;
+    f32 m_xRot        = 0.0f;
+
+    std::unique_ptr<KinematicCharacterController> m_kinematicController;
 };
 
 }  // namespace COA

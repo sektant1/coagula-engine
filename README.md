@@ -1,83 +1,161 @@
-# GD-Engine
+# Coagula Engine
 
-GD-Engine is an educational game engine built step by step throughout a structured series of lessons. The goal of this repository is to provide a clear, progressive learning path for those who want to deeply understand how game engines are built from scratch using modern C++ and core rendering/physics/input concepts.
+Small C++17 game engine for learning. OpenGL 3.3, GLFW, GLEW, Bullet, glm.
 
----
+## Build
 
-## 📚 Lessons Structure
+```sh
+./compile.sh            # debug build + run
+./compile.sh --release  # release build + run
+```
 
-All detailed lesson sources are stored in the **`lessons/`**  directory.
-Each lesson introduces a new subsystem or feature.
-You can also browse through the **Git tags**, where every tag represents a specific lesson checkpoint — allowing you to view the engine exactly as it was at that step in development.
-Additionally, each commit contains the full engine state up to that point, including all lessons from the very beginning up to the commit you are currently inspecting.
+Binary lands in `bin/<type>/coagula-engine`. The script `cd`s to the repo root so shaders under `assets/` resolve.
 
----
+CMake also writes `compile_commands.json` for `clangd`.
 
-## 🎯 Purpose of the Engine
+## Layout
 
-This engine is not meant to compete with production engines like Unity or Unreal.  
-Instead, it serves as a **learning-focused codebase**, designed to reveal how:
+```
+source/            app entrypoint + sandbox (Game, Player, main.cpp)
+engine/source/     engine library (Engine, Scene, render, physics, input, io)
+engine/thirdparty/ vendored GLFW + GLEW
+assets/
+    shaders/       GLSL pairs (.vert + .frag)
+    scenes/        JSON scene files
+    models/        glTF models
+    materials/     material JSON
+    textures/
+```
 
-- Rendering pipelines are built from zero.
-- Physics and collision systems function internally.
-- Scene graphs, components, UI systems and scripting expand engine architecture.
-- Audio integrated
-- Real 2D and 3D gameplay logic is implemented.
+## Starting point
 
-Every subsystem is introduced gradually with detailed breakdowns and simple C++ implementations.
+`source/main.cpp` creates an `ENG::Application` subclass, hands it to the `Engine` singleton, and runs the main loop. Swap the app by editing one line in `main.cpp`.
 
----
+## Recipes
 
-## 💻 Supported Platforms
+### New application
 
-The engine is designed to be **cross-platform** and currently targets:
+Subclass `COA::Application`, then point `source/main.cpp` at it.
 
-- ✅ **Windows**
-- ✅ **macOS**
-- ✅ **Linux**
+```cpp
+class MyApp : public COA::Application {
+public:
+    bool Init() override        { return true; }
+    void RegisterTypes() override {}
+    void Update(float dt) override {}
+    void Destroy() override     {}
+};
+```
 
----
+### Load a scene from JSON
 
-## 🛠️ Technologies & Standards
+Scenes live in `assets/scenes/*.json`. Load once in `Init()`.
 
-| Technology        | Details                               |
-|------------------|---------------------------------------|
-| **Language**      | C++ (C++17 standard)                  |
-| **Build System**  | CMake                                 |
-| **Graphics**      | OpenGL                                |
-| **Window Management**      | GLFW                                |
+```cpp
+auto scene = COA::Scene::Load("scenes/scene.json");
+COA::Engine::GetInstance().SetScene(scene.get());
+m_scene = scene; // keep the shared_ptr alive
+```
 
----
+In `Update(dt)`, call `m_scene->Update(dt)`.
 
-## 📂 Project Structure
+### Spawn an object + components
 
-| Folder             | Description |
-|------------------|------------|
-| `source/`         | Project source code |
-| `CMakeLists.txt`  | Project build configuration |
-| `engine/source/`  | Engine source code |
-| `engine/thirdparty/` | Engine third-party libraries |
-| `engine/CMakeLists.txt`  | Engine build configuration |
-| `lessons/`        | Lesson materials |
+```cpp
+auto *obj = scene->CreateObject("Crate");
+obj->SetPosition(vec3(0, 1, -3));
+obj->AddComponent(new COA::MeshComponent(material, mesh));
+```
 
----
+Child objects: `scene->CreateObject("Camera", parentObj);`.
 
-## ⚙️ Build Instructions
+### Custom component / object type
 
-You can build the engine using one of two approaches:
+Use the `COMPONENT(T)` macro and register the type in `RegisterTypes()`.
 
-### 1. Generate Project via Script
-- `./gen_proj_vs2022.bat` for Visual Studio 2022
-- `./gen_proj_xcode.sh` for Xcode
-Then open the generated project from `build` folder in your preferred IDE.
+```cpp
+class HealthComponent : public COA::Component {
+    COMPONENT(HealthComponent)
+public:
+    void Update(float dt) override {}
+};
 
-### 2. Open Repository with IDE in CMake Mode (Recommended)
-Simply open the repository root in **CLion / Visual Studio Code / Visual Studio (CMake mode)** and let it configure automatically.
+void MyApp::RegisterTypes() {
+    HealthComponent::Register();
+}
+```
 
----
+Same pattern for game-object subclasses (see `source/Player.h` — `GAMEOBJECT(T)` + `Player::Register()`).
 
-## 🌱 Educational Focus
+### Read input
 
-This repository evolves lesson by lesson.  
-You are encouraged to explore the tags chronologically and compare how the engine grows through each commit.  
-It’s a **transparent and developer-friendly journey** into engine architecture and low-level game development.
+```cpp
+auto &input = COA::Engine::GetInstance().GetInputManager();
+if (input.IsKeyPressed(GLFW_KEY_W))     { /* forward */ }
+if (input.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT)) { /* fire */ }
+```
+
+Mouse position: `glfwGetCursorPos` on the current context.
+
+### Lights
+
+```cpp
+auto *l = scene->CreateObject("Sun");
+l->SetPosition(vec3(10, 20, 5));
+auto *lc = new COA::LightComponent();
+lc->SetColor(vec3(1.0f, 0.95f, 0.8f));   // warm white
+l->AddComponent(lc);
+```
+
+Multiple `LightComponent`s are collected into the per-frame uniform array.
+
+### Physics (rigid body)
+
+Easiest path: declare it in the scene JSON — `PhysicsComponent` reads
+`collider` + `body` blocks and registers itself with `PhysicsManager`.
+
+```json
+{
+  "type": "PhysicsComponent",
+  "collider": { "shape": "box", "halfExtents": [0.5, 0.5, 0.5] },
+  "body":     { "mass": 1.0 }
+}
+```
+
+In code:
+
+```cpp
+auto body = std::make_shared<COA::RigidBody>(/*...*/);
+obj->AddComponent(new COA::PhysicsComponent(body));
+```
+
+The component copies the simulated transform back onto its GameObject each frame.
+
+### glTF model
+
+```cpp
+auto *gltfRoot = COA::GameObject::LoadGLTF("models/scene.glb", scene);
+gltfRoot->SetPosition(vec3(0, 0, -5));
+```
+
+Builds a GameObject hierarchy mirroring the file's node tree, with
+`MeshComponent` + `AnimationComponent` attached where present.
+
+### Quit cleanly
+
+```cpp
+if (input.IsKeyPressed(GLFW_KEY_ESCAPE)) SetNeedsToBeClosed(true);
+```
+
+## Docs
+
+```sh
+cmake --build build --target engine-docs
+# open docs/generated/html/index.html
+```
+
+Site uses a CRT/terminal theme — see `docs/custom.css`.
+
+## License
+
+Educational. No warranty.

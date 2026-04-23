@@ -17,7 +17,7 @@ namespace COA
 {
 void KeyCallback(GLFWwindow *window, int key, int, int action, int)
 {
-    auto &inputManager = COA::Engine::GetInstance().GetInputManager();
+    auto &inputManager = Engine::GetInstance().GetInputManager();
     if (action == GLFW_PRESS)
     {
         inputManager.SetKeyPressed(key, true);
@@ -29,7 +29,7 @@ void KeyCallback(GLFWwindow *window, int key, int, int action, int)
 
 void MouseButtonCallback(GLFWwindow *window, int button, int action, int mods)
 {
-    auto &inputManager = COA::Engine::GetInstance().GetInputManager();
+    auto &inputManager = Engine::GetInstance().GetInputManager();
     if (action == GLFW_PRESS)
     {
         inputManager.SetMouseButtonPressed(button, true);
@@ -41,12 +41,13 @@ void MouseButtonCallback(GLFWwindow *window, int button, int action, int mods)
 
 void CursorPositionCallback(GLFWwindow *window, f64 xpos, f64 ypos)
 {
-    auto &inputManager = COA::Engine::GetInstance().GetInputManager();
+    auto &inputManager = Engine::GetInstance().GetInputManager();
 
     inputManager.SetMousePositionOld(inputManager.GetMousePositionCurrent());
 
     vec2 currentPos(static_cast<f32>(xpos), static_cast<f32>(ypos));
     inputManager.SetMousePositionCurrent(currentPos);
+    inputManager.SetMousePositionChanged(true);
 }
 
 Engine &Engine::GetInstance()
@@ -68,6 +69,9 @@ bool Engine::Init(int width, int height)
 #if defined(__linux__)
     glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_X11);
 #endif
+
+    Scene::RegisterTypes();
+    m_application->RegisterTypes();
 
     if (glfwInit() == 0)
     {
@@ -93,6 +97,8 @@ bool Engine::Init(int width, int height)
     glfwSetKeyCallback(m_window, KeyCallback);
     glfwSetMouseButtonCallback(m_window, MouseButtonCallback);
     glfwSetCursorPosCallback(m_window, CursorPositionCallback);
+
+    glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     glfwMakeContextCurrent(m_window);
 
@@ -173,6 +179,22 @@ void Engine::Run()
                     cameraData.viewMatrix       = cameraComponent->GetViewMatrix();
                     cameraData.projectionMatrix = cameraComponent->GetProjectionMatrix(aspect);
                     cameraData.position         = cameraObject->GetWorldPosition();
+                } else
+                {
+                    static bool warned = false;
+                    if (!warned)
+                    {
+                        LOG_WARN("Main camera GameObject '%s' has no CameraComponent", cameraObject->GetName().c_str());
+                        warned = true;
+                    }
+                }
+            } else
+            {
+                static bool warned = false;
+                if (!warned)
+                {
+                    LOG_WARN("Scene has no main camera set — rendering with identity matrices");
+                    warned = true;
                 }
             }
 
@@ -184,6 +206,8 @@ void Engine::Run()
         glfwSwapBuffers(m_window);
 
         m_inputManager.SetMousePositionOld(m_inputManager.GetMousePositionCurrent());
+
+        m_inputManager.SetMousePositionChanged(false);
     }
 }
 

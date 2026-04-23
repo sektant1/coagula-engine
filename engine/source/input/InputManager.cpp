@@ -7,7 +7,8 @@ namespace COA
 
 void InputManager::SetKeyPressed(int key, bool pressed)
 {
-    if (key < 0 | key >= static_cast<int>(m_keys.size())) {
+    if (key < 0 | key >= static_cast<int>(m_keys.size()))
+    {
         LOG_WARN("SetKeyPressed out-of-range key=%d (size=%zu)", key, m_keys.size());
         return;
     }
@@ -16,7 +17,8 @@ void InputManager::SetKeyPressed(int key, bool pressed)
 
 bool InputManager::IsKeyPressed(int key)
 {
-    if (key < 0 | key >= static_cast<int>(m_keys.size())) {
+    if (key < 0 | key >= static_cast<int>(m_keys.size()))
+    {
         LOG_WARN("IsKeyPressed out-of-range key=%d (size=%zu)", key, m_keys.size());
         return false;
     }
@@ -26,7 +28,8 @@ bool InputManager::IsKeyPressed(int key)
 
 void InputManager::SetMouseButtonPressed(int button, bool pressed)
 {
-    if (button < 0 | button >= static_cast<int>(m_keys.size())) {
+    if (button < 0 | button >= static_cast<int>(m_keys.size()))
+    {
         return;
     }
     m_mouseKeys[button] = pressed;
@@ -34,7 +37,8 @@ void InputManager::SetMouseButtonPressed(int button, bool pressed)
 
 bool InputManager::IsMouseButtonPressed(int button)
 {
-    if (button < 0 | button >= static_cast<int>(m_keys.size())) {
+    if (button < 0 | button >= static_cast<int>(m_keys.size()))
+    {
         return false;
     }
 
@@ -59,6 +63,16 @@ void InputManager::SetMousePositionCurrent(const vec2 &pos)
 const vec2 InputManager::GetMousePositionCurrent() const
 {
     return m_mousePositionCurrent;
+}
+
+void InputManager::SetMousePositionChanged(bool changed)
+{
+    m_mousePositionChanged = changed;
+}
+
+bool InputManager::IsMousePositionChanged() const
+{
+    return m_mousePositionChanged;
 }
 
 }  // namespace COA

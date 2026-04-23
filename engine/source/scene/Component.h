@@ -29,81 +29,91 @@
 #pragma once
 
 #include "Types.h"
+#include "nlohmann/json.hpp"
 
 namespace COA
 {
-
 class GameObject;
 
-/**
- * @brief Abstract base class for all attachable behaviours.
- *
- * Each concrete subclass gets a unique static type ID via StaticTypeId<T>(),
- * which allows efficient component lookup without dynamic_cast.
- *
- * The engine calls Update() once per frame on every component of every
- * active GameObject in the current Scene.
- */
 class Component
 {
 public:
     virtual ~Component() = default;
+    virtual void   LoadProperties(const nlohmann::json &json);
+    virtual void   Update(f32 deltaTime) = 0;
+    virtual void   Init();
+    virtual size_t GetTypeId() const = 0;
 
-    /**
-     * @brief Called once per frame by the owning GameObject.
-     * @param deltaTime Seconds since the previous frame.
-     */
-    virtual void Update(f32 deltaTime) = 0;
-
-    /**
-     * @brief Returns the runtime type ID for this component instance.
-     *        Implemented automatically by the COMPONENT macro.
-     */
-    [[nodiscard]] virtual usize GetTypeId() const = 0;
-
-    virtual void Init();
-
-    /// Returns the GameObject this component is attached to.
     GameObject *GetOwner();
 
-    /**
-     * @brief Returns the unique type ID for component type T.
-     *
-     * IDs are assigned sequentially on first call for each type and remain
-     * stable for the lifetime of the process. Used by GameObject::GetComponent<T>().
-     */
     template<typename T>
-    static usize StaticTypeId()
+    static size_t StaticTypeId()
     {
-        static usize typeId = nextId++;
+        static size_t typeId = nextId++;
         return typeId;
     }
 
 protected:
-    /// Back-pointer to the owning GameObject, set by GameObject::AddComponent().
     GameObject *m_owner = nullptr;
 
     friend class GameObject;
 
 private:
-    static usize nextId;  ///< Global counter for assigning unique type IDs.
+    static size_t nextId;
 };
 
-// clang-format off
-/**
- * @brief Boilerplate macro that wires up the runtime type ID for a component.
- *
- * Place at the very top of the public section of any Component subclass.
- * Provides:
- * - `static usize TypeId()` — class-level type ID.
- * - `usize GetTypeId() const override` — virtual override.
- *
- * @param ComponentClass  The concrete component class name.
- */
+class ComponentCreatorBase
+{
+public:
+    virtual ~ComponentCreatorBase()      = default;
+    virtual Component *CreateComponent() = 0;
+};
+
+template<typename T>
+class ComponentCreator : public ComponentCreatorBase
+{
+public:
+    Component *CreateComponent() override { return new T(); }
+};
+
+class ComponentFactory
+{
+public:
+    static ComponentFactory &GetInstance();
+
+    template<typename T>
+    void RegisterComponent(const std::string &name)
+    {
+        m_creators.emplace(name, std::make_unique<ComponentCreator<T>>());
+    }
+
+    Component *CreateComponent(const std::string &name)
+    {
+        auto it = m_creators.find(name);
+        if (it != m_creators.end())
+        {
+            return it->second->CreateComponent();
+        }
+
+        return nullptr;
+    }
+
+private:
+    std::unordered_map<std::string, std::unique_ptr<ComponentCreatorBase>> m_creators;
+};
+
 #define COMPONENT(ComponentClass) \
 public: \
-static usize TypeId() { return Component::StaticTypeId<ComponentClass>(); } \
-usize GetTypeId() const override {return TypeId();} \
-
-
+    static size_t TypeId() \
+    { \
+        return COA::Component::StaticTypeId<ComponentClass>(); \
+    } \
+    size_t GetTypeId() const override \
+    { \
+        return TypeId(); \
+    } \
+    static void Register() \
+    { \
+        COA::ComponentFactory::GetInstance().RegisterComponent<ComponentClass>(std::string(#ComponentClass)); \
+    }
 }  // namespace COA

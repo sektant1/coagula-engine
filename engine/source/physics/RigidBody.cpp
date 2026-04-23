@@ -18,10 +18,10 @@ RigidBody::RigidBody(BodyType type, const std::shared_ptr<Collider> &collider, f
         return;
     }
 
-    btVector3 intertia(0, 0, 0);
+    btVector3 inertia(0, 0, 0);
     if (m_type == BodyType::Dynamic && mass > 0.0f && m_collider->GetShape())
     {
-        m_collider->GetShape()->calculateLocalInertia(btScalar(mass), intertia);
+        m_collider->GetShape()->calculateLocalInertia(btScalar(mass), inertia);
     }
 
     btTransform transform;
@@ -29,7 +29,7 @@ RigidBody::RigidBody(BodyType type, const std::shared_ptr<Collider> &collider, f
     btDefaultMotionState *motionState = new btDefaultMotionState(transform);
 
     btRigidBody::btRigidBodyConstructionInfo info(
-        (m_type == BodyType::Dynamic) ? btScalar(mass) : btScalar(0), motionState, m_collider->GetShape(), intertia);
+        (m_type == BodyType::Dynamic) ? btScalar(mass) : btScalar(0), motionState, m_collider->GetShape(), inertia);
 
     m_body = std::make_unique<btRigidBody>(info);
     m_body->setFriction(friction);
@@ -113,4 +113,3 @@ glm::quat RigidBody::GetRotation() const
     return glm::quat(rot.w(), rot.x(), rot.y(), rot.z());
 }
 }  // namespace COA
-

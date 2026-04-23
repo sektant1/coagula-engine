@@ -6,12 +6,28 @@
 #include "scene/Scene.h"
 
 #include "Common.h"
+#include "Engine.h"
 #include "Log.h"
 #include "scene/GameObject.h"
+#include "scene/components/AnimationComponent.h"
+#include "scene/components/CameraComponent.h"
 #include "scene/components/LightComponent.h"
+#include "scene/components/MeshComponent.h"
+#include "scene/components/PhysicsComponent.h"
+#include "scene/components/PlayerControllerComponent.h"
 
 namespace COA
 {
+
+void Scene::RegisterTypes()
+{
+    AnimationComponent::Register();
+    CameraComponent::Register();
+    LightComponent::Register();
+    MeshComponent::Register();
+    PhysicsComponent::Register();
+    PlayerControllerComponent::Register();
+}
 
 void Scene::Update(f32 deltaTime)
 {
@@ -70,6 +86,18 @@ void Scene::Clear()
     m_objects.clear();
 }
 
+GameObject *Scene::CreateObject(const std::string &type, const std::string &name, GameObject *parent)
+{
+    GameObject *obj = GameObjectFactory::GetInstance().CreateGameObject(type);
+    if (obj)
+    {
+        obj->SetName(name);
+        obj->m_scene = this;
+        obj->SetParent(parent);
+    }
+    return obj;
+}
+
 GameObject *Scene::CreateObject(const std::string &name, GameObject *parent)
 {
     auto obj = new GameObject();
@@ -78,6 +106,180 @@ GameObject *Scene::CreateObject(const std::string &name, GameObject *parent)
     SetParent(obj, parent);
     LOG_INFO("Created GameObject '%s' (parent=%s)", name.c_str(), parent ? parent->GetName().c_str() : "<root>");
     return obj;
+}
+
+void Scene::LoadObject(const nlohmann::json &jsonObject, GameObject *parent)
+{
+    const str name = jsonObject.value("name", "Object");
+
+    GameObject *gameObject = nullptr;
+
+    if (jsonObject.contains("type"))
+    {
+        const std::string type = jsonObject.value("type", "");
+        if (type == "gltf")
+        {
+            std::string path = jsonObject.value("path", "");
+            gameObject       = GameObject::LoadGLTF(path, this);
+            if (gameObject)
+            {
+                gameObject->SetParent(parent);
+                gameObject->SetName(name);
+            } else
+            {
+                LOG_ERROR("Scene::LoadObject failed to load GLTF '%s' for object '%s'", path.c_str(), name.c_str());
+            }
+        } else
+        {
+            gameObject = CreateObject(type, name, parent);
+            if (!gameObject)
+            {
+                LOG_ERROR("Scene::LoadObject unknown GameObject type '%s' (name='%s')", type.c_str(), name.c_str());
+            }
+        }
+    } else
+    {
+        gameObject = CreateObject(name, parent);
+    }
+
+    if (!gameObject)
+    {
+        return;
+    }
+
+    // Read transform
+    if (jsonObject.contains("position"))
+    {
+        auto      posObj = jsonObject["position"];
+        glm::vec3 pos;
+        pos.x = posObj.value("x", 0.0f);
+        pos.y = posObj.value("y", 0.0f);
+        pos.z = posObj.value("z", 0.0f);
+        gameObject->SetPosition(pos);
+        // gameObject->LoadProperties(posObj);
+    }
+
+    if (jsonObject.contains("rotation"))
+    {
+        auto      rotObj = jsonObject["rotation"];
+        glm::quat rot;
+        rot.x = rotObj.value("x", 0.0f);
+        rot.y = rotObj.value("y", 0.0f);
+        rot.z = rotObj.value("z", 0.0f);
+        rot.w = rotObj.value("w", 1.0f);
+        gameObject->SetRotation(rot);
+        // gameObject->LoadProperties(rotObj);
+    }
+
+    if (jsonObject.contains("scale"))
+    {
+        auto      scaleObj = jsonObject["scale"];
+        glm::vec3 scale;
+        scale.x = scaleObj.value("x", 1.0f);
+        scale.y = scaleObj.value("y", 1.0f);
+        scale.z = scaleObj.value("z", 1.0f);
+        gameObject->SetScale(scale);
+        // gameObject->LoadProperties(scaleObj);
+    }
+
+    gameObject->LoadProperties(jsonObject);
+
+    if (jsonObject.contains("components") && jsonObject["components"].is_array())
+    {
+        const auto &components = jsonObject["components"];
+        for (const auto &comp : components)
+        {
+            const std::string type      = comp.value("type", "");
+            Component        *component = ComponentFactory::GetInstance().CreateComponent(type);
+            if (component)
+            {
+                component->LoadProperties(comp);
+                gameObject->AddComponent(component);
+            } else
+            {
+                LOG_ERROR("Unknown component type '%s' on object '%s' (not registered in ComponentFactory)",
+                          type.c_str(),
+                          name.c_str());
+            }
+        }
+    }
+
+    if (jsonObject.contains("children") && jsonObject["children"].is_array())
+    {
+        const auto &children = jsonObject["children"];
+        for (const auto &child : children)
+        {
+            LoadObject(child, gameObject);
+        }
+    }
+
+    gameObject->Init();
+}
+
+std::shared_ptr<Scene> Scene::Load(const str &path)
+{
+    LOG_INFO("Scene::Load '%s'", path.c_str());
+    const str contents = Engine::GetInstance().GetFileSystem().LoadAssetFileText(path);
+    if (contents.empty())
+    {
+        LOG_ERROR("Scene::Load empty or missing file '%s'", path.c_str());
+        return nullptr;
+    }
+
+    nlohmann::json json;
+    try
+    {
+        json = nlohmann::json::parse(contents);
+    } catch (const nlohmann::json::parse_error &e)
+    {
+        LOG_ERROR("Scene::Load JSON parse error in '%s': %s", path.c_str(), e.what());
+        return nullptr;
+    }
+    if (json.empty())
+    {
+        LOG_ERROR("Scene::Load JSON empty in '%s'", path.c_str());
+        return nullptr;
+    }
+
+    auto result = std::make_shared<Scene>();
+
+    const str sceneName = json.value("name", "noname");
+    if (json.contains("objects") && json["objects"].is_array())
+    {
+        const auto &objects = json["objects"];
+        for (const auto &obj : objects)
+        {
+            result->LoadObject(obj, nullptr);
+        }
+    } else
+    {
+        LOG_WARN("Scene '%s' has no 'objects' array", sceneName.c_str());
+    }
+
+    if (json.contains("camera"))
+    {
+        str cameraObjName = json.value("camera", "");
+        for (const auto &child : result->m_objects)
+        {
+            if (auto object = child->FindChildByName(cameraObjName))
+            {
+                result->SetMainCamera(object);
+                break;
+            }
+        }
+        if (!result->GetMainCamera())
+        {
+            LOG_ERROR("Scene '%s' camera target '%s' not found in loaded objects",
+                      sceneName.c_str(),
+                      cameraObjName.c_str());
+        }
+    } else
+    {
+        LOG_WARN("Scene '%s' has no 'camera' key — render will use identity matrices", sceneName.c_str());
+    }
+
+    LOG_INFO("Scene '%s' loaded (%zu root objects)", sceneName.c_str(), result->m_objects.size());
+    return result;
 }
 
 bool Scene::SetParent(GameObject *obj, GameObject *parent)

@@ -1,0 +1,95 @@
+{
+  "name": "MyScene",
+  "camera": "MainPlayer",
+  "objects": [
+    {
+      "name": "MainPlayer",
+      "type": "Player",
+      "position": { "x": 0, "y": 2, "z": 7 },
+      "components": [
+        { "type": "CameraComponent" },
+        { "type": "PlayerControllerComponent" }
+      ],
+      "children": [
+        {
+          "name": "Gun",
+          "type": "gltf",
+          "path": "models/carbine/scene.gltf",
+          "position": { "x": 0.75, "y": -0.5, "z": -0.75 },
+          "scale": { "x": -1, "y": 1, "z": 1 }
+        }
+      ]
+    },
+    {
+      "name": "Ground",
+      "position": { "x": 0, "y": -5, "z": 0 },
+      "components": [
+        {
+          "type": "MeshComponent",
+          "mesh": {
+            "type": "box",
+            "x": 20,
+            "y": 2,
+            "z": 20
+          },
+          "material": "materials/brick.mat"
+        },
+        {
+          "type": "PhysicsComponent",
+          "collider": {
+            "type": "box",
+            "x": 20,
+            "y": 2,
+            "z": 20
+          },
+          "body": {
+            "mass": 0,
+            "friction": 0.5,
+            "type": "static"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ObjectCollide",
+      "position": { "x": 0, "y": 7, "z": 0 },
+      "rotation": { "x": 1, "y": 2, "z": 0, "w": 1 },
+      "components": [
+        {
+          "type": "MeshComponent",
+          "mesh": {
+            "type": "box",
+            "x": 1,
+            "y": 1,
+            "z": 1
+          },
+          "material": "materials/brick.mat"
+        },
+        {
+          "type": "PhysicsComponent",
+          "collider": {
+            "type": "box",
+            "x": 1,
+            "y": 1,
+            "z": 1
+          },
+          "body": {
+            "mass": 5,
+            "friction": 0.5,
+            "type": "dynamic"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Light",
+      "position": { "x": 0, "y": 5, "z": 0 },
+      "components": [
+        {
+          "type": "LightComponent",
+          "color": { "r": 1, "g": 1, "b": 1 }
+        }
+      ]
+    }
+  ]
+}

@@ -40,12 +40,14 @@ class Mesh;
 class MeshComponent : public Component
 {
     COMPONENT(MeshComponent)
+
 public:
     /**
      * @brief Construct a MeshComponent with a mesh-material pair.
      * @param material The surface description (shader + uniforms + textures).
      * @param mesh     The GPU geometry to draw.
      */
+    MeshComponent() = default;
     MeshComponent(const std::shared_ptr<Material> &material, const std::shared_ptr<Mesh> &mesh);
 
     /**
@@ -53,6 +55,10 @@ public:
      * @param deltaTime Not used directly, but keeps the Component interface uniform.
      */
     void Update(f32 deltaTime) override;
+    void SetMaterial(const std::shared_ptr<Material> &material);
+    void SetMesh(const std::shared_ptr<Mesh> &mesh);
+
+    void LoadProperties(const nlohmann::json &json) override;
 
 private:
     std::shared_ptr<Material> m_material;  ///< Shared surface material (shader + params).

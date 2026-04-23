@@ -80,3 +80,16 @@
  * @defgroup coa_io I/O
  * @brief Asset-path resolution and file loading utilities.
  */
+
+/**
+ * @defgroup coa_physics Physics
+ * @brief Bullet-backed collision and rigid-body simulation.
+ *
+ * - **PhysicsManager** — owns the dynamics world and steps it each frame.
+ * - **Collider** (+ Box/Sphere/Capsule) — collision-shape wrappers.
+ * - **RigidBody** — Static / Dynamic / Kinematic body with mass and friction.
+ * - **KinematicCharacterController** — capsule character: walk, jump, ground test.
+ *
+ * `PhysicsComponent` (in @ref coa_components) is the glue that attaches a
+ * RigidBody to a GameObject.
+ */

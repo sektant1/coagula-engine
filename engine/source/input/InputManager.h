@@ -84,6 +84,9 @@ public:
      */
     void SetMousePositionCurrent(const vec2 &pos);
 
+    void SetMousePositionChanged(bool changed);
+    bool IsMousePositionChanged() const;
+
     /**
      * @brief Retrieve the cursor position for the current frame.
      *
@@ -95,10 +98,12 @@ public:
     [[nodiscard]] const vec2 GetMousePositionCurrent() const;
 
 private:
-    std::array<bool, 512> m_keys                 = {false};  ///< Pressed state for each GLFW key code.
-    std::array<bool, 16>  m_mouseKeys            = {false};  ///< Pressed state for each GLFW mouse button.
+    std::array<bool, 512> m_keys                 = {false};     ///< Pressed state for each GLFW key code.
+    std::array<bool, 16>  m_mouseKeys            = {false};     ///< Pressed state for each GLFW mouse button.
     vec2                  m_mousePositionOld     = vec2(0.0F);  ///< Cursor position at end of previous frame.
     vec2                  m_mousePositionCurrent = vec2(0.0F);  ///< Cursor position at end of current frame.
+
+    bool m_mousePositionChanged = false;
 
     friend class Engine;
 };

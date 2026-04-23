@@ -46,6 +46,7 @@ public:
     /// Returns the linear RGB colour of this light (default: white {1,1,1}).
     const vec3 &GetColor() const;
 
+    void LoadProperties(const nlohmann::json &json) override;
     /**
      * @brief Set the light's emission colour.
      * @param color Linear RGB values in [0, 1] (HDR values > 1 are allowed).

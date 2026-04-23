@@ -210,4 +210,10 @@ glm::quat AnimationComponent::Interpolate(const std::vector<KeyFrameQuat> &keys,
 
     return keys.back().value;
 }
+
+bool AnimationComponent::IsPlaying()
+{
+    return m_isPlaying;
+}
+
 }  // namespace COA

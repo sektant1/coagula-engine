@@ -47,6 +47,7 @@
 #include "io/FileReader.h"
 #include "io/FileSystem.h"
 #include "physics/Collider.h"
+#include "physics/KinematicCharacterController.h"
 #include "physics/PhysicsManager.h"
 #include "physics/RigidBody.h"
 #include "render/Builder.h"

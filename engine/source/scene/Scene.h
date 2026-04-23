@@ -37,6 +37,7 @@
 
 #include "Common.h"
 #include "Types.h"
+#include "nlohmann/json.hpp"
 #include "scene/GameObject.h"
 
 namespace COA
@@ -60,7 +61,8 @@ public:
      * @brief Update all root objects (which recursively update their children).
      * @param deltaTime Seconds since the previous frame.
      */
-    void Update(f32 deltaTime);
+    static void RegisterTypes();
+    void        Update(f32 deltaTime);
 
     /// Destroy all objects and reset the scene to an empty state.
     void Clear();
@@ -72,6 +74,7 @@ public:
      * @return Non-owning pointer to the new object.
      */
     GameObject *CreateObject(const std::string &name, GameObject *parent = nullptr);
+    GameObject *CreateObject(const std::string &type, const std::string &name, GameObject *parent = nullptr);
 
     /**
      * @brief Create a typed GameObject subclass owned by this scene.
@@ -120,11 +123,13 @@ public:
      *
      * @return Vector of LightData for all active lights in the scene.
      */
-    std::vector<LightData> CollectLight();
+    std::vector<LightData>        CollectLight();
+    static std::shared_ptr<Scene> Load(const str &path);
 
 private:
     /// Recursive DFS helper used by CollectLight().
     void CollectLightsRecursive(GameObject *obj, std::vector<LightData> &out);
+    void LoadObject(const nlohmann::json &jsonObject, GameObject *parent = nullptr);
 
 private:
     std::vector<std::unique_ptr<GameObject>> m_objects;  ///< All root-level objects (own the tree).
