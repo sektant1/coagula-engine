@@ -154,8 +154,6 @@ cmake --build build --target engine-docs
 # open docs/generated/html/index.html
 ```
 
-Site uses a CRT/terminal theme — see `docs/custom.css`.
-
 ## License
 
 Educational. No warranty.
