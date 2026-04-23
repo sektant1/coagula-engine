@@ -19,6 +19,9 @@
  * | input/InputManager.h       | Keyboard + mouse polling                       |
  * | io/FileReader.h            | Simple file reader utility                     |
  * | io/FileSystem.h            | Asset-relative path resolution                 |
+ * | physics/PhysicsManager.h   | Bullet world singleton + step                  |
+ * | physics/RigidBody.h        | Rigid body wrapper                             |
+ * | physics/Collider.h         | Collision shape wrapper                        |
  * | render/Builder.h           | MeshData factory helpers                       |
  * | render/Material.h          | Shader + uniform container                     |
  * | render/Mesh.h              | GPU mesh (VAO/VBO/EBO)                         |
@@ -43,6 +46,9 @@
 #include "input/InputManager.h"
 #include "io/FileReader.h"
 #include "io/FileSystem.h"
+#include "physics/Collider.h"
+#include "physics/PhysicsManager.h"
+#include "physics/RigidBody.h"
 #include "render/Builder.h"
 #include "render/Material.h"
 #include "render/Mesh.h"
@@ -54,4 +60,5 @@
 #include "scene/components/CameraComponent.h"
 #include "scene/components/LightComponent.h"
 #include "scene/components/MeshComponent.h"
+#include "scene/components/PhysicsComponent.h"
 #include "scene/components/PlayerControllerComponent.h"

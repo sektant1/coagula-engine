@@ -9,6 +9,7 @@
 #include "GLFW/glfw3.h"
 #include "Log.h"
 #include "graphics/GraphicsAPI.h"
+#include "physics/PhysicsManager.h"
 #include "render/RenderQueue.h"
 #include "scene/components/CameraComponent.h"
 
@@ -64,6 +65,10 @@ bool Engine::Init(int width, int height)
         return false;
     }
 
+#if defined(__linux__)
+    glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_X11);
+#endif
+
     if (glfwInit() == 0)
     {
         LOG_ERROR("Failed to initialize GLFW");
@@ -91,7 +96,7 @@ bool Engine::Init(int width, int height)
 
     glfwMakeContextCurrent(m_window);
 
-    glewExperimental = GL_TRUE;
+    glewExperimental  = GL_TRUE;
     GLenum glewStatus = glewInit();
 #ifdef GLEW_ERROR_NO_GLX_DISPLAY
     if (glewStatus == GLEW_ERROR_NO_GLX_DISPLAY)
@@ -105,10 +110,13 @@ bool Engine::Init(int width, int height)
         glfwTerminate();
         return false;
     }
-    while (glGetError() != GL_NO_ERROR) {}
+    while (glGetError() != GL_NO_ERROR)
+    {
+    }
     LOG_INFO("GLEW initialized (GL %s)", reinterpret_cast<const char *>(glGetString(GL_VERSION)));
 
     m_graphicsAPI.Init();
+    m_physicsManager.Init();
     bool appOk = m_application->Init();
     if (!appOk)
     {
@@ -139,6 +147,7 @@ void Engine::Run()
         float deltaTime = std::chrono::duration<float>(now - m_lastTimePoint).count();
         m_lastTimePoint = now;
 
+        m_physicsManager.Update(deltaTime);
         m_application->Update(deltaTime);
 
         m_graphicsAPI.SetClearColor(1.0F, 1.0F, 1.0F, 1.0F);
@@ -227,6 +236,11 @@ void Engine::SetScene(Scene *scene)
 TextureManager &Engine::GetTextureManager()
 {
     return m_textureManager;
+}
+
+PhysicsManager &Engine::GetPhysicsManager()
+{
+    return m_physicsManager;
 }
 
 Scene *Engine::GetScene()

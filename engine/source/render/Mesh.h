@@ -74,8 +74,10 @@ public:
     /// Creates a unit cube mesh (factory convenience, same as Builder::CreateCube).
     static std::shared_ptr<Mesh> CreateCube();
 
+    static std::shared_ptr<Mesh> CreateBox(const glm::vec3 &extents = glm::vec3(1.0f));
+
 private:
-    VertexLayout m_vertexLayout;      ///< Attribute layout used when setting up the VAO.
+    VertexLayout m_vertexLayout;  ///< Attribute layout used when setting up the VAO.
 
     GLuint m_VBO         = 0;  ///< Vertex Buffer Object — raw vertex data on the GPU.
     GLuint m_EBO         = 0;  ///< Element Buffer Object — index data (0 if non-indexed).

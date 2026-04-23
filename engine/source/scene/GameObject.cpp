@@ -105,6 +105,7 @@ void GameObject::AddComponent(Component *component)
     }
     m_components.emplace_back(component);
     component->m_owner = this;
+    component->Init();
     LOG_INFO("Component added to '%s' (total=%zu)", m_name.c_str(), m_components.size());
 }
 

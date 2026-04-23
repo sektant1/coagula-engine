@@ -35,6 +35,7 @@
 #include "graphics/Texture.h"
 #include "input/InputManager.h"
 #include "io/FileSystem.h"
+#include "physics/PhysicsManager.h"
 #include "render/RenderQueue.h"
 #include "scene/Scene.h"
 
@@ -117,6 +118,8 @@ public:
     /// Returns the TextureManager that caches loaded textures by path.
     TextureManager &GetTextureManager();
 
+    PhysicsManager &GetPhysicsManager();
+
     /**
      * @brief Replace the active scene (takes ownership).
      * @param scene Heap-allocated Scene. Previous scene is destroyed.
@@ -127,15 +130,17 @@ public:
     Scene *GetScene();
 
 private:
-    std::unique_ptr<Application>          m_application;    ///< The user game/lab instance.
-    std::chrono::steady_clock::time_point m_lastTimePoint;  ///< Timestamp of the previous frame.
-    GLFWwindow                           *m_window = nullptr; ///< GLFW window handle.
-    InputManager                          m_inputManager;   ///< Keyboard + mouse state.
-    GraphicsAPI                           m_graphicsAPI;    ///< GL wrapper (shaders, buffers, draw).
-    RenderQueue                           m_renderQueue;    ///< Per-frame render command list.
-    FileSystem                            m_fileSystem;     ///< Asset path resolver.
-    TextureManager                        m_textureManager; ///< Texture cache.
-    std::unique_ptr<Scene>                m_currentScene;   ///< Active scene graph.
+    std::unique_ptr<Application>          m_application;       ///< The user game/lab instance.
+    std::chrono::steady_clock::time_point m_lastTimePoint;     ///< Timestamp of the previous frame.
+    GLFWwindow                           *m_window = nullptr;  ///< GLFW window handle.
+    InputManager                          m_inputManager;      ///< Keyboard + mouse state.
+    GraphicsAPI                           m_graphicsAPI;       ///< GL wrapper (shaders, buffers, draw).
+    RenderQueue                           m_renderQueue;       ///< Per-frame render command list.
+    FileSystem                            m_fileSystem;        ///< Asset path resolver.
+    TextureManager                        m_textureManager;    ///< Texture cache.
+
+    PhysicsManager         m_physicsManager;
+    std::unique_ptr<Scene> m_currentScene;  ///< Active scene graph.
 };
 
 }  // namespace COA

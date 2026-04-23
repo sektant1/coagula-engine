@@ -21,8 +21,8 @@ BUILD_DIR="bin/$BUILD_TYPE"
 echo "Building in $BUILD_DIR..."
 
 # Configure and build
-cmake -B "$BUILD_DIR" -S . -DCMAKE_BUILD_TYPE="${BUILD_TYPE^}"  
-cmake --build "$BUILD_DIR"
+cmake -B "$BUILD_DIR" -S . -G Ninja -DCMAKE_BUILD_TYPE="${BUILD_TYPE^}"
+cmake --build "$BUILD_DIR" -j"$(nproc)"
 
 # Gets the binary name that cmake exports to
 source "$BUILD_DIR/build_config.sh"

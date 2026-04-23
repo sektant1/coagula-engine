@@ -61,6 +61,8 @@ public:
      */
     [[nodiscard]] virtual usize GetTypeId() const = 0;
 
+    virtual void Init();
+
     /// Returns the GameObject this component is attached to.
     GameObject *GetOwner();
 

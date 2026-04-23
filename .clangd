@@ -1,7 +1,15 @@
 CompileFlags:
+  Compiler: g++
   Add:
-    - -I/home/sektant1/Repos/paladin-engine/engine/thirdparty/cgltf
-    - -I/home/sektant1/Repos/paladin-engine/engine/thirdparty/stb_image
-    - -I/home/sektant1/Repos/paladin-engine/engine/thirdparty/json
-    - -I/home/sektant1/Repos/paladin-engine/engine/source
+    - -xc++
+    - -std=c++17
+    - -I/home/gfe/Personal/coagula-engine/source
+    - -I/home/gfe/Personal/coagula-engine/engine/source
+    - -I/home/gfe/Personal/coagula-engine/engine/thirdparty/glew/include
+    - -I/home/gfe/Personal/coagula-engine/engine/thirdparty/glfw-3.4/include
+    - -I/home/gfe/Personal/coagula-engine/engine/thirdparty/stb_image
+    - -I/home/gfe/Personal/coagula-engine/engine/thirdparty/cgltf
+    - -I/home/gfe/Personal/coagula-engine/engine/thirdparty/json
+    - -I/home/gfe/Personal/coagula-engine/engine/thirdparty/bullet/src
+    - -I/home/gfe/Personal/coagula-engine/build/engine_build
   CompilationDatabase: build
