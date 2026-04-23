@@ -17,6 +17,14 @@ Small educational C++17 game engine. OpenGL 3.3 Core, GLFW, GLEW, Bullet, glm.
 | Read keyboard / mouse                    | @ref coa_input, COA::InputManager       |
 | Look up a type alias (`vec3`, `f32`, …)  | @ref coa_types                          |
 
+## Project pages
+
+- @ref build — how to compile and run.
+- @ref layout — where each folder lives and what it holds.
+- @ref starting_point — the entrypoint and the `Application` hooks.
+- @ref build_docs — how this site is generated.
+- @ref license — terms for engine code, vendored libs, assets.
+
 ## Learn by task
 
 - @ref tutorials — step-by-step walks: hello window, first triangle, scenes, physics, FPS player.

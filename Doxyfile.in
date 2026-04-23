@@ -4,12 +4,17 @@ PROJECT_NUMBER         = "0.0.1"
 OUTPUT_DIRECTORY       = @CMAKE_SOURCE_DIR@/docs/generated
 INPUT                  = @CMAKE_SOURCE_DIR@/engine/source \
                          @CMAKE_SOURCE_DIR@/source \
-                         @CMAKE_SOURCE_DIR@/README.md \
+                         @CMAKE_SOURCE_DIR@/docs/homepage.md \
                          @CMAKE_SOURCE_DIR@/docs/overview.md \
+                         @CMAKE_SOURCE_DIR@/docs/build.md \
+                         @CMAKE_SOURCE_DIR@/docs/layout.md \
+                         @CMAKE_SOURCE_DIR@/docs/starting-point.md \
                          @CMAKE_SOURCE_DIR@/docs/tutorials.md \
                          @CMAKE_SOURCE_DIR@/docs/recipes.md \
-                         @CMAKE_SOURCE_DIR@/docs/guides.md
-USE_MDFILE_AS_MAINPAGE = @CMAKE_SOURCE_DIR@/README.md
+                         @CMAKE_SOURCE_DIR@/docs/guides.md \
+                         @CMAKE_SOURCE_DIR@/docs/building-docs.md \
+                         @CMAKE_SOURCE_DIR@/docs/license.md
+USE_MDFILE_AS_MAINPAGE = @CMAKE_SOURCE_DIR@/docs/homepage.md
 RECURSIVE              = YES
 FILE_PATTERNS          = *.h *.cpp *.md *.dox
 EXCLUDE_PATTERNS       = */thirdparty/* */build/* */bin/* */docs/generated/*
@@ -100,6 +105,8 @@ HTML_COLORSTYLE_GAMMA  = 100
 # Custom stylesheet — terminal.css aesthetic baked into Doxygen vars to avoid
 # selector conflicts with Doxygen's own layout/markdown rules.
 HTML_EXTRA_STYLESHEET  = @CMAKE_SOURCE_DIR@/docs/custom.css
+HTML_HEADER            = @CMAKE_SOURCE_DIR@/docs/header.html
+HTML_EXTRA_FILES       = @CMAKE_SOURCE_DIR@/docs/unescape-headings.js
 
 # Search — client-side full-text search over all documented symbols + files.
 SEARCHENGINE           = YES

@@ -1,140 +1,350 @@
-/* Coagula Engine docs — CRT/PS1/terminal aesthetic for Doxygen.
- * Pure variable overrides + scoped class selectors. No bare element
- * selectors (no body/h1/ul/li/pre) so markdown rendering stays intact. */
+/* Coagula Engine docs — dungeon / fantasy / torch-lit terminal.
+ * Terminal monospace body on dark stone, medieval display headings,
+ * torch-amber accents, carved borders, parchment-grained code tablets.
+ * Pure variable overrides + scoped selectors — no bare element rules. */
+
+@import url("https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&family=Fira+Code:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;700&family=Share+Tech+Mono&family=VT323&family=MedievalSharp&family=Cinzel:wght@500;700&family=UnifrakturMaguntia&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Uncial+Antiqua&family=Metamorphous&display=swap");
+
+/* Enchanted Land — freeware fantasy display face from Iconian Fonts.
+ * Not on Google Fonts. Drop EnchantedLand.ttf into docs/fonts/ and it
+ * will be copied to the generated site by Doxyfile's HTML_EXTRA_FILES.
+ * .woff2 is preferred if available; the .ttf fallback still works. */
+@font-face {
+    font-family: "Enchanted Land";
+    font-style: normal;
+    font-weight: normal;
+    font-display: swap;
+    src: url("fonts/EnchantedLand.woff2") format("woff2"),
+         url("fonts/EnchantedLand.ttf")   format("truetype");
+}
 
 html {
-    /* ---- palette: phosphor green on deep black, PS1 cyan accent ---- */
-    --page-background-color:           #0a0a0a;
-    --page-foreground-color:           #d4e8d4;
-    --page-secondary-foreground-color: #6c8a6c;
+    /* ============================================================
+     * Palette — goblin dungeon: dank stone, sickly moss, blood rust
+     * ============================================================ */
+    --page-background-color:           #0c0f0a;   /* dank stone, faint green shadow */
+    --page-foreground-color:           #e0dcb8;   /* brighter parchment for body */
+    --page-secondary-foreground-color: #8a8a68;   /* lichen ink */
 
-    --primary-color:         #6fdc8c;   /* phosphor green */
-    --primary-dark-color:    #3fa05f;
-    --primary-light-color:   #aef0bf;
-    --primary-lighter-color: #14241a;
-    --primary-lightest-color:#0e1a12;
+    --primary-color:         #8ba83d;   /* goblin moss */
+    --primary-dark-color:    #4a5a20;   /* deep moss */
+    --primary-light-color:   #c4d96a;   /* toxic glow */
+    --primary-lighter-color: #1a2112;
+    --primary-lightest-color:#121810;
 
-    --separator-color:      #1f2a1f;
-    --side-nav-background:  #060906;
+    --separator-color:      #23291a;
+    --side-nav-background:  #070906;
     --side-nav-foreground:  var(--page-foreground-color);
 
-    /* fragment = code blocks */
-    --fragment-background:  #050805;
-    --fragment-foreground:  #d4e8d4;
-    --fragment-keyword:     #ff79c6;   /* magenta */
-    --fragment-keywordtype: #8be9fd;   /* cyan */
-    --fragment-keywordflow: #ff79c6;
-    --fragment-token:       #f1fa8c;   /* amber string */
-    --fragment-comment:     #6c8a6c;
-    --fragment-link:        var(--primary-light-color);
-    --fragment-preprocessor:#ffb86c;
-    --fragment-linenumber-color:      #3a5a3a;
-    --fragment-linenumber-background: #050805;
-    --fragment-linenumber-border-color: #14241a;
+    /* secondary accent — dried blood / rust */
+    --accent-blood:         #8a2a1e;
+    --accent-blood-light:   #b04538;
 
-    --code-background:      #0d130d;
+    /* code tablets */
+    --fragment-background:  #080a07;
+    --fragment-foreground:  #c4c2a0;
+    --fragment-keyword:     #b04538;   /* blood rust */
+    --fragment-keywordtype: #6a9a8a;   /* corpse cyan */
+    --fragment-keywordflow: #b04538;
+    --fragment-token:       #b8a53a;   /* tarnished gold */
+    --fragment-comment:     #556048;   /* mildew */
+    --fragment-link:        var(--primary-light-color);
+    --fragment-preprocessor:#9a7a2a;
+    --fragment-linenumber-color:      #3e4a2a;
+    --fragment-linenumber-background: #080a07;
+    --fragment-linenumber-border-color: #1a2112;
+
+    --code-background:      #131810;
     --code-foreground:      var(--primary-light-color);
 
-    --tablehead-background: #0d130d;
+    --tablehead-background: #131810;
     --tablehead-foreground: var(--primary-color);
-    --blockquote-background:#0d130d;
+    --blockquote-background:#131810;
     --blockquote-foreground:var(--page-secondary-foreground-color);
     --blockquote-borderColor:var(--primary-color);
 
-    --memdef-border-color:       #1f2a1f;
-    --memdef-title-background:   #0d130d;
+    --memdef-border-color:       #23291a;
+    --memdef-title-background:   #131810;
     --memdef-title-foreground:   var(--primary-color);
-    --memdef-proto-background:   #0a120a;
+    --memdef-proto-background:   #0f130c;
     --memdef-proto-text-color:   var(--primary-light-color);
     --memdef-doc-background:     var(--page-background-color);
-    --memdef-param-name-color:   #f1fa8c;
+    --memdef-param-name-color:   #b8a53a;
 
-    --warning-color-bg: #2a1f10;
-    --warning-color-hl: #ffb86c;
-    --note-color-bg:    #0a1f1a;
-    --note-color-hl:    #8be9fd;
+    --warning-color-bg: #200a06;
+    --warning-color-hl: #b04538;
+    --note-color-bg:    #0e1208;
+    --note-color-hl:    #8ba83d;
 
-    /* ---- typography: pixel-friendly mono stack ---- */
-    --font-family-normal:    "Menlo","Consolas","Liberation Mono","DejaVu Sans Mono","Courier New",monospace;
-    --font-family-monospace: var(--font-family-normal);
-    --page-font-size:        14px;
-    --code-font-size:        13px;
+    /* ============================================================
+     * Typography — terminal body, medieval display
+     *
+     * Ranked fallback stacks. Swap the *first* entry in any stack to
+     * re-theme the whole site. Every name listed is loaded from
+     * Google Fonts at the top of this file, so any of them can be
+     * promoted to first position with no further setup.
+     *
+     *   Monospace candidates (code + body):
+     *     "Fira Mono"         — clean, readable, default
+     *     "Fira Code"         — Fira Mono with programming ligatures
+     *     "JetBrains Mono"    — slightly wider, strong italic
+     *     "IBM Plex Mono"     — corporate-classic, great at small sizes
+     *     "Share Tech Mono"   — hacker-terminal flavour
+     *     "VT323"             — pixel CRT, very retro
+     *
+     *   Display candidates (headings, titles, tabs):
+     *     "MedievalSharp"     — inky medieval, default
+     *     "Cinzel"            — Roman inscription capitals
+     *     "UnifrakturMaguntia"— full blackletter / gothic
+     *     "IM Fell English SC"— old-press small caps
+     *     "IM Fell English"   — old-press body-weight
+     *     "Uncial Antiqua"    — Celtic uncial
+     *     "Metamorphous"      — fantasy-game display
+     * ============================================================ */
+    --font-family-monospace: "Fira Mono","Fira Code","JetBrains Mono","IBM Plex Mono","Share Tech Mono","VT323","Menlo","Consolas","Liberation Mono",monospace;
+    --font-family-normal:    "IM Fell English","IM Fell English SC","MedievalSharp","Metamorphous","Palatino Linotype","Book Antiqua",Georgia,serif;
+    --font-family-display:   "Enchanted Land","UnifrakturMaguntia","Uncial Antiqua","MedievalSharp","Metamorphous",Georgia,serif;
+    /* More readable secondary medieval for sub-headings */
+    --font-family-subheading:"Enchanted Land","MedievalSharp","Metamorphous","Cinzel","IM Fell English SC",Georgia,serif;
+    --page-font-size:        18px;
+    --code-font-size:        14.5px;
 }
 
-/* ---- header bar: phosphor underline ---- */
-#projectname {
-    color: var(--primary-color);
-    letter-spacing: 1px;
-    text-shadow: 0 0 2px rgba(111, 220, 140, 0.35);
+/* Apply the body font globally where Doxygen doesn't use the variable,
+ * with readability-friendly line-height + spacing. */
+body, p, li, td, th, dd, dt, .contents, .textblock, .memdoc, .fieldtable,
+.directory, .navpath, #nav-tree {
+    font-family: var(--font-family-normal);
+    line-height: 1.65;
 }
-#projectname::before { content: "$ "; color: var(--page-secondary-foreground-color); }
-#projectbrief { color: var(--page-secondary-foreground-color); }
+p, li, dd, .textblock, .memdoc {
+    color: var(--page-foreground-color);
+}
+p  { margin: 0.85em 0; }
+ul, ol { margin: 0.85em 0; padding-left: 1.6em; }
+li { margin: 0.25em 0; }
+
+/* ============================================================
+ * Global — parchment grain over stone
+ * ============================================================ */
+body, #top, .contents, #doc-content {
+    background-color: var(--page-background-color);
+    background-image:
+        /* torch glow top-left */
+        radial-gradient(ellipse at top left,  rgba(139,168,61,0.07), transparent 45%),
+        radial-gradient(ellipse at bottom right, rgba(74,90,32,0.05), transparent 55%),
+        /* parchment fibre noise */
+        repeating-linear-gradient(
+            45deg,
+            rgba(196,194,160,0.015) 0px,
+            rgba(196,194,160,0.015) 1px,
+            transparent 1px,
+            transparent 3px
+        ),
+        repeating-linear-gradient(
+            -45deg,
+            rgba(0,0,0,0.05) 0px,
+            rgba(0,0,0,0.05) 1px,
+            transparent 1px,
+            transparent 4px
+        );
+}
+
+/* ============================================================
+ * Title bar — engraved doorplate with torches
+ * ============================================================ */
 #titlearea {
-    border-bottom: 1px solid var(--primary-color);
-    box-shadow: 0 0 8px rgba(111, 220, 140, 0.15);
+    border-top: 2px solid var(--primary-dark-color);
+    border-bottom: 2px solid var(--primary-color);
+    box-shadow:
+        0 0 24px rgba(139,168,61,0.18),
+        inset 0 0 40px rgba(0,0,0,0.7);
+    background:
+        linear-gradient(180deg, #161d0e 0%, #0e1209 100%);
+    position: relative;
+}
+#titlearea::before,
+#titlearea::after {
+    content: "❧";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary-color);
+    font-size: 20px;
+    opacity: 0.6;
+    text-shadow: 0 0 6px rgba(139,168,61,0.5);
+}
+#titlearea::before { left: 18px; }
+#titlearea::after  { right: 18px; content: "☙"; }
+
+#projectname {
+    font-family: var(--font-family-display);
+    font-weight: 700;
+    color: var(--primary-light-color);
+    letter-spacing: 2px;
+    text-shadow:
+        0 0 6px rgba(139,168,61,0.55),
+        0 0 2px rgba(196,217,106,0.7),
+        2px 2px 0 rgba(0,0,0,0.8);
+}
+#projectname::before {
+    content: "☠ ";
+    color: var(--primary-color);
+    opacity: 0.85;
+}
+#projectname::after {
+    content: " ☠";
+    color: var(--primary-color);
+    opacity: 0.85;
+}
+#projectbrief {
+    font-family: var(--font-family-normal);
+    color: var(--page-secondary-foreground-color);
+    font-style: italic;
 }
 
-/* ---- main content frame ---- */
-div.contents { max-width: 1100px; margin: 0 auto; }
+/* ============================================================
+ * Headings — illuminated manuscript.
+ *
+ * h1 / page title use the blackletter display face (striking but hard
+ * to read in long text); h2–h4 drop to MedievalSharp which is far
+ * more legible at small sizes while keeping the medieval flavour.
+ * ============================================================ */
+h1, .title, div.header .title {
+    font-family: var(--font-family-display) !important;
+    color: var(--primary-light-color) !important;
+    letter-spacing: 1px;
+    line-height: 1.25;
+    text-shadow:
+        0 0 6px rgba(139,168,61,0.3),
+        1px 1px 0 rgba(0,0,0,0.6);
+    border: none;
+    margin: 1.2em 0 0.6em;
+}
+h2, h2.groupheader, h3, h4, h5, h6 {
+    font-family: var(--font-family-subheading) !important;
+    color: var(--primary-light-color) !important;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
+    text-shadow:
+        0 0 3px rgba(139,168,61,0.25),
+        1px 1px 0 rgba(0,0,0,0.55);
+    border: none;
+    margin: 1.5em 0 0.5em;
+}
+h1 {
+    border-bottom: 2px double var(--primary-color) !important;
+    padding-bottom: 8px;
+    font-size: 2.2em;
+}
+h2, h2.groupheader {
+    border-bottom: 1px solid var(--primary-dark-color) !important;
+    padding-bottom: 5px;
+    font-size: 1.55em;
+}
+h3 { font-size: 1.25em; color: var(--primary-color) !important; }
+h4 { font-size: 1.08em; color: var(--primary-color) !important; }
+h1::before { content: "⚔ "; color: var(--primary-color); opacity: 0.85; }
+h2::before { content: "† ";  color: var(--primary-color); opacity: 0.75; }
+h3::before { content: "▸ ";  color: var(--primary-dark-color); opacity: 0.8; }
 
-/* ---- sidebar: deep black, no rounding ---- */
+/* unescape-headings.js rewrites escaped <tt> → <code>; style those pills
+ * within headings to keep the medieval feel without shouting */
+h1 code, h2 code, h3 code, h4 code, .title code {
+    font-family: var(--font-family-monospace);
+    font-size: 0.75em;
+    background: #18200e;
+    border: 1px solid var(--primary-dark-color);
+    color: var(--primary-color);
+    padding: 1px 8px;
+    text-shadow: none;
+    vertical-align: 2px;
+}
+
+/* ============================================================
+ * Main content frame
+ * ============================================================ */
+div.contents {
+    max-width: 960px;      /* ~75 chars of body text — easier on the eyes */
+    margin: 0 auto;
+    padding: 10px 32px 48px;
+}
+/* Readable measure for prose blocks */
+.textblock p, .memdoc p { max-width: 75ch; }
+
+/* ============================================================
+ * Sidebar tree — dungeon scroll
+ * ============================================================ */
+#side-nav, #nav-tree {
+    background-color: var(--side-nav-background);
+    border-right: 2px solid var(--separator-color);
+}
+#nav-tree {
+    background-image:
+        linear-gradient(180deg, rgba(139,168,61,0.04), transparent 200px);
+}
+#nav-tree { font-size: 15px; line-height: 1.55; }
+#nav-tree .item { color: var(--page-foreground-color); padding: 2px 0; }
 #nav-tree .selected {
     background-image: none;
     background-color: var(--primary-lighter-color);
-    color: var(--primary-color);
-    border-left: 2px solid var(--primary-color);
+    color: var(--primary-light-color);
+    border-left: 3px solid var(--primary-color);
+    box-shadow: inset 0 0 12px rgba(139,168,61,0.12);
 }
 #nav-tree .item:hover { color: var(--primary-light-color); }
+#nav-tree .arrow { color: var(--primary-dark-color); }
 
 /* ============================================================
- * CODE BLOCKS — the centerpiece. CRT inset, scanlines, prompt.
+ * Code tablets — engraved stone with rune glow
  * ============================================================ */
-
 div.fragment, pre.fragment {
     background: var(--fragment-background);
-    border: 1px solid var(--separator-color);
-    border-left: 2px solid var(--primary-color);
+    border: 1px solid var(--primary-dark-color);
+    border-left: 3px solid var(--primary-color);
     border-radius: 0;
-    padding: 14px 16px 14px 16px;
-    margin: 12px 0;
+    padding: 14px 16px;
+    margin: 14px 0;
     position: relative;
-    /* subtle CRT scanlines + inner glow */
     background-image:
+        /* torch flicker on top-left */
+        radial-gradient(ellipse at top left, rgba(139,168,61,0.08), transparent 50%),
+        /* horizontal carving lines */
         repeating-linear-gradient(
             to bottom,
-            rgba(111, 220, 140, 0.025) 0px,
-            rgba(111, 220, 140, 0.025) 1px,
+            rgba(139,168,61,0.02) 0px,
+            rgba(139,168,61,0.02) 1px,
             transparent 1px,
-            transparent 3px
+            transparent 4px
         );
     box-shadow:
-        inset 0 0 24px rgba(111, 220, 140, 0.06),
-        inset 0 0 0 1px rgba(0, 0, 0, 0.6);
+        inset 0 0 20px rgba(0,0,0,0.8),
+        0 0 12px rgba(139,168,61,0.08),
+        0 2px 0 rgba(0,0,0,0.6);
     overflow-x: auto;
 }
-
-/* corner brackets — TTY frame feel, no extra DOM */
+/* carved corners */
 div.fragment::before,
 div.fragment::after {
     content: "";
     position: absolute;
-    width: 8px; height: 8px;
+    width: 10px; height: 10px;
     border-color: var(--primary-color);
     border-style: solid;
     pointer-events: none;
-    opacity: 0.7;
+    opacity: 0.75;
 }
-div.fragment::before { top: -1px; right: -1px; border-width: 1px 1px 0 0; }
-div.fragment::after  { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
+div.fragment::before { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+div.fragment::after  { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
 
-/* code text glow, mild — keeps it readable */
-div.fragment .line,
-pre.fragment {
-    text-shadow: 0 0 1px rgba(212, 232, 212, 0.35);
-    line-height: 1.5em;
+div.fragment .line, pre.fragment {
+    font-family: var(--font-family-monospace);
+    text-shadow: none;            /* glow hurt small-text legibility */
+    line-height: 1.55;
+    letter-spacing: 0.2px;
+    color: var(--fragment-foreground);
 }
 
-/* line numbers as gutter */
 .fragment .lineno {
     color: var(--fragment-linenumber-color);
     border-right: 1px solid var(--fragment-linenumber-border-color);
@@ -144,7 +354,6 @@ pre.fragment {
 }
 .fragment .lineno a { color: var(--fragment-linenumber-color) !important; }
 
-/* token colors */
 .fragment .keyword,
 .fragment .keywordflow   { color: var(--fragment-keyword); font-weight: 700; }
 .fragment .keywordtype   { color: var(--fragment-keywordtype); }
@@ -152,44 +361,53 @@ pre.fragment {
 .fragment .comment       { color: var(--fragment-comment); font-style: italic; }
 .fragment .preprocessor  { color: var(--fragment-preprocessor); }
 
-/* inline code: pill with bracket */
+/* inline code — rune-stamped tag */
 code, tt, .tt {
     background: var(--code-background);
     color: var(--code-foreground);
-    border: 1px solid var(--separator-color);
-    border-radius: 0;
-    padding: 0 6px;
+    border: 1px solid var(--primary-dark-color);
+    border-radius: 2px;
+    padding: 1px 6px;
     font-family: var(--font-family-monospace);
-    font-size: 0.92em;
+    font-size: 0.82em;       /* Fira Mono reads big next to serif body */
+    text-shadow: none;
+    vertical-align: 1px;
 }
 
-/* ---- member items: ASCII-box look ---- */
+/* ============================================================
+ * Member items — spellbook entries
+ * ============================================================ */
 div.memitem {
-    border: 1px solid var(--separator-color);
+    border: 1px solid var(--primary-dark-color);
     border-radius: 0 !important;
-    margin: 14px 0;
-    box-shadow: 0 0 0 1px rgba(0,0,0,0.5);
+    margin: 18px 0;
+    box-shadow:
+        0 0 0 1px #0e1209,
+        0 0 8px rgba(139,168,61,0.08);
     overflow: hidden;
+    background: #0d1009;
 }
 div.memproto, .memtitle {
     border-radius: 0 !important;
     text-shadow: none !important;
     box-shadow: none !important;
     border: none !important;
-    border-bottom: 1px dashed var(--separator-color) !important;
+    border-bottom: 1px solid var(--primary-dark-color) !important;
+    background: linear-gradient(180deg, #161d0e, #0e1209) !important;
+    color: var(--primary-color) !important;
 }
 div.memproto::before {
-    content: "▌ ";
+    content: "❦ ";
     color: var(--primary-color);
-    opacity: 0.8;
+    opacity: 0.85;
 }
 div.memdoc {
     border-radius: 0 !important;
     box-shadow: none !important;
     border: none !important;
+    padding-top: 10px;
 }
 
-/* member labels (static/inline/etc) */
 span.mlabel {
     background: var(--primary-lighter-color);
     color: var(--primary-color);
@@ -197,52 +415,140 @@ span.mlabel {
     border-radius: 0;
     text-shadow: none;
     padding: 1px 6px;
+    font-family: var(--font-family-monospace);
+    font-size: 0.85em;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
-/* ---- search box ---- */
+/* ============================================================
+ * Search box — engraved keystone
+ * ============================================================ */
 #MSearchBox {
     min-width: 220px;
     border: 1px solid var(--primary-color);
     border-radius: 0;
-    box-shadow: 0 0 6px rgba(111,220,140,0.2);
-    background: #050805;
+    box-shadow:
+        0 0 8px rgba(139,168,61,0.25),
+        inset 0 0 6px rgba(0,0,0,0.6);
+    background: #060805;
 }
 #MSearchBox .left, #MSearchBox .right { background: transparent; }
-#MSearchField { color: var(--primary-light-color); }
-#MSearchField::placeholder { color: var(--page-secondary-foreground-color); }
+#MSearchField {
+    color: var(--primary-light-color);
+    font-family: var(--font-family-monospace);
+}
+#MSearchField::placeholder {
+    color: var(--page-secondary-foreground-color);
+    font-style: italic;
+}
 
-/* ---- tab strip: TTY menu ---- */
+/* ============================================================
+ * Tab strip — iron-bound menu
+ * ============================================================ */
+.tabs, .tabs2, .tabs3 {
+    background-image: none;
+    background-color: #0d1009;
+    border-bottom: 1px solid var(--primary-dark-color);
+}
+.tablist li a {
+    font-family: var(--font-family-display);
+    letter-spacing: 1px;
+    text-shadow: none;
+    color: var(--page-secondary-foreground-color) !important;
+    border-bottom: 2px solid transparent;
+    text-transform: uppercase;
+    font-size: 0.95em;
+}
 .tablist li.current a {
     background-image: none;
     background-color: var(--primary-lighter-color);
-    color: var(--primary-color) !important;
-    text-shadow: none;
+    color: var(--primary-light-color) !important;
+    text-shadow: 0 0 4px rgba(139,168,61,0.4);
     border-bottom: 2px solid var(--primary-color);
-}
-.tablist li a {
-    text-shadow: none;
-    border-bottom: 2px solid transparent;
 }
 .tablist li a:hover {
     color: var(--primary-light-color) !important;
     background-image: none;
 }
 
-/* ---- tables ---- */
+/* ============================================================
+ * Tables — scroll ledger
+ * ============================================================ */
+table.markdownTable, table.doxtable, table.fieldtable {
+    border-collapse: collapse;
+    border: 1px solid var(--primary-dark-color);
+    box-shadow: 0 0 8px rgba(139,168,61,0.05);
+}
 table.markdownTable th,
 table.doxtable th,
 table.fieldtable th {
     background: var(--tablehead-background);
     color: var(--tablehead-foreground);
-    border: 1px solid var(--separator-color);
+    border: 1px solid var(--primary-dark-color);
+    font-family: var(--font-family-display);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 0.95em;
+    padding: 6px 12px;
 }
 table.markdownTable td,
 table.doxtable td,
 table.fieldtable td {
     border: 1px solid var(--separator-color);
+    padding: 7px 14px;
+    line-height: 1.5;
+}
+table.markdownTable tr:nth-child(even) td,
+table.doxtable tr:nth-child(even) td {
+    background: rgba(139,168,61,0.03);
 }
 
-/* ---- selection: phosphor highlight ---- */
+/* ============================================================
+ * Links — rune glow, underlined for readability
+ * ============================================================ */
+a, a:visited {
+    color: var(--primary-light-color);
+    text-decoration: none;
+    border-bottom: 1px solid var(--primary-dark-color);
+}
+a:hover {
+    color: #e3f0a8;
+    border-bottom-color: var(--primary-color);
+    text-shadow: 0 0 4px rgba(196,217,106,0.35);
+}
+/* Don't underline links inside headings — the heading has its own rule */
+h1 a, h2 a, h3 a, h4 a, h5 a { border-bottom: none; }
+
+/* ============================================================
+ * Notes / warnings — bordered scrolls
+ * ============================================================ */
+dl.note, dl.warning, dl.attention {
+    border-left: 3px solid var(--primary-color);
+    background: rgba(139,168,61,0.05);
+    padding: 8px 14px;
+    margin: 12px 0;
+    border-radius: 0 !important;
+}
+dl.warning, dl.attention {
+    border-left-color: var(--warning-color-hl);
+    background: rgba(176,69,56,0.1);
+}
+
+/* ============================================================
+ * Scrollbar — iron rail
+ * ============================================================ */
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: #060805; }
+::-webkit-scrollbar-thumb {
+    background: var(--primary-dark-color);
+    border: 2px solid #060805;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--primary-color); }
+
+/* ============================================================
+ * Selection — torch highlight
+ * ============================================================ */
 ::selection {
     background: var(--primary-color);
     color: var(--page-background-color);
