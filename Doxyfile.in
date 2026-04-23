@@ -109,7 +109,7 @@ SEARCH_INCLUDES        = YES
 # as SVGs when Graphviz is installed and degrade gracefully otherwise.
 # ----------------------------------------------------------------
 # Set HAVE_DOT = YES after installing Graphviz to get inheritance / include graphs.
-HAVE_DOT               = NO
+HAVE_DOT               = YES
 DOT_NUM_THREADS        = 0
 CLASS_GRAPH            = YES
 COLLABORATION_GRAPH    = YES
