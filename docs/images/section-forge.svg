@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 180" role="img" aria-labelledby="forge-title forge-desc">
+  <title id="forge-title">PLACEHOLDER — Hero's Forge (Tutorials section)</title>
+  <desc id="forge-desc">Sir Dan's sword on an anvil by a glowing forge. Replace with final section art.</desc>
+  <defs>
+    <radialGradient id="fireGlow" cx="30%" cy="60%" r="40%">
+      <stop offset="0%" stop-color="#ffb648"/>
+      <stop offset="60%" stop-color="#c43a3a" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#c43a3a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="480" height="180" fill="#0e0b1c"/>
+  <!-- forge glow -->
+  <rect width="480" height="180" fill="url(#fireGlow)"/>
+  <!-- forge stone arch -->
+  <path d="M50,180 L50,100 Q50,70 120,70 Q190,70 190,100 L190,180 Z" fill="#1a1430" stroke="#3a2f5c" stroke-width="1.5"/>
+  <!-- fire -->
+  <g fill="#ffb648">
+    <path d="M90,150 Q100,120 110,150 Q120,125 130,150 Q140,130 150,150 Z"/>
+  </g>
+  <g fill="#c43a3a">
+    <path d="M95,150 Q105,135 115,150 Q125,140 135,150 Q142,138 148,150 Z"/>
+  </g>
+  <!-- anvil -->
+  <g fill="#2a2140" stroke="#eae6d3" stroke-width="0.8">
+    <rect x="260" y="130" width="100" height="16"/>
+    <polygon points="260,130 250,120 260,120"/>
+    <polygon points="360,130 370,120 360,120"/>
+    <rect x="290" y="146" width="40" height="24"/>
+  </g>
+  <!-- sword on anvil -->
+  <g>
+    <rect x="278" y="125" width="120" height="4" fill="#c0c8d8"/>
+    <polygon points="398,125 414,127 398,129" fill="#eae6d3"/>
+    <rect x="270" y="123" width="10" height="8" fill="#8a6f2a"/>
+    <rect x="266" y="121" width="4" height="12" fill="#6fe07a"/>
+  </g>
+  <!-- sparks -->
+  <g fill="#ffd988">
+    <circle cx="130" cy="80"  r="1.4"/>
+    <circle cx="150" cy="60"  r="1"/>
+    <circle cx="170" cy="95"  r="1.2"/>
+    <circle cx="100" cy="55"  r="1"/>
+  </g>
+  <rect x="0" y="170" width="480" height="10" fill="#05040c"/>
+</svg>

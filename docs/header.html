@@ -23,8 +23,15 @@ $darkmode
 <link href="$relpath^$stylesheet" rel="stylesheet" type="text/css" />
 $extrastylesheet
 <script type="text/javascript" src="$relpath^unescape-headings.js"></script>
+<script type="text/javascript" src="$relpath^torch-flicker.js" defer></script>
+<script type="text/javascript" src="$relpath^fog-layer.js" defer></script>
+<script type="text/javascript" src="$relpath^rune-reveal.js" defer></script>
+<script type="text/javascript" src="$relpath^forge-spark.js" defer></script>
+<script type="text/javascript" src="$relpath^anvil-copy.js" defer></script>
+<script type="text/javascript" src="$relpath^hearth-scroll.js" defer></script>
 </head>
 <body>
+<div class="coa-fog" aria-hidden="true"></div>
 <!--BEGIN DISABLE_INDEX-->
   <!--BEGIN FULL_SIDEBAR-->
 <div id="side-nav" class="ui-resizable side-nav-resizable"><!-- do not remove this div, it is closed by doxygen! -->
@@ -35,6 +42,8 @@ $extrastylesheet
 
 <!--BEGIN TITLEAREA-->
 <div id="titlearea">
+<!-- <div class="coa-torch coa-torch--left"  aria-hidden="true"></div> -->
+<!-- <div class="coa-torch coa-torch--right" aria-hidden="true"></div> -->
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr id="projectrow">

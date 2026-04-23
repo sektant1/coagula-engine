@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="sigil-title">
+  <title id="sigil-title">PLACEHOLDER — Coagula sigil (skull and crossed bones)</title>
+  <g fill="#eae6d3" stroke="#6fe07a" stroke-width="0.8">
+    <!-- crossbones -->
+    <g transform="rotate(45 32 32)">
+      <rect x="8" y="29" width="48" height="6" rx="3"/>
+      <circle cx="8"  cy="32" r="4"/>
+      <circle cx="56" cy="32" r="4"/>
+    </g>
+    <g transform="rotate(-45 32 32)">
+      <rect x="8" y="29" width="48" height="6" rx="3"/>
+      <circle cx="8"  cy="32" r="4"/>
+      <circle cx="56" cy="32" r="4"/>
+    </g>
+    <!-- skull -->
+    <path d="M32,12 C22,12 16,20 16,28 C16,34 18,37 20,39 L20,46 C20,48 22,50 24,50 L26,50 L26,44 L30,44 L30,50 L34,50 L34,44 L38,50 L40,50 C42,50 44,48 44,46 L44,39 C46,37 48,34 48,28 C48,20 42,12 32,12 Z" fill="#eae6d3"/>
+    <!-- eye sockets glowing green -->
+    <ellipse cx="26" cy="28" rx="3.5" ry="4.5" fill="#0a0818"/>
+    <ellipse cx="38" cy="28" rx="3.5" ry="4.5" fill="#0a0818"/>
+    <circle cx="26" cy="28" r="1.6" fill="#6fe07a"/>
+    <circle cx="38" cy="28" r="1.6" fill="#6fe07a"/>
+    <!-- nose -->
+    <path d="M32,32 L30,36 L34,36 Z" fill="#0a0818"/>
+    <!-- teeth -->
+    <path d="M26,40 L38,40 L38,43 L36,43 L36,41 L34,41 L34,43 L32,43 L32,41 L30,41 L30,43 L28,43 L28,41 L26,41 Z" fill="#0a0818"/>
+  </g>
+</svg>

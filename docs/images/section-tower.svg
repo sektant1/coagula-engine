@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 180" role="img" aria-labelledby="tower-title tower-desc">
+  <title id="tower-title">PLACEHOLDER — Zarok's Tower (API Overview section)</title>
+  <desc id="tower-desc">Gothic wizard tower silhouette against purple sky with lightning. Replace with final section art.</desc>
+  <defs>
+    <linearGradient id="tsky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a0c36"/>
+      <stop offset="100%" stop-color="#0a0818"/>
+    </linearGradient>
+  </defs>
+  <rect width="480" height="180" fill="url(#tsky)"/>
+  <!-- lightning -->
+  <path d="M80,10 L90,50 L75,55 L95,110 L80,70 L100,65 Z" fill="#c4b8ff" opacity="0.85"/>
+  <!-- moon -->
+  <circle cx="400" cy="40" r="22" fill="#f4eed6" opacity="0.9"/>
+  <!-- tower base -->
+  <rect x="200" y="90" width="80" height="90" fill="#1a1430" stroke="#3a2f5c" stroke-width="1.5"/>
+  <!-- tower shaft -->
+  <rect x="215" y="40" width="50" height="60" fill="#1a1430" stroke="#3a2f5c" stroke-width="1.5"/>
+  <!-- battlements -->
+  <g fill="#1a1430">
+    <rect x="215" y="30" width="8" height="10"/>
+    <rect x="231" y="30" width="8" height="10"/>
+    <rect x="247" y="30" width="8" height="10"/>
+    <rect x="195" y="80" width="8" height="10"/>
+    <rect x="211" y="80" width="8" height="10"/>
+    <rect x="261" y="80" width="8" height="10"/>
+    <rect x="277" y="80" width="8" height="10"/>
+  </g>
+  <!-- windows glowing green -->
+  <g fill="#6fe07a">
+    <rect x="230" y="55" width="6" height="12"/>
+    <rect x="244" y="55" width="6" height="12"/>
+    <rect x="225" y="110" width="10" height="18"/>
+    <rect x="245" y="110" width="10" height="18"/>
+  </g>
+  <!-- door -->
+  <path d="M230,180 L230,150 Q230,140 240,140 Q250,140 250,150 L250,180 Z" fill="#05040c" stroke="#3a2f5c"/>
+  <!-- bats -->
+  <g fill="#eae6d3" opacity="0.7">
+    <path d="M140,60 q4,-4 8,0 q4,-4 8,0 l-4,3 l-4,-1 l-4,1 Z"/>
+    <path d="M330,80 q3,-3 6,0 q3,-3 6,0 l-3,2 l-3,-1 l-3,1 Z"/>
+  </g>
+  <!-- ground -->
+  <rect x="0" y="170" width="480" height="10" fill="#05040c"/>
+</svg>

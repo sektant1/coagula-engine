@@ -95,18 +95,28 @@ DISABLE_INDEX          = NO
 FULL_SIDEBAR           = NO
 TREEVIEW_WIDTH         = 280
 
-# Theme — terminal.css aesthetic (monospace, high-contrast, dark TTY).
-# Base Doxygen colorstyle is DARK; terminal.css + custom.css repaint everything.
+# Theme — forge & deep-hall (see docs/custom.css).
+# Base Doxygen colorstyle is DARK; custom.css repaints everything.
 HTML_COLORSTYLE        = DARK
-HTML_COLORSTYLE_HUE    = 120
-HTML_COLORSTYLE_SAT    = 30
+HTML_COLORSTYLE_HUE    = 32
+HTML_COLORSTYLE_SAT    = 80
 HTML_COLORSTYLE_GAMMA  = 100
 
-# Custom stylesheet — terminal.css aesthetic baked into Doxygen vars to avoid
-# selector conflicts with Doxygen's own layout/markdown rules.
-HTML_EXTRA_STYLESHEET  = @CMAKE_SOURCE_DIR@/docs/custom.css
+# Custom stylesheet — forge & deep-hall theme baked into Doxygen vars to
+# avoid selector conflicts with Doxygen's own layout/markdown rules.
+HTML_EXTRA_STYLESHEET  = @CMAKE_SOURCE_DIR@/docs/custom.css \
+                         @CMAKE_SOURCE_DIR@/docs/header-fix.css
 HTML_HEADER            = @CMAKE_SOURCE_DIR@/docs/header.html
-HTML_EXTRA_FILES       = @CMAKE_SOURCE_DIR@/docs/unescape-headings.js
+HTML_EXTRA_FILES       = @CMAKE_SOURCE_DIR@/docs/unescape-headings.js \
+                         @CMAKE_SOURCE_DIR@/docs/torch-flicker.js \
+                         @CMAKE_SOURCE_DIR@/docs/fog-layer.js \
+                         @CMAKE_SOURCE_DIR@/docs/rune-reveal.js \
+                         @CMAKE_SOURCE_DIR@/docs/forge-spark.js \
+                         @CMAKE_SOURCE_DIR@/docs/anvil-copy.js \
+                         @CMAKE_SOURCE_DIR@/docs/hearth-scroll.js
+
+# Image path — kept for future @image html references.
+IMAGE_PATH             = @CMAKE_SOURCE_DIR@/docs/images
 
 # Search — client-side full-text search over all documented symbols + files.
 SEARCHENGINE           = YES
