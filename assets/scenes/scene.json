@@ -21,6 +21,36 @@
       ]
     },
     {
+      "name": "Ground2",
+      "position": { "x": 0, "y": -50, "z": 0 },
+      "components": [
+        {
+          "type": "MeshComponent",
+          "mesh": {
+            "type": "box",
+            "x": 200,
+            "y": 2,
+            "z": 200
+          },
+          "material": "materials/brick.mat"
+        },
+        {
+          "type": "PhysicsComponent",
+          "collider": {
+            "type": "box",
+            "x": 200,
+            "y": 2,
+            "z": 200
+          },
+          "body": {
+            "mass": 0,
+            "friction": 0.5,
+            "type": "static"
+          }
+        }
+      ]
+    },
+    {
       "name": "Ground",
       "position": { "x": 0, "y": -5, "z": 0 },
       "components": [
@@ -46,6 +76,37 @@
             "mass": 0,
             "friction": 0.5,
             "type": "static"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ObjectCollide2",
+      "position": { "x": 6, "y": 7, "z": 2 },
+      "rotation": { "x": 1, "y": 2, "z": 0, "w": 1 },
+      "components": [
+        {
+          "type": "MeshComponent",
+          "mesh": {
+            "type": "box",
+            "x": 1,
+            "y": 1,
+            "z": 1
+          },
+          "material": "materials/brick.mat"
+        },
+        {
+          "type": "PhysicsComponent",
+          "collider": {
+            "type": "box",
+            "x": 1,
+            "y": 1,
+            "z": 1
+          },
+          "body": {
+            "mass": 5,
+            "friction": 0.5,
+            "type": "dynamic"
           }
         }
       ]

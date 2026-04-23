@@ -17,8 +17,8 @@ CMake also writes `compile_commands.json` for `clangd`.
 
 ```
 source/            app entrypoint + sandbox (Game, Player, main.cpp)
-engine/source/     engine library (Engine, Scene, render, physics, input, io)
 engine/thirdparty/ vendored GLFW + GLEW
+engine/source/     engine library (Engine, Scene, render, physics, input, io)
 assets/
     shaders/       GLSL pairs (.vert + .frag)
     scenes/        JSON scene files
