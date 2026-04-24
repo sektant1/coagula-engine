@@ -16,6 +16,7 @@ file(
   "source/*.h")
 
 include_directories(source)
+include_directories(thirdparty/glm)
 option(ENGINE_UNITY_BUILD "Enable unity build for Engine" OFF)
 add_library(${PROJECT_NAME} ${PROJECT_SOURCE_FILES})
 if(ENGINE_UNITY_BUILD)
@@ -30,7 +31,7 @@ target_precompile_headers(
   <unordered_map>
   <functional>
   <algorithm>
-  ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glm/glm/glm.hpp
+  <glm/glm.hpp>
   <GL/glew.h>)
 
 add_subdirectory(thirdparty/glfw-3.4 "${CMAKE_CURRENT_BINARY_DIR}/glfw_build")
@@ -59,6 +60,35 @@ if(APPLE)
               ${AUDIOUNIT_FRAMEWORK}
               ${AUDIOTOOLBOX_FRAMEWORK}
               ${COREFOUNDATION_FRAMEWORK})
+endif()
+
+# -- Third party: Dear ImGui (GLFW + OpenGL3 backend) --
+add_library(
+  imgui STATIC
+  thirdparty/imgui/imgui.cpp
+  thirdparty/imgui/imgui_demo.cpp
+  thirdparty/imgui/imgui_draw.cpp
+  thirdparty/imgui/imgui_tables.cpp
+  thirdparty/imgui/imgui_widgets.cpp
+  thirdparty/imgui/backends/imgui_impl_glfw.cpp
+  thirdparty/imgui/backends/imgui_impl_opengl3.cpp)
+target_include_directories(imgui PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/imgui
+                                        ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/imgui/backends)
+
+target_link_libraries(imgui PRIVATE ${GLFW_LIB} glew)
+
+# -- Third party: Catch2 (vendored) --
+option(CHAD_BUILD_TESTS "Build chad-engine tests" ON)
+if(CHAD_BUILD_TESTS AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/catch2/CMakeLists.txt)
+  set(CATCH_INSTALL_DOCS
+      OFF
+      CACHE BOOL "" FORCE)
+  set(CATCH_INSTALL_EXTRAS
+      OFF
+      CACHE BOOL "" FORCE)
+  add_subdirectory(thirdparty/catch2)
+  list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/catch2/extras)
+  enable_testing()
 endif()
 
 add_library(nlohmann_json INTERFACE)
@@ -121,7 +151,8 @@ target_link_libraries(
   BulletDynamics
   BulletCollision
   LinearMath
-  miniaudio)
+  miniaudio
+  imgui)
 
 add_custom_command(
   TARGET ${PROJECT_NAME}

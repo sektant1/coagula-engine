@@ -72,11 +72,30 @@ void PlayerControllerComponent::Update(f32 deltaTime)
 
     if (inputManager.IsKeyPressed(GLFW_KEY_SPACE))
     {
-        m_kinematicController->Jump(vec3(0.0f, 5.0f, 0.0f));
+        m_kinematicController->Jump(vec3(0.0f, m_moveSpeed * m_jumpSpeed, 0.0f));
     }
 
     // Sync scene object with physics controller
     m_owner->SetPosition(m_kinematicController->GetPosition());
+}
+
+bool PlayerControllerComponent::OnGround() const
+{
+    if (m_kinematicController)
+    {
+        return m_kinematicController->OnGround();
+    }
+    return false;
+}
+
+void PlayerControllerComponent::SetMS(f32 ms)
+{
+    m_moveSpeed = ms;
+}
+
+f32 PlayerControllerComponent::GetMS()
+{
+    return m_moveSpeed;
 }
 
 }  // namespace COA

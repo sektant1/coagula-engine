@@ -84,4 +84,5 @@ bool KinematicCharacterController::OnGround() const
 {
     return m_controller->onGround();
 }
+
 }  // namespace COA

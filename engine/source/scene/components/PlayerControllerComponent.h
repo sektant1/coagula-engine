@@ -38,9 +38,15 @@ public:
 
     void Update(f32 deltaTime) override;
 
+    [[nodiscard]] bool OnGround() const;
+
+    void SetMS(f32 ms);
+    f32  GetMS();
+
 private:
     f32 m_sensitivity = 15.0F;  ///< Mouse-look sensitivity multiplier (degrees per pixel).
     f32 m_moveSpeed   = 5.0F;   ///< Translation speed in world units per second.
+    f32 m_jumpSpeed   = 0.5F;   ///< Translation speed in world units per second.
     f32 m_yRot        = 0.0f;
     f32 m_xRot        = 0.0f;
 

@@ -3,6 +3,7 @@
 #include <COA.h>
 
 #include "scene/GameObject.h"
+#include "scene/components/AudioComponent.h"
 
 namespace COA
 {
@@ -18,6 +19,8 @@ public:
     void Update(f32 deltaTime) override;
 
 private:
-    AnimationComponent *m_animationComponent = nullptr;
+    AnimationComponent        *m_animationComponent        = nullptr;
+    AudioComponent            *m_audioComponent            = nullptr;
+    PlayerControllerComponent *m_playerControllerComponent = nullptr;
 };
 }  // namespace COA

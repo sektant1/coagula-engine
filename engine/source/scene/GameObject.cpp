@@ -8,6 +8,7 @@
 
 #include "graphics/Texture.h"
 #include "graphics/VertexLayout.h"
+#include "render/Material.h"
 #include "render/Mesh.h"
 #include "scene/components/AnimationComponent.h"
 #include "scene/components/MeshComponent.h"

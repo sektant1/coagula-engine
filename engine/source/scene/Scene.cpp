@@ -10,6 +10,8 @@
 #include "Log.h"
 #include "scene/GameObject.h"
 #include "scene/components/AnimationComponent.h"
+#include "scene/components/AudioComponent.h"
+#include "scene/components/AudioListenerComponent.h"
 #include "scene/components/CameraComponent.h"
 #include "scene/components/LightComponent.h"
 #include "scene/components/MeshComponent.h"
@@ -27,6 +29,8 @@ void Scene::RegisterTypes()
     MeshComponent::Register();
     PhysicsComponent::Register();
     PlayerControllerComponent::Register();
+    AudioComponent::Register();
+    AudioListenerComponent::Register();
 }
 
 void Scene::Update(f32 deltaTime)
@@ -269,9 +273,8 @@ std::shared_ptr<Scene> Scene::Load(const str &path)
         }
         if (!result->GetMainCamera())
         {
-            LOG_ERROR("Scene '%s' camera target '%s' not found in loaded objects",
-                      sceneName.c_str(),
-                      cameraObjName.c_str());
+            LOG_ERROR(
+                "Scene '%s' camera target '%s' not found in loaded objects", sceneName.c_str(), cameraObjName.c_str());
         }
     } else
     {

@@ -1,3 +1,6 @@
+#ifndef COMMON_H
+#define COMMON_H
+
 /**
  * @file Common.h
  * @ingroup coa_types
@@ -17,7 +20,6 @@
 #pragma once
 
 #include "Types.h"
-#include "render/Material.h"
 
 namespace COA
 {
@@ -48,3 +50,4 @@ struct LightData
 };
 
 }  // namespace COA
+#endif

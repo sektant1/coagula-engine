@@ -123,6 +123,11 @@ bool Engine::Init(int width, int height)
 
     m_graphicsAPI.Init();
     m_physicsManager.Init();
+    if (!m_audioManager.Init())
+    {
+        LOG_ERROR("AudioManager Init failed");
+    }
+
     bool appOk = m_application->Init();
     if (!appOk)
     {
