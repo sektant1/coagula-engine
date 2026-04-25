@@ -106,7 +106,7 @@ HTML_COLORSTYLE_GAMMA  = 100
 # avoid selector conflicts with Doxygen's own layout/markdown rules.
 HTML_EXTRA_STYLESHEET  = @CMAKE_SOURCE_DIR@/docs/custom.css
 HTML_HEADER            = @CMAKE_SOURCE_DIR@/docs/header.html
-HTML_EXTRA_FILES       =
+HTML_EXTRA_FILES       = @CMAKE_SOURCE_DIR@/docs/coa-forge.js
 
 # Image path — kept for future @image html references.
 IMAGE_PATH             = @CMAKE_SOURCE_DIR@/docs/images
