@@ -106,13 +106,7 @@ HTML_COLORSTYLE_GAMMA  = 100
 # avoid selector conflicts with Doxygen's own layout/markdown rules.
 HTML_EXTRA_STYLESHEET  = @CMAKE_SOURCE_DIR@/docs/custom.css
 HTML_HEADER            = @CMAKE_SOURCE_DIR@/docs/header.html
-HTML_EXTRA_FILES       = @CMAKE_SOURCE_DIR@/docs/unescape-headings.js \
-                         @CMAKE_SOURCE_DIR@/docs/torch-flicker.js \
-                         @CMAKE_SOURCE_DIR@/docs/fog-layer.js \
-                         @CMAKE_SOURCE_DIR@/docs/rune-reveal.js \
-                         @CMAKE_SOURCE_DIR@/docs/forge-spark.js \
-                         @CMAKE_SOURCE_DIR@/docs/anvil-copy.js \
-                         @CMAKE_SOURCE_DIR@/docs/hearth-scroll.js
+HTML_EXTRA_FILES       =
 
 # Image path — kept for future @image html references.
 IMAGE_PATH             = @CMAKE_SOURCE_DIR@/docs/images

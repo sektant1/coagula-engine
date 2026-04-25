@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" role="img" aria-labelledby="cursor-title">
-  <title id="cursor-title">PLACEHOLDER — rune cursor</title>
-  <g fill="#6fe07a" stroke="#0a0818" stroke-width="0.6">
-    <path d="M2,2 L2,18 L7,14 L10,22 L13,21 L10,13 L16,13 Z"/>
-  </g>
-</svg>
