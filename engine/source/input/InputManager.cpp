@@ -1,9 +1,16 @@
 #include "input/InputManager.h"
 
+#include "Engine.h"
 #include "Log.h"
+#include "editor/Editor.h"
 
 namespace COA
 {
+
+static bool EditorSwallowsInput()
+{
+    return Engine::GetInstance().GetEditor().IsVisible();
+}
 
 void InputManager::SetKeyPressed(int key, bool pressed)
 {
@@ -22,6 +29,10 @@ bool InputManager::IsKeyPressed(int key)
         LOG_WARN("IsKeyPressed out-of-range key=%d (size=%zu)", key, m_keys.size());
         return false;
     }
+    if (EditorSwallowsInput())
+    {
+        return false;
+    }
 
     return m_keys[key];
 }
@@ -38,6 +49,10 @@ void InputManager::SetMouseButtonPressed(int button, bool pressed)
 bool InputManager::IsMouseButtonPressed(int button)
 {
     if (button < 0 | button >= static_cast<int>(m_keys.size()))
+    {
+        return false;
+    }
+    if (EditorSwallowsInput())
     {
         return false;
     }
@@ -72,6 +87,10 @@ void InputManager::SetMousePositionChanged(bool changed)
 
 bool InputManager::IsMousePositionChanged() const
 {
+    if (EditorSwallowsInput())
+    {
+        return false;
+    }
     return m_mousePositionChanged;
 }
 

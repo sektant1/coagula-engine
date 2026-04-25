@@ -104,6 +104,8 @@ public:
      */
     void BindMesh(Mesh *mesh);
 
+    void UnbindMesh(Mesh *mesh);
+
     /**
      * @brief Issue a draw call for the bound mesh.
      *

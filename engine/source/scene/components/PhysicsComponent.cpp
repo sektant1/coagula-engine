@@ -104,4 +104,9 @@ void PhysicsComponent::SetRigidBody(const std::shared_ptr<RigidBody> &body)
     m_rigidBody = body;
 }
 
+const std::shared_ptr<RigidBody> &PhysicsComponent::GetRigidBody()
+{
+    return m_rigidBody;
+}
+
 }  // namespace COA

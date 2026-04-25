@@ -33,6 +33,7 @@
 #include <memory>
 #include <string>
 #include <type_traits>
+#include <utility>
 #include <vector>
 
 #include "Common.h"
@@ -93,7 +94,13 @@ public:
         auto obj = new T();
         obj->SetName(name);
         obj->m_scene = this;
-        SetParent(obj, parent);
+        if (m_isUpdating)
+        {
+            m_objectsToAdd.push_back({obj, parent})
+        } else
+        {
+            SetParent(obj, parent);
+        }
 
         return obj;
     }
@@ -135,9 +142,10 @@ private:
     void LoadObject(const nlohmann::json &jsonObject, GameObject *parent = nullptr);
 
 private:
-    std::vector<std::unique_ptr<GameObject>> m_objects;  ///< All root-level objects (own the tree).
-
+    std::vector<std::unique_ptr<GameObject>>           m_objects;  ///< All root-level objects (own the tree).
+    std::vector<std::pair<GameObject *, GameObject *>> m_objectsToAdd;
     GameObject *m_mainCamera = nullptr;  ///< Non-owning pointer to the active camera object.
+    bool        m_isUpdating;
 };
 
 }  // namespace COA

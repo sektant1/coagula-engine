@@ -26,7 +26,7 @@ void RenderQueue::Submit(const RenderCommand &command)
 
 void RenderQueue::Draw(GraphicsAPI &graphicsAPI, const CameraData &cameraData, const std::vector<LightData> &lights)
 {
-    const RenderSettings &rs = Engine::GetInstance().GetRenderSettings();
+    const RenderSettings &rs    = Engine::GetInstance().GetRenderSettings();
     int                   drawn = 0;
 
     for (auto &command : m_commands)
@@ -58,15 +58,16 @@ void RenderQueue::Draw(GraphicsAPI &graphicsAPI, const CameraData &cameraData, c
         // for shaders that don't declare the uniform, so this is safe across materials.
         program->SetUniform("uSnapResolutionX", rs.snapX);
         program->SetUniform("uSnapResolutionY", rs.snapY);
-        program->SetUniform("uFogStart",        rs.fogStart);
-        program->SetUniform("uFogEnd",          rs.fogEnd);
-        program->SetUniform("uAmbient",         rs.ambient);
-        program->SetUniform("uLightDir",        rs.lightDir);
-        program->SetUniform("uColorDepth",      rs.colorDepth);
-        program->SetUniform("uDitherStrength",  rs.ditherStrength);
+        program->SetUniform("uFogStart", rs.fogStart);
+        program->SetUniform("uFogEnd", rs.fogEnd);
+        program->SetUniform("uAmbient", rs.ambient);
+        program->SetUniform("uLightDir", rs.lightDir);
+        program->SetUniform("uColorDepth", rs.colorDepth);
+        program->SetUniform("uDitherStrength", rs.ditherStrength);
 
         graphicsAPI.BindMesh(command.mesh);
         graphicsAPI.DrawMesh(command.mesh);
+        graphicsAPI.UnbindMesh(command.mesh);
         ++drawn;
     }
 

@@ -212,6 +212,17 @@ void GraphicsAPI::BindMesh(Mesh *mesh)
     }
 }
 
+void GraphicsAPI::UnbindMesh(Mesh *mesh)
+{
+    if (mesh)
+    {
+        mesh->Unbind();
+    } else
+    {
+        LOG_WARN("BindMesh called with nullptr");
+    }
+}
+
 void GraphicsAPI::DrawMesh(Mesh *mesh)
 {
     if (mesh)

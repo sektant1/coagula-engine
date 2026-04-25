@@ -35,6 +35,17 @@ void Scene::RegisterTypes()
 
 void Scene::Update(f32 deltaTime)
 {
+    m_objects.erase(std::remove_if(m_objects.begin(), m_objects.end(), [](auto &obj) { return obj->IsAlive(); }),
+                    m_objects.end());
+
+    for (auto &obj : m_objectsToAdd)
+    {
+        SetParent(obj.first, obj.second);
+    }
+    m_objectsToAdd.clear();
+
+    m_isUpdating = true;
+
     for (auto it = m_objects.begin(); it != m_objects.end();)
     {
         if ((*it)->IsAlive())
@@ -46,6 +57,8 @@ void Scene::Update(f32 deltaTime)
             it = m_objects.erase(it);
         }
     }
+
+    m_isUpdating = false;
 }
 
 void Scene::SetMainCamera(GameObject *camera)
@@ -97,7 +110,13 @@ GameObject *Scene::CreateObject(const std::string &type, const std::string &name
     {
         obj->SetName(name);
         obj->m_scene = this;
-        obj->SetParent(parent);
+        if (m_isUpdating)
+        {
+            m_objectsToAdd.push_back({obj, parent})
+        } else
+        {
+            SetParent(obj, parent);
+        }
     }
     return obj;
 }
@@ -107,7 +126,13 @@ GameObject *Scene::CreateObject(const std::string &name, GameObject *parent)
     auto obj = new GameObject();
     obj->SetName(name);
     obj->m_scene = this;
-    SetParent(obj, parent);
+    if (m_isUpdating)
+    {
+        m_objectsToAdd.push_back({obj, parent})
+    } else
+    {
+        SetParent(obj, parent);
+    }
     LOG_INFO("Created GameObject '%s' (parent=%s)", name.c_str(), parent ? parent->GetName().c_str() : "<root>");
     return obj;
 }

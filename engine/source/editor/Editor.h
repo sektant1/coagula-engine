@@ -45,7 +45,7 @@ private:
     void DrawMenuBar();
     void DrawHierarchy();
     void DrawInspector();
-    void DrawAssets();
+    void DrawConsole();
     void DrawRender();
     void DrawStats();
     void DrawObjectNode(GameObject *obj);
@@ -54,7 +54,7 @@ private:
     bool        m_visible         = true;
     bool        m_showHierarchy   = true;
     bool        m_showInspector   = true;
-    bool        m_showAssets      = true;
+    bool        m_showConsole      = true;
     bool        m_showRender      = true;
     bool        m_showStats       = true;
     bool        m_showDemo        = false;

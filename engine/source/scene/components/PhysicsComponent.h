@@ -37,7 +37,8 @@ public:
     void Update(float deltaTime) override;
 
     /// Replace the component's rigid body at runtime.
-    void SetRigidBody(const std::shared_ptr<RigidBody> &body);
+    void                              SetRigidBody(const std::shared_ptr<RigidBody> &body);
+    const std::shared_ptr<RigidBody> &GetRigidBody();
 
 private:
     std::shared_ptr<RigidBody> m_rigidBody;

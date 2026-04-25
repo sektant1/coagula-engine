@@ -438,4 +438,10 @@ std::shared_ptr<Mesh> Mesh::Load(const str &path)
 
         return result;
     }
+
+    void Mesh::Unbind(){
+        glBindVertexArray(0);
+}
+
+
 }  // namespace COA

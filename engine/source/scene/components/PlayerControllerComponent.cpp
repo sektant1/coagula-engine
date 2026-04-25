@@ -3,6 +3,7 @@
 #include "Engine.h"
 #include "GLFW/glfw3.h"
 #include "Types.h"
+#include "editor/Editor.h"
 #include "input/InputManager.h"
 
 namespace COA
@@ -16,10 +17,11 @@ void PlayerControllerComponent::Init()
 void PlayerControllerComponent::Update(f32 deltaTime)
 {
     auto &inputManager = Engine::GetInstance().GetInputManager();
+    const bool editorOpen = Engine::GetInstance().GetEditor().IsVisible();
 
     auto rotation = m_owner->GetRotation();
 
-    if (inputManager.IsMousePositionChanged())
+    if (!editorOpen && inputManager.IsMousePositionChanged())
     {
         const auto &oldPos     = inputManager.GetMousePositionOld();
         const auto &currentPos = inputManager.GetMousePositionCurrent();
@@ -49,6 +51,12 @@ void PlayerControllerComponent::Update(f32 deltaTime)
     auto position = m_owner->GetPosition();
 
     vec3 move(0.0f);
+    if (editorOpen)
+    {
+        m_kinematicController->Walk(vec3(0.0f));
+        m_owner->SetPosition(m_kinematicController->GetPosition());
+        return;
+    }
     if (inputManager.IsKeyPressed(GLFW_KEY_A))
     {
         move -= right;

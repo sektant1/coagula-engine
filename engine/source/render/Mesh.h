@@ -63,6 +63,7 @@ public:
     /// Bind the VAO so subsequent draw calls use this mesh's geometry.
     void Bind();
 
+    void Unbind();
     /**
      * @brief Issue the draw call for this mesh.
      *
