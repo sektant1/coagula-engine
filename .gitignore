@@ -53,6 +53,7 @@ Mkfile.old
 dkms.conf
 
 .cache
+.playwright-mcp
 build
 docs/generated/
 bin
