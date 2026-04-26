@@ -146,6 +146,23 @@ public:
 
     GLFWwindow *GetWindow() { return m_window; }
 
+    /// Game-time multiplier applied to deltaTime each frame (1.0 = realtime).
+    float GetTimeScale() const { return m_timeScale; }
+    void  SetTimeScale(float scale) { m_timeScale = scale; }
+
+    /// When true, deltaTime is forced to 0.0 (Application::Update still runs).
+    bool IsPaused() const { return m_paused; }
+    void SetPaused(bool paused) { m_paused = paused; }
+
+    /// Render a centered loading panel with optional progress bar.
+    /// Pass `progress < 0` for an indeterminate (animated) bar.
+    /// Performs two swaps on first call so the frame is presented before
+    /// blocking work begins on platforms that delay the first present.
+    void DrawLoadingScreen(const char *message, float progress = -1.0F);
+
+    /// Update the loading panel mid-load (single swap). Cheap to call per step.
+    void UpdateLoadingProgress(float progress, const char *message);
+
 private:
     std::unique_ptr<Application>          m_application;       ///< The user game/lab instance.
     std::chrono::steady_clock::time_point m_lastTimePoint;     ///< Timestamp of the previous frame.
@@ -159,6 +176,9 @@ private:
 
     PhysicsManager         m_physicsManager;
     std::unique_ptr<Scene> m_currentScene;  ///< Active scene graph.
+
+    float m_timeScale = 1.0F;
+    bool  m_paused    = false;
 
     Editor         m_editor;          ///< ImGui overlay.
     RenderTarget   m_sceneTarget;     ///< Low-res FBO for pixelated look.

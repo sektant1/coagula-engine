@@ -9,8 +9,11 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "Application.h"
 #include "Engine.h"
 #include "GL/glew.h"
+#include "btBulletDynamicsCommon.h"
+#include "physics/PhysicsManager.h"
 #include "GLFW/glfw3.h"
 #include "Log.h"
 #include "backends/imgui_impl_glfw.h"
@@ -216,6 +219,14 @@ void Editor::Draw()
         ImGui::SetNextWindowSize(d.statsSize, ImGuiCond_Always);
         DrawStats();
     }
+    if (m_showEngine)
+    {
+        DrawEnginePanel();
+    }
+    if (m_showPhysics)
+    {
+        DrawPhysicsPanel();
+    }
     if (m_showDemo)
     {
         ImGui::ShowDemoWindow(&m_showDemo);
@@ -266,6 +277,8 @@ void Editor::DrawMenuBar()
         ImGui::MenuItem("Console", nullptr, &m_showConsole);
         ImGui::MenuItem("Render", nullptr, &m_showRender);
         ImGui::MenuItem("Stats", nullptr, &m_showStats);
+        ImGui::MenuItem("Engine", nullptr, &m_showEngine);
+        ImGui::MenuItem("Physics", nullptr, &m_showPhysics);
         ImGui::Separator();
         ImGui::MenuItem("ImGui Demo", nullptr, &m_showDemo);
         ImGui::EndMenu();
@@ -604,15 +617,115 @@ void Editor::DrawRender()
         rs.useInternalRes = false;
     }
 
-    ImGui::SeparatorText("PSX shader uniforms");
-    ImGui::DragFloat("uSnapResolutionX", &rs.snapX, 1.0F, 0.0F, 4096.0F);
-    ImGui::DragFloat("uSnapResolutionY", &rs.snapY, 1.0F, 0.0F, 4096.0F);
-    ImGui::DragFloat("uFogStart", &rs.fogStart, 0.1F, 0.0F, 10000.0F);
-    ImGui::DragFloat("uFogEnd", &rs.fogEnd, 0.1F, 0.0F, 10000.0F);
-    ImGui::SliderFloat("uAmbient", &rs.ambient, 0.0F, 1.0F);
-    ImGui::DragFloat3("uLightDir", glm::value_ptr(rs.lightDir), 0.01F);
-    ImGui::SliderFloat("uColorDepth", &rs.colorDepth, 0.0F, 64.0F);
-    ImGui::SliderFloat("uDitherStrength", &rs.ditherStrength, 0.0F, 1.0F);
+    ImGui::SeparatorText("Display");
+    if (ImGui::Checkbox("VSync", &m_vsyncEnabled))
+    {
+        glfwSwapInterval(m_vsyncEnabled ? 1 : 0);
+    }
+    if (ImGui::Checkbox("Wireframe", &m_wireframe))
+    {
+        glPolygonMode(GL_FRONT_AND_BACK, m_wireframe ? GL_LINE : GL_FILL);
+    }
+    if (ImGui::Checkbox("Lock cursor", &m_cursorLocked))
+    {
+        glfwSetInputMode(Engine::GetInstance().GetWindow(),
+                         GLFW_CURSOR,
+                         m_cursorLocked ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+    }
+
+    ImGui::End();
+}
+
+// ---- Engine panel -----------------------------------------------------
+
+void Editor::DrawEnginePanel()
+{
+    ImGui::SetNextWindowSize(ImVec2(320.0F, 0.0F), ImGuiCond_FirstUseEver);
+    if (!ImGui::Begin("Engine", &m_showEngine))
+    {
+        ImGui::End();
+        return;
+    }
+
+    Engine &eng = Engine::GetInstance();
+
+    ImGui::SeparatorText("Time");
+    float scale = eng.GetTimeScale();
+    if (ImGui::SliderFloat("Time scale", &scale, 0.0F, 4.0F, "%.2fx"))
+    {
+        eng.SetTimeScale(scale);
+    }
+    ImGui::SameLine();
+    if (ImGui::SmallButton("1x"))
+    {
+        eng.SetTimeScale(1.0F);
+    }
+
+    bool paused = eng.IsPaused();
+    if (ImGui::Checkbox("Pause (dt = 0)", &paused))
+    {
+        eng.SetPaused(paused);
+    }
+
+    ImGui::SeparatorText("Scene");
+    Scene *scene = eng.GetScene();
+    if (scene != nullptr)
+    {
+        ImGui::Text("Root objects: %zu", scene->GetRootObjects().size());
+    } else
+    {
+        ImGui::TextDisabled("No active scene");
+    }
+
+    ImGui::SeparatorText("Application");
+    if (ImGui::Button("Quit"))
+    {
+        if (auto *app = eng.GetApplication())
+        {
+            app->SetNeedsToBeClosed(true);
+        }
+    }
+
+    ImGui::End();
+}
+
+// ---- Physics panel ----------------------------------------------------
+
+void Editor::DrawPhysicsPanel()
+{
+    ImGui::SetNextWindowSize(ImVec2(320.0F, 0.0F), ImGuiCond_FirstUseEver);
+    if (!ImGui::Begin("Physics", &m_showPhysics))
+    {
+        ImGui::End();
+        return;
+    }
+
+    auto *world = Engine::GetInstance().GetPhysicsManager().GetWorld();
+    if (world == nullptr)
+    {
+        ImGui::TextDisabled("Physics world not available");
+        ImGui::End();
+        return;
+    }
+
+    btVector3 g       = world->getGravity();
+    float     grav[3] = {g.x(), g.y(), g.z()};
+    if (ImGui::DragFloat3("Gravity", grav, 0.1F, -100.0F, 100.0F))
+    {
+        world->setGravity(btVector3(grav[0], grav[1], grav[2]));
+    }
+    if (ImGui::Button("Earth (0,-9.81,0)"))
+    {
+        world->setGravity(btVector3(0.0F, -9.81F, 0.0F));
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("Zero-G"))
+    {
+        world->setGravity(btVector3(0.0F, 0.0F, 0.0F));
+    }
+
+    int bodies = world->getNumCollisionObjects();
+    ImGui::Text("Collision objects: %d", bodies);
 
     ImGui::End();
 }

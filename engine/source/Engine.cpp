@@ -1,4 +1,5 @@
 #include <chrono>
+#include <cstdio>
 #include <vector>
 
 #include "Engine.h"
@@ -8,7 +9,10 @@
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 #include "Log.h"
+#include "backends/imgui_impl_glfw.h"
+#include "backends/imgui_impl_opengl3.h"
 #include "graphics/GraphicsAPI.h"
+#include "imgui.h"
 #include "physics/PhysicsManager.h"
 #include "render/RenderQueue.h"
 #include "scene/components/CameraComponent.h"
@@ -134,7 +138,11 @@ bool Engine::Init(int width, int height)
         LOG_ERROR("Editor Init failed");
     }
 
+    DrawLoadingScreen("Loading...", 0.0F);
+
     bool appOk = m_application->Init();
+
+    UpdateLoadingProgress(1.0F, "Ready");
     if (!appOk)
     {
         LOG_ERROR("Application Init failed");
@@ -165,8 +173,10 @@ void Engine::Run()
         float deltaTime = std::chrono::duration<float>(now - m_lastTimePoint).count();
         m_lastTimePoint = now;
 
-        m_physicsManager.Update(deltaTime);
-        m_application->Update(deltaTime);
+        float scaledDt = m_paused ? 0.0F : deltaTime * m_timeScale;
+
+        m_physicsManager.Update(scaledDt);
+        m_application->Update(scaledDt);
 
         // Bind scene target (offscreen low-res) or default framebuffer for the scene pass.
         int winW = 0, winH = 0;
@@ -322,6 +332,82 @@ Scene *Engine::GetScene()
 FileSystem &Engine::GetFileSystem()
 {
     return m_fileSystem;
+}
+
+namespace
+{
+void RenderLoadingFrameImpl(GLFWwindow *window, const char *message, float progress)
+{
+    glfwPollEvents();
+
+    int winW = 0, winH = 0;
+    glfwGetFramebufferSize(window, &winW, &winH);
+
+    RenderTarget::BindDefault(winW, winH);
+    glClearColor(0.05F, 0.05F, 0.07F, 1.0F);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+
+    const ImGuiViewport *vp = ImGui::GetMainViewport();
+    ImGui::SetNextWindowPos(ImVec2(vp->WorkPos.x + vp->WorkSize.x * 0.5F, vp->WorkPos.y + vp->WorkSize.y * 0.5F),
+                            ImGuiCond_Always,
+                            ImVec2(0.5F, 0.5F));
+    ImGui::SetNextWindowSize(ImVec2(420.0F, 0.0F), ImGuiCond_Always);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(32.0F, 24.0F));
+    ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.10F, 0.10F, 0.13F, 1.0F));
+    ImGui::PushStyleColor(ImGuiCol_PlotHistogram, ImVec4(0.35F, 0.65F, 1.0F, 1.0F));
+    ImGui::Begin("##loading",
+                 nullptr,
+                 ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove
+                     | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoNav
+                     | ImGuiWindowFlags_NoFocusOnAppearing);
+
+    ImGui::SetWindowFontScale(1.6F);
+    ImGui::TextUnformatted(message);
+    ImGui::SetWindowFontScale(1.0F);
+    ImGui::Spacing();
+
+    float barFraction = (progress < 0.0F) ? -1.0F * static_cast<float>(ImGui::GetTime()) : progress;
+    char  overlay[16] = "";
+    if (progress >= 0.0F)
+    {
+        std::snprintf(overlay, sizeof(overlay), "%d%%", static_cast<int>(progress * 100.0F + 0.5F));
+    }
+    ImGui::ProgressBar(barFraction, ImVec2(-1.0F, 18.0F), progress >= 0.0F ? overlay : "");
+
+    ImGui::End();
+    ImGui::PopStyleColor(2);
+    ImGui::PopStyleVar();
+
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+    glfwSwapBuffers(window);
+}
+}  // namespace
+
+void Engine::DrawLoadingScreen(const char *message, float progress)
+{
+    if (m_window == nullptr)
+    {
+        return;
+    }
+    // Swap twice: on some platforms/compositors the very first swap after
+    // window creation isn't presented until the next frame is queued.
+    RenderLoadingFrameImpl(m_window, message, progress);
+    RenderLoadingFrameImpl(m_window, message, progress);
+}
+
+void Engine::UpdateLoadingProgress(float progress, const char *message)
+{
+    if (m_window == nullptr)
+    {
+        return;
+    }
+    RenderLoadingFrameImpl(m_window, message, progress);
 }
 
 }  // namespace mnd

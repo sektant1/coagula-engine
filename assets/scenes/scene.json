@@ -1018,35 +1018,95 @@
       "name": "TorchLight_Hall",
       "position": { "x": 0, "y": 6, "z": 0 },
       "components": [
-        { "type": "LightComponent", "color": { "r": 1, "g": 0.75, "b": 0.45 } }
+        { "type": "LightComponent", "color": { "r": 1, "g": 0.75, "b": 0.45 } },
+        {
+          "type": "MeshComponent",
+          "mesh": { "type": "sphere", "r": 0.2 },
+          "material": {
+            "path": "materials/light_bulb.mat",
+            "params": {
+              "float3": [
+                { "name": "uEmissive", "value0": 1.0, "value1": 0.75, "value2": 0.45 }
+              ]
+            }
+          }
+        }
       ]
     },
     {
       "name": "TorchLight_Entry",
       "position": { "x": 0, "y": 6, "z": 16 },
       "components": [
-        { "type": "LightComponent", "color": { "r": 1, "g": 0.7, "b": 0.4 } }
+        { "type": "LightComponent", "color": { "r": 1, "g": 0.7, "b": 0.4 } },
+        {
+          "type": "MeshComponent",
+          "mesh": { "type": "sphere", "r": 0.2 },
+          "material": {
+            "path": "materials/light_bulb.mat",
+            "params": {
+              "float3": [
+                { "name": "uEmissive", "value0": 1.0, "value1": 0.7, "value2": 0.4 }
+              ]
+            }
+          }
+        }
       ]
     },
     {
       "name": "TorchLight_Altar",
       "position": { "x": 0, "y": 5, "z": -14 },
       "components": [
-        { "type": "LightComponent", "color": { "r": 0.6, "g": 0.55, "b": 1.0 } }
+        { "type": "LightComponent", "color": { "r": 0.6, "g": 0.55, "b": 1.0 } },
+        {
+          "type": "MeshComponent",
+          "mesh": { "type": "sphere", "r": 0.2 },
+          "material": {
+            "path": "materials/light_bulb.mat",
+            "params": {
+              "float3": [
+                { "name": "uEmissive", "value0": 0.6, "value1": 0.55, "value2": 1.0 }
+              ]
+            }
+          }
+        }
       ]
     },
     {
       "name": "TorchLight_Loot",
       "position": { "x": 23, "y": 6, "z": 0 },
       "components": [
-        { "type": "LightComponent", "color": { "r": 1, "g": 0.8, "b": 0.5 } }
+        { "type": "LightComponent", "color": { "r": 1, "g": 0.8, "b": 0.5 } },
+        {
+          "type": "MeshComponent",
+          "mesh": { "type": "sphere", "r": 0.2 },
+          "material": {
+            "path": "materials/light_bulb.mat",
+            "params": {
+              "float3": [
+                { "name": "uEmissive", "value0": 1.0, "value1": 0.8, "value2": 0.5 }
+              ]
+            }
+          }
+        }
       ]
     },
     {
       "name": "TorchLight_Crypt",
       "position": { "x": -23, "y": 6, "z": 0 },
       "components": [
-        { "type": "LightComponent", "color": { "r": 0.7, "g": 0.8, "b": 1 } }
+        { "type": "LightComponent", "color": { "r": 0.7, "g": 0.8, "b": 1 } },
+        {
+          "type": "MeshComponent",
+          "mesh": { "type": "sphere", "r": 0.2 },
+          "material": {
+            "path": "materials/light_bulb.mat",
+            "params": {
+              "float3": [
+                { "name": "uEmissive", "value0": 0.7, "value1": 0.8, "value2": 1.0 }
+              ]
+            }
+          }
+        }
       ]
     }
   ]

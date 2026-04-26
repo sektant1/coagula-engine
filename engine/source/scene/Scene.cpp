@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cstdio>
 #include <memory>
 #include <utility>
 #include <vector>
@@ -274,9 +275,17 @@ std::shared_ptr<Scene> Scene::Load(const str &path)
     if (json.contains(kJsonKeyObjects) && json[kJsonKeyObjects].is_array())
     {
         const auto &objects = json[kJsonKeyObjects];
+        const auto  total   = objects.size();
+        std::size_t i       = 0;
         for (const auto &obj : objects)
         {
+            const str objName = obj.value(kJsonKeyName, str("object"));
+            char      msg[128];
+            std::snprintf(msg, sizeof(msg), "Loading %s (%zu/%zu)", objName.c_str(), i + 1, total);
+            Engine::GetInstance().UpdateLoadingProgress(
+                total > 0 ? static_cast<float>(i) / static_cast<float>(total) : 0.0F, msg);
             result->LoadObject(obj, nullptr);
+            ++i;
         }
     } else
     {

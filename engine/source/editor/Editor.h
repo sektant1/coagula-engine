@@ -79,19 +79,27 @@ private:
     void DrawConsole();
     void DrawRender();
     void DrawStats();
+    void DrawEnginePanel();
+    void DrawPhysicsPanel();
     void DrawObjectNode(GameObject *obj);
 
-    bool        m_initialized     = false;
-    bool        m_visible         = true;
-    bool        m_showHierarchy   = true;
-    bool        m_showInspector   = true;
-    bool        m_showConsole      = true;
-    bool        m_showRender      = true;
-    bool        m_showStats       = true;
-    bool        m_showDemo        = false;
-    GameObject *m_selected        = nullptr;
-    int         m_lastDrawCount   = 0;
-    f32         m_fpsSmoothed     = 0.0F;
+    bool        m_initialized   = false;
+    bool        m_visible       = true;
+    bool        m_showHierarchy = true;
+    bool        m_showInspector = true;
+    bool        m_showConsole   = true;
+    bool        m_showRender    = true;
+    bool        m_showStats     = true;
+    bool        m_showEngine    = true;
+    bool        m_showPhysics   = false;
+    bool        m_showDemo      = false;
+    GameObject *m_selected      = nullptr;
+    int         m_lastDrawCount = 0;
+    f32         m_fpsSmoothed   = 0.0F;
+
+    bool m_vsyncEnabled  = true;
+    bool m_wireframe     = false;
+    bool m_cursorLocked  = true;
 
     std::vector<std::pair<std::string, PanelFn>> m_customPanels;
 };
