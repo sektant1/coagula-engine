@@ -1,90 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- HTML header for doxygen 1.16.1 — CRYPT.SYS theme -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="$langISO">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen $doxygenversion"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<meta name="theme-color" content="#0d0a08"/>
-<!--BEGIN PROJECT_NAME--><title>$projectname &mdash; $title</title><!--END PROJECT_NAME-->
+<meta name="theme-color" content="#040907"/>
+<!--BEGIN PROJECT_NAME--><title>$projectname &#x2756; $title</title><!--END PROJECT_NAME-->
 <!--BEGIN !PROJECT_NAME--><title>$title</title><!--END !PROJECT_NAME-->
+<!--BEGIN PROJECT_ICON-->
+<link rel="icon" href="$relpath^$projecticon" type="image/x-icon" />
+<!--END PROJECT_ICON-->
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500;700&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+<!-- Fonts: blackletter display + manuscript serif + CRT mono + code mono -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=VT323&amp;family=Share+Tech+Mono&amp;family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap"/>
 
 <link href="$relpath^tabs.css" rel="stylesheet" type="text/css"/>
-<!--BEGIN DISABLE_INDEX-->
 <!--BEGIN FULL_SIDEBAR-->
 <script type="text/javascript">var page_layout=1;</script>
 <!--END FULL_SIDEBAR-->
-<!--END DISABLE_INDEX-->
 <script type="text/javascript" src="$relpath^jquery.js"></script>
 <script type="text/javascript" src="$relpath^dynsections.js"></script>
-
-<!-- doxygen-awesome-css companion scripts -->
-<script type="text/javascript" src="$relpath^doxygen-awesome-darkmode-toggle.js"></script>
-<script type="text/javascript" src="$relpath^doxygen-awesome-fragment-copy-button.js"></script>
-<script type="text/javascript" src="$relpath^doxygen-awesome-paragraph-link.js"></script>
-<script type="text/javascript" src="$relpath^doxygen-awesome-interactive-toc.js"></script>
-<script type="text/javascript" src="$relpath^doxygen-awesome-tabs.js"></script>
-<script type="text/javascript">
-  // Default to the dwarven forge (dark) on first visit; respect any
-  // saved user preference afterwards.
-  (function () {
-    try {
-      if (!localStorage.getItem("prefers-color-scheme")) {
-        localStorage.setItem("prefers-color-scheme", "dark");
-        document.documentElement.classList.add("dark-mode");
-      }
-    } catch (e) {}
-  })();
-  DoxygenAwesomeDarkModeToggle.init()
-  DoxygenAwesomeFragmentCopyButton.init()
-  DoxygenAwesomeParagraphLink.init()
-  DoxygenAwesomeInteractiveToc.init()
-  DoxygenAwesomeTabs.init()
-</script>
-
+<!--BEGIN COPY_CLIPBOARD-->
+<script type="text/javascript" src="$relpath^clipboard.js"></script>
+<!--END COPY_CLIPBOARD-->
 $treeview
 $search
 $mathjax
 $darkmode
 <link href="$relpath^$stylesheet" rel="stylesheet" type="text/css" />
 $extrastylesheet
+
+<!-- doxygen-awesome plugins -->
+<script type="text/javascript" src="$relpath^doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="$relpath^doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="$relpath^doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript" src="$relpath^doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="$relpath^doxygen-awesome-tabs.js"></script>
+<script type="text/javascript">
+  // Initialise plugins as soon as DOM ready (per doxygen-awesome docs).
+  (function () {
+    function go () {
+      try { DoxygenAwesomeDarkModeToggle.init(); } catch (e) {}
+      try { DoxygenAwesomeFragmentCopyButton.init(); } catch (e) {}
+      try { DoxygenAwesomeParagraphLink.init(); } catch (e) {}
+      try { DoxygenAwesomeInteractiveToc.init(); } catch (e) {}
+      try { DoxygenAwesomeTabs.init(); } catch (e) {}
+    }
+    if (document.readyState !== 'loading') go();
+    else document.addEventListener('DOMContentLoaded', go);
+  })();
+</script>
+<script type="text/javascript" src="$relpath^crypt.js" defer></script>
 </head>
 <body>
 
-<!-- Forge atmosphere -->
-<canvas id="coa-embers" aria-hidden="true"></canvas>
-<div class="coa-grain" aria-hidden="true"></div>
-<div class="coa-vignette" aria-hidden="true"></div>
-
-<!-- Full-width runic strip pinned to the top of the right (content) pane -->
-<div class="coa-strip" aria-hidden="true">
-  <div class="coa-strip__rule"></div>
-  <div class="coa-strip__motto">
-    <span class="coa-rune">&#x16A0;</span>
-    SOLVE &nbsp;&middot;&nbsp; ET &nbsp;&middot;&nbsp; COAGULA
-    <span class="coa-rune">&#x16B1;</span>
-  </div>
-  <div class="coa-strip__rule"></div>
+<!-- ============================================================== -->
+<!--  CRYPT.SYS atmosphere — fixed, decorative, behind everything    -->
+<!-- ============================================================== -->
+<div class="crypt-bg" aria-hidden="true">
+  <div class="crypt-stone"></div>
+  <div class="crypt-dither"></div>
+  <div class="crypt-scanlines"></div>
+  <div class="crypt-vignette"></div>
 </div>
+<div class="crypt-runes" aria-hidden="true">
+  <span class="crypt-runes__sigil">&#x2756;</span>
+</div>
+<canvas class="crypt-embers" aria-hidden="true"></canvas>
+<div class="crypt-cursor-glow" aria-hidden="true"></div>
+<!-- ============================================================== -->
+
+<!--BEGIN FULL_SIDEBAR-->
+<div id="side-nav" class="ui-resizable side-nav-resizable"><!-- do not remove this div, it is closed by doxygen! -->
+<!--END FULL_SIDEBAR-->
 
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
-
-<!-- Sidebar-top sigil (sits inside #top, above #titlearea) -->
-<div class="coa-banner" aria-hidden="true">
-  <div class="coa-banner__sigil">
-    <svg viewBox="0 0 64 64" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6">
-      <circle cx="32" cy="32" r="26"/>
-      <path d="M32 6 L32 58 M6 32 L58 32 M14 14 L50 50 M50 14 L14 50"/>
-      <circle cx="32" cy="32" r="9" fill="currentColor" fill-opacity=".15"/>
-      <path d="M24 32 L40 32 M32 24 L32 40" stroke-width="2"/>
-    </svg>
-  </div>
-  <div class="coa-banner__motto">DEEP &middot; HALL &middot; CODEX</div>
-</div>
 
 <!--BEGIN TITLEAREA-->
 <div id="titlearea">
@@ -92,13 +86,13 @@ $extrastylesheet
  <tbody>
  <tr id="projectrow">
   <!--BEGIN PROJECT_LOGO-->
-  <td id="projectlogo"><img alt="Logo" src="$relpath^$projectlogo"/></td>
+  <td id="projectlogo"><img alt="Logo" src="$relpath^$projectlogo"$logosize/></td>
   <!--END PROJECT_LOGO-->
   <!--BEGIN PROJECT_NAME-->
   <td id="projectalign">
    <div id="projectname">$projectname<!--BEGIN PROJECT_NUMBER--><span id="projectnumber">&#160;$projectnumber</span><!--END PROJECT_NUMBER-->
    </div>
-   <!--BEGIN PROJECT_BRIEF--><div id="projectbrief">$projectbrief</div><!--END PROJECT_BRIEF-->
+   <!--BEGIN PROJECT_BRIEF--><div id="projectbrief"><span class="crypt-prompt">&gt;</span> <span class="crypt-brief">$projectbrief</span><span class="crypt-caret">_</span></div><!--END PROJECT_BRIEF-->
   </td>
   <!--END PROJECT_NAME-->
   <!--BEGIN !PROJECT_NAME-->
@@ -116,15 +110,13 @@ $extrastylesheet
    <!--END SEARCHENGINE-->
   <!--END DISABLE_INDEX-->
  </tr>
- <!--BEGIN SEARCHENGINE-->
+  <!--BEGIN SEARCHENGINE-->
   <!--BEGIN FULL_SIDEBAR-->
-   <tr><td colspan="2">$searchbox</td></tr>
+  <tr><td colspan="2">$searchbox</td></tr>
   <!--END FULL_SIDEBAR-->
- <!--END SEARCHENGINE-->
+  <!--END SEARCHENGINE-->
  </tbody>
 </table>
 </div>
 <!--END TITLEAREA-->
 <!-- end header part -->
-
-<script src="$relpath^coa-forge.js" defer></script>

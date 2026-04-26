@@ -1,151 +1,97 @@
-PROJECT_NAME           = "Coagula Engine"
-PROJECT_BRIEF          = "Retro FPS Game engine | C++17 · GLFW · component-based scene graph"
-PROJECT_NUMBER         = "0.0.1"
-OUTPUT_DIRECTORY       = @CMAKE_SOURCE_DIR@/docs/generated
-INPUT                  = @CMAKE_SOURCE_DIR@/engine/source \
-                         @CMAKE_SOURCE_DIR@/source \
-                         @CMAKE_SOURCE_DIR@/docs/homepage.md \
-                         @CMAKE_SOURCE_DIR@/docs/overview.md \
-                         @CMAKE_SOURCE_DIR@/docs/build.md \
-                         @CMAKE_SOURCE_DIR@/docs/layout.md \
-                         @CMAKE_SOURCE_DIR@/docs/starting-point.md \
-                         @CMAKE_SOURCE_DIR@/docs/tutorials.md \
-                         @CMAKE_SOURCE_DIR@/docs/recipes.md \
-                         @CMAKE_SOURCE_DIR@/docs/guides.md \
-                         @CMAKE_SOURCE_DIR@/docs/building-docs.md \
-                         @CMAKE_SOURCE_DIR@/docs/license.md
-USE_MDFILE_AS_MAINPAGE = @CMAKE_SOURCE_DIR@/docs/homepage.md
-RECURSIVE              = YES
-FILE_PATTERNS          = *.h *.cpp *.md *.dox
-EXCLUDE_PATTERNS       = */thirdparty/* */build/* */bin/* */docs/generated/*
+# =============================================================================
+# Monad Engine — Doxygen config (ROBCO TERMLINK theme)
+# Generated via configure_file(@ONLY); CMake @VAR@ tokens are substituted.
+# =============================================================================
 
-# ----------------------------------------------------------------
-# Extraction — only extract documented entities for a cleaner site.
-# (EXTRACT_ALL was hiding which symbols are actually commented.)
-# ----------------------------------------------------------------
+# --- Project --------------------------------------------------------------
+PROJECT_NAME           = "Monad Engine"
+PROJECT_BRIEF          = "Undercity Codex"
+PROJECT_NUMBER         =
+OUTPUT_DIRECTORY       = @CMAKE_BINARY_DIR@/docs
+OUTPUT_LANGUAGE        = English
+TAB_SIZE               = 4
+MARKDOWN_SUPPORT       = YES
+AUTOLINK_SUPPORT       = YES
+BUILTIN_STL_SUPPORT    = YES
 EXTRACT_ALL            = YES
 EXTRACT_PRIVATE        = NO
 EXTRACT_STATIC         = YES
 EXTRACT_LOCAL_CLASSES  = YES
-EXTRACT_ANON_NSPACES   = NO
 HIDE_UNDOC_MEMBERS     = NO
 HIDE_UNDOC_CLASSES     = NO
-HIDE_SCOPE_NAMES       = NO
-SHOW_USED_FILES        = YES
+INLINE_INHERITED_MEMB  = YES
+SHOW_INCLUDE_FILES     = YES
+SORT_MEMBERS_CTORS_1ST = YES
 
-# ----------------------------------------------------------------
-# Parsing
-# ----------------------------------------------------------------
-JAVADOC_AUTOBRIEF      = YES
-QT_AUTOBRIEF           = YES
-MARKDOWN_SUPPORT       = YES
-AUTOLINK_SUPPORT       = YES
-BUILTIN_STL_SUPPORT    = YES
-CPP_CLI_SUPPORT        = NO
-STRIP_CODE_COMMENTS    = NO
-TOC_INCLUDE_HEADINGS   = 3
+# --- Input ----------------------------------------------------------------
+INPUT                  = @CMAKE_SOURCE_DIR@/engine/source \
+                         @CMAKE_SOURCE_DIR@/docs
+FILE_PATTERNS          = *.h *.hpp *.cpp *.cc *.md
+RECURSIVE              = YES
+EXCLUDE_PATTERNS       = */thirdparty/* */build/* */bin/*
+USE_MDFILE_AS_MAINPAGE = @CMAKE_SOURCE_DIR@/docs/homepage.md
+IMAGE_PATH             = @CMAKE_SOURCE_DIR@/docs
 
-# Expand the COMPONENT(T) / GAMEOBJECT(T) macros so the generated class
-# page is clean instead of dumping the macro body.
-MACRO_EXPANSION        = YES
-EXPAND_ONLY_PREDEF     = YES
-PREDEFINED             = "COMPONENT(T)=" \
-                         "GAMEOBJECT(T)="
-
-# ----------------------------------------------------------------
-# Source browser
-# ----------------------------------------------------------------
+# --- Source browser -------------------------------------------------------
 SOURCE_BROWSER         = YES
 INLINE_SOURCES         = NO
+STRIP_CODE_COMMENTS    = NO
 REFERENCED_BY_RELATION = YES
 REFERENCES_RELATION    = YES
-REFERENCES_LINK_SOURCE = YES
 VERBATIM_HEADERS       = YES
 
-# ----------------------------------------------------------------
-# Sorting / organisation
-# ----------------------------------------------------------------
-SORT_MEMBER_DOCS       = YES
-SORT_BRIEF_DOCS        = YES
-SORT_GROUP_NAMES       = YES
-SORT_BY_SCOPE_NAME     = NO
-SHOW_GROUPED_MEMB_INC  = YES
-SHOW_INCLUDE_FILES     = YES
-SHOW_FILES             = YES
-SHOW_NAMESPACES        = YES
-GENERATE_TODOLIST      = YES
-GENERATE_DEPRECATEDLIST = YES
-GENERATE_BUGLIST       = YES
-
-# ----------------------------------------------------------------
-# HTML output
-# ----------------------------------------------------------------
+# --- HTML output ----------------------------------------------------------
 GENERATE_HTML          = YES
-GENERATE_LATEX         = NO
 HTML_OUTPUT            = html
 HTML_FILE_EXTENSION    = .html
-HTML_DYNAMIC_MENUS     = YES
+HTML_COLORSTYLE        = DARK
+HTML_COLORSTYLE_HUE    = 35
+HTML_COLORSTYLE_SAT    = 80
+HTML_COLORSTYLE_GAMMA  = 100
 HTML_DYNAMIC_SECTIONS  = YES
-HTML_INDEX_NUM_ENTRIES = 200
-HTML_COPY_CLIPBOARD    = YES
-
-# Navigation — sidebar-only layout (recommended by doxygen-awesome-css).
+HTML_INDEX_NUM_ENTRIES = 100
 GENERATE_TREEVIEW      = YES
 DISABLE_INDEX          = NO
 FULL_SIDEBAR           = NO
-TREEVIEW_WIDTH         = 335
+TREEVIEW_WIDTH         = 320
 
-# Theme — doxygen-awesome-css base + Coagula "Deep-Hall & Forge" overlay.
-HTML_COLORSTYLE        = LIGHT
-
-# Stylesheets stack: awesome (base) → awesome-sidebar-only (layout)
-#                  → awesome-sidebar-only-darkmode-toggle (theme switch)
-#                  → coa-forge (Coagula dwarven overlay).
-HTML_EXTRA_STYLESHEET  = @DOXYGEN_AWESOME_CSS_DIR@/doxygen-awesome.css \
-                         @DOXYGEN_AWESOME_CSS_DIR@/doxygen-awesome-sidebar-only.css \
-                         @DOXYGEN_AWESOME_CSS_DIR@/doxygen-awesome-sidebar-only-darkmode-toggle.css \
-                         @CMAKE_SOURCE_DIR@/docs/custom.css
-
+# Theme: doxygen-awesome stack (order matters), Crypt overlay last.
 HTML_HEADER            = @CMAKE_SOURCE_DIR@/docs/header.html
-HTML_EXTRA_FILES       = @CMAKE_SOURCE_DIR@/docs/coa-forge.js \
+HTML_EXTRA_STYLESHEET  = @DOXYGEN_AWESOME_CSS_DIR@/doxygen-awesome.css \
+                         @CMAKE_SOURCE_DIR@/docs/crypt.css
+HTML_EXTRA_FILES       = @CMAKE_SOURCE_DIR@/docs/crypt.js \
                          @DOXYGEN_AWESOME_CSS_DIR@/doxygen-awesome-darkmode-toggle.js \
                          @DOXYGEN_AWESOME_CSS_DIR@/doxygen-awesome-fragment-copy-button.js \
                          @DOXYGEN_AWESOME_CSS_DIR@/doxygen-awesome-paragraph-link.js \
                          @DOXYGEN_AWESOME_CSS_DIR@/doxygen-awesome-interactive-toc.js \
                          @DOXYGEN_AWESOME_CSS_DIR@/doxygen-awesome-tabs.js
 
-# Image path — kept for future @image html references.
-IMAGE_PATH             = @CMAKE_SOURCE_DIR@/docs/images
-
-# Search — client-side full-text search over all documented symbols + files.
+# --- Search ---------------------------------------------------------------
 SEARCHENGINE           = YES
 SERVER_BASED_SEARCH    = NO
 EXTERNAL_SEARCH        = NO
-SEARCH_INCLUDES        = YES
 
-# ----------------------------------------------------------------
-# Dot / diagrams — auto-detect, so inheritance/collaboration graphs render
-# as SVGs when Graphviz is installed and degrade gracefully otherwise.
-# ----------------------------------------------------------------
-# Set HAVE_DOT = YES after installing Graphviz to get inheritance / include graphs.
+# --- Diagrams -------------------------------------------------------------
 HAVE_DOT               = YES
-DOT_NUM_THREADS        = 0
+DOT_IMAGE_FORMAT       = svg
+INTERACTIVE_SVG        = YES
+DOT_TRANSPARENT        = YES
 CLASS_GRAPH            = YES
 COLLABORATION_GRAPH    = YES
-GROUP_GRAPHS           = YES
 INCLUDE_GRAPH          = YES
 INCLUDED_BY_GRAPH      = YES
 CALL_GRAPH             = NO
 CALLER_GRAPH           = NO
-DIRECTORY_GRAPH        = YES
-DOT_IMAGE_FORMAT       = svg
-INTERACTIVE_SVG        = YES
-DOT_TRANSPARENT        = YES
 
-# ----------------------------------------------------------------
-# Miscellaneous
-# ----------------------------------------------------------------
+# --- Disable other outputs ------------------------------------------------
+GENERATE_LATEX         = NO
+GENERATE_RTF           = NO
+GENERATE_MAN           = NO
+GENERATE_XML           = NO
+GENERATE_DOCBOOK       = NO
+
+# --- Warnings -------------------------------------------------------------
 QUIET                  = YES
+WARNINGS               = YES
 WARN_IF_UNDOCUMENTED   = NO
-WARN_NO_PARAMDOC       = NO
-ALPHABETICAL_INDEX     = YES
+WARN_IF_DOC_ERROR      = YES

@@ -1,4 +1,4 @@
-# Coagula Engine
+# Monad Engine
 
 Small C++17 game engine for learning. OpenGL 3.3, GLFW, GLEW, Bullet, glm.
 
@@ -9,7 +9,7 @@ Small C++17 game engine for learning. OpenGL 3.3, GLFW, GLEW, Bullet, glm.
 ./compile.sh --release  # release build + run
 ```
 
-Binary lands in `bin/<type>/coagula-engine`. The script `cd`s to the repo root so shaders under `assets/` resolve.
+Binary lands in `bin/<type>/monad-engine`. The script `cd`s to the repo root so shaders under `assets/` resolve.
 
 CMake also writes `compile_commands.json` for `clangd`.
 
@@ -150,8 +150,8 @@ if (input.IsKeyPressed(GLFW_KEY_ESCAPE)) SetNeedsToBeClosed(true);
 ## Docs
 
 ```sh
-cmake --build build --target engine-docs
-# open docs/generated/html/index.html
+cmake --build bin/debug --target engine-docs
+# open bin/debug/docs/html/index.html
 ```
 
 ## License

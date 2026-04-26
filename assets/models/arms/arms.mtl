@@ -1,0 +1,22 @@
+# Blender 5.1.0 MTL File: 'arms.blend'
+# www.blender.org
+
+newmtl arm_mat_dark
+Ns 10.000005
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd arm_albedo_dark.png
+
+newmtl arm_mat_pale
+Ns 10.000005
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd arm_albedo_pale.png

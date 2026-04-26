@@ -1,121 +1,29 @@
-@mainpage Coagula Engine
+# Monad Engine {#mainpage}
 
-@htmlonly
-<pre class="coa-ascii" aria-hidden="true">
-   ______   ______    ___     ______   __  __   __       ___
-  / ____/  / __  /   /   |   / ____/  / / / /  / /      /   |
- / /      / / / /   / /| |  / / __   / / / /  / /      / /| |
-/ /___   / /_/ /   / ___ | / /_/ /  / /_/ /  / /___   / ___ |
-\____/   \____/   /_/  |_| \____/   \____/  /_____/  /_/  |_|
-
-       -=[ solvet  ::  et  ::  coagula ]=-
-</pre>
-@endhtmlonly
-
-> _Visita Interiora Terrae Rectificando Invenies Occultum Lapidem._
-
-Coagula is a teaching/learning codebase. A digital grimoire.
-It reduces the complexity of 3D engines to their base essence.
-Small enough to see the whole. Large enough to manifest a world.
-
-@htmlonly<div class="coa-divider" aria-hidden="true"></div>@endhtmlonly
-
-## Get going
-
-@htmlonly
-<pre class="coa-ascii" aria-hidden="true">
-+--[ Coagula (Coagulate/Bind): ]----------------------+
-    The act of binding, solidifying, or synthesizing
-    the purified components back together into a new,
-    more perfect, and fixed form.
-+-----------------------------------------------------+
-</pre>
-@endhtmlonly
-
-| If you want to...                    | Go to                        |
-|--------------------------------------|------------------------------|
-| Compile and run                      | @ref build                   |
-| Know what lives where                | @ref layout                  |
-| Understand the entrypoint            | @ref starting_point          |
-| Follow a step-by-step walk           | @ref tutorials               |
-| Copy-paste a quick snippet           | @ref recipes                 |
-| Read a longer explanation            | @ref guides                  |
-| Regenerate this site                 | @ref build_docs              |
-| Check the license                    | @ref license                 |
-| Browse the API by subsystem          | @ref overview                |
-
-@htmlonly<div class="coa-divider" aria-hidden="true"></div>@endhtmlonly
-
-## One-minute tour
-
-@htmlonly
-<pre class="coa-ascii" aria-hidden="true">
-+--[ ONE-MINUTE-TOUR ]------------------------------+
-|  When the student is ready, the code speaks.      |
-+---------------------------------------------------+
-</pre>
-@endhtmlonly
-
-```cpp
-#include "COA.h"
-
-class Game : public COA::Application {
-public:
-    bool Init() override {
-        m_scene = COA::Scene::Load("scenes/scene.json");
-        COA::Engine::GetInstance().SetScene(m_scene.get());
-        return true;
-    }
-    void RegisterTypes() override {}
-    void Update(float dt) override { m_scene->Update(dt); }
-    void Destroy() override {}
-private:
-    std::shared_ptr<COA::Scene> m_scene;
-};
-
-int main() {
-    auto &e = COA::Engine::GetInstance();
-    e.SetApplication(new Game());
-    e.Init(1280, 720);
-    e.Run();
-    e.Destroy();
-}
+```
+ROBCO INDUSTRIES (TM) TERMLINK PROTOCOL
+MONAD-OS v0.1.4 — UNAUTHORISED ACCESS PROHIBITED
+> CONNECTION ESTABLISHED
 ```
 
-Then:
+Welcome, operator. The **Monad Engine** is a C++17 game engine assembled
+lesson by lesson. This terminal serves as the operator's manual: every
+subsystem, every entry point, every override is mapped here.
 
-```sh
-./compile.sh
-```
+## Status Report
 
-That is the whole boot sequence. Everything else — rendering, physics,
-input, scene graph — is driven by the `Scene` and its `Component`s.
+The engine ships as two linked artifacts:
 
-@htmlonly<div class="coa-divider" aria-hidden="true"></div>@endhtmlonly
+- **`Engine`** — static library containing every subsystem.
+- **`monad-engine`** — host executable that links the library.
 
-## Features at a glance
+Game code subclasses @ref COA::Application and registers with
+@ref COA::Engine before entering the main loop.
 
-@htmlonly
-@endhtmlonly
+## Available Modules
 
-- **Singleton engine** with window, GL context, input, render queue, physics.
-- **Command-queue renderer** — `Mesh` + `Material` paired at submit time.
-- **Component scene graph** — `GameObject` tree, JSON-loadable.
-- **Bullet physics** — static / dynamic / kinematic rigid bodies, capsule character controller.
-- **glTF import** — mesh + skeletal animation, one call.
-- **Shadertoy-style shader sandbox** — `iTime`, `iResolution`, `iMouse` uniforms wired for quick experiments.
+- @ref overview — **Subsystem Map** (architecture overview)
+- @ref build — **Compile / Link / Run** (build instructions)
+- @ref tutorial — **Operator Training** (lessons)
 
-@htmlonly<div class="coa-divider" aria-hidden="true"></div>@endhtmlonly
-
-## Status of the Work
-
-**Educational by design.** No warranty, no bloat, no black boxes.  
-The code is the teacher. The student is the stone. The engine is the fire.
-
-Read it. Rectify it. Coagulate something greater.
-
-**To the pure all things are pure.**
-
-— *Coagula Engine*  
-*Solve et Coagula*
-Educational. No warranty. See @ref license.
+@note Toggle phosphor / amber via the colour switch in the upper-right.

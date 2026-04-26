@@ -1,0 +1,1137 @@
+/* =====================================================================
+   ROBCO TERMLINK — Coagula Engine docs theme
+   Fallout-style green phosphor CRT terminal.
+   Layered overlay on doxygen-awesome-css. Last in stylesheet stack.
+
+   Sections:
+     1.  Variables (dark default + amber alt mode)
+     2.  Global resets, fonts
+     3.  Atmosphere layers (phosphor / dither / scanlines / vignette / curvature)
+     4.  Top status strip + cursor glow
+     5.  Title area, brand, brief
+     6.  Sidebar (#side-nav, #nav-tree)
+     7.  Headings + terminal prompts
+     8.  Body copy
+     9.  Links, paragraphs, lists
+     10. Code: fragments + inline + copy button
+     11. Tables
+     12. Admonition boxes
+     13. Member docs (.memitem / .memproto / .memdoc)
+     14. Search box
+     15. Tabs / nav strips
+     16. Buttons / form inputs / dark toggle
+     17. Scrollbars + selection
+     18. Animations (keyframes)
+     19. Reveal-on-scroll
+     20. Responsive breakpoints
+     21. Light/amber-mode overrides
+     22. Reduced motion + print
+   ===================================================================== */
+
+/* -------------------------------------------------------------- 1. vars */
+html {
+  /* phosphor palette */
+  --term-bg-deep:    #020604;
+  --term-bg:         #040907;
+  --term-panel:      #06120a;
+  --term-raised:     #0a1d10;
+
+  --phos-dim:        #0a8a2a;
+  --phos:            #1aff4d;
+  --phos-bright:     #66ff8a;
+  --phos-blaze:      #aaffbb;
+  --phos-deep:       #03260c;
+  --phos-soft:       rgba(26, 255, 77, 0.12);
+  --phos-glow:       rgba(26, 255, 77, 0.45);
+
+  --amber:           #ffb000;
+  --amber-bright:    #ffd166;
+  --warn-red:        #ff3030;
+  --warn-red-bright: #ff6060;
+
+  /* type */
+  --font-display: "VT323", "Share Tech Mono", ui-monospace, monospace;
+  --font-heading: "VT323", "Share Tech Mono", ui-monospace, monospace;
+  --font-body:    "Share Tech Mono", "IBM Plex Mono", ui-monospace, "Courier New", monospace;
+  --font-ui:      "VT323", "Share Tech Mono", ui-monospace, monospace;
+  --font-code:    "IBM Plex Mono", "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  /* doxygen-awesome overrides */
+  --primary-color:           var(--phos);
+  --primary-dark-color:      var(--phos-bright);
+  --primary-light-color:     var(--phos-dim);
+  --page-background-color:   transparent;
+  --page-foreground-color:   var(--phos);
+  --page-secondary-foreground-color: var(--phos-dim);
+  --separator-color:         rgba(26, 255, 77, 0.28);
+
+  --side-nav-background:     transparent;
+  --side-nav-foreground:     var(--phos);
+  --searchbar-background:    rgba(4, 9, 7, 0.85);
+  --searchbar-border-color:  var(--phos-dim);
+
+  --code-background:         var(--term-bg-deep);
+  --code-foreground:         var(--phos);
+  --fragment-background:     var(--term-bg-deep);
+  --fragment-foreground:     var(--phos);
+  --fragment-keyword:        var(--phos-bright);
+  --fragment-keywordtype:    var(--phos-bright);
+  --fragment-keywordflow:    var(--phos-blaze);
+  --fragment-token:          var(--amber);
+  --fragment-comment:        var(--phos-dim);
+  --fragment-link:           var(--phos-blaze);
+  --fragment-preprocessor:   var(--amber-bright);
+  --fragment-linenumber-color: var(--phos-dim);
+  --fragment-linenumber-background: #02100a;
+  --fragment-linenumber-border: rgba(26,255,77,0.18);
+
+  --memdef-border-color:     var(--phos-dim);
+  --memdef-title-background: linear-gradient(180deg, #07180e 0%, #03100a 100%);
+  --memdef-proto-background: #04140c;
+
+  --tablehead-background:    #07180e;
+  --tablehead-foreground:    var(--phos-bright);
+
+  --note-background:         rgba(26,255,77,0.08);
+  --note-foreground:         var(--phos);
+  --note-color-primary:      var(--phos-bright);
+  --warning-background:      rgba(255,48,48,0.10);
+  --warning-foreground:      var(--warn-red-bright);
+  --warning-color-primary:   var(--warn-red);
+  --attention-background:    rgba(255,176,0,0.12);
+  --attention-foreground:    var(--amber-bright);
+  --attention-color-primary: var(--amber);
+  --todo-background:         rgba(170,255,187,0.08);
+  --todo-foreground:         var(--phos-blaze);
+  --todo-color-primary:      var(--phos-blaze);
+
+  --content-maxwidth:        62rem;
+  --spacing-large:           2rem;
+
+  --term-shadow:             inset 0 0 0 1px rgba(26,255,77,0.18),
+                             0 0 24px -10px var(--phos-glow);
+  --term-shadow-inset:       inset 0 0 60px rgba(26,255,77,0.05),
+                             inset 0 0 0 1px rgba(26,255,77,0.20);
+
+  background-color: var(--term-bg-deep);
+}
+
+html.dark-mode {
+  --primary-color:         var(--phos);
+  --page-background-color: transparent;
+  --page-foreground-color: var(--phos);
+  --side-nav-background:   transparent;
+}
+
+/* ----------------------------------------------------- 2. resets, fonts */
+html, body {
+  background: transparent !important;
+  color: var(--phos);
+  font-family: var(--font-body);
+  font-size: clamp(15px, 14.5px + 0.2vw, 17px);
+  line-height: 1.65;
+  letter-spacing: 0;
+  font-feature-settings: "kern";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+#top, #main-nav, #nav-path, .header, .contents, .textblock,
+#doc-content, #side-nav, #nav-tree {
+  background: transparent !important;
+}
+
+div.contents {
+  background:
+    linear-gradient(180deg, rgba(26,255,77,0.025), rgba(26,255,77,0.005)),
+    rgba(4,9,7,0.55);
+  padding: 1.5rem 1.75rem 3rem;
+  border: 1px solid rgba(26,255,77,0.18);
+  position: relative;
+  box-shadow: var(--term-shadow-inset);
+}
+
+/* ----------------------------------------------- 3. atmosphere layers   */
+.crypt-bg {
+  position: fixed; inset: 0; z-index: -10;
+  pointer-events: none;
+  contain: strict;
+}
+.crypt-stone {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 45%, #082215 0%, #04120a 55%, #010604 100%);
+}
+.crypt-stone::after {
+  /* phosphor noise grain */
+  content: "";
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.10  0 0 0 0 1.00  0 0 0 0 0.30  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/></svg>");
+  background-size: 240px 240px;
+  opacity: 0.07;
+  mix-blend-mode: screen;
+  animation: phos-grain 1.2s steps(4) infinite;
+}
+.crypt-dither {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='4' height='4'><rect width='1' height='1' x='0' y='0' fill='%231aff4d' fill-opacity='0.20'/><rect width='1' height='1' x='2' y='2' fill='%231aff4d' fill-opacity='0.10'/><rect width='1' height='1' x='1' y='3' fill='%231aff4d' fill-opacity='0.06'/><rect width='1' height='1' x='3' y='1' fill='%231aff4d' fill-opacity='0.06'/></svg>");
+  background-size: 4px 4px;
+  opacity: 0.12;
+  mix-blend-mode: screen;
+}
+.crypt-scanlines {
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0,0,0,0)     0,
+    rgba(0,0,0,0)     1px,
+    rgba(0,0,0,0.55)  1px,
+    rgba(0,0,0,0.55)  2px
+  );
+  opacity: 0.55;
+  mix-blend-mode: multiply;
+  animation: scan-drift 8s linear infinite;
+}
+.crypt-vignette {
+  position: absolute; inset: 0;
+  /* CRT corner darken + center glow */
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(26,255,77,0.08) 0%, transparent 35%),
+    radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.65) 95%);
+}
+.crypt-vignette::after {
+  /* CRT curvature corners — quarter-circle masks */
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 0 0,         transparent 16px, rgba(0,0,0,0.85) 22px),
+    radial-gradient(circle at 100% 0,      transparent 16px, rgba(0,0,0,0.85) 22px),
+    radial-gradient(circle at 0 100%,      transparent 16px, rgba(0,0,0,0.85) 22px),
+    radial-gradient(circle at 100% 100%,   transparent 16px, rgba(0,0,0,0.85) 22px);
+  background-size: 50% 50%, 50% 50%, 50% 50%, 50% 50%;
+  background-position: 0 0, 100% 0, 0 100%, 100% 100%;
+  background-repeat: no-repeat;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* ------------------------------------------- 4. top status + ember/canvas */
+.crypt-runes {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 2px; z-index: 100;
+  background: linear-gradient(90deg, transparent, var(--phos-dim) 20%, var(--phos) 50%, var(--phos-dim) 80%, transparent);
+  box-shadow: 0 0 12px var(--phos-glow);
+}
+.crypt-runes__sigil {
+  position: fixed; top: -2px; left: 12px;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: var(--phos);
+  text-shadow: 0 0 8px var(--phos-glow);
+  z-index: 101;
+  pointer-events: none;
+}
+.crypt-runes__sigil::before {
+  content: "ROBCO TERMLINK \2014  COA-OS v0.1.4  \2014  CONNECTION SECURE";
+}
+.crypt-embers {
+  position: fixed; inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 98;
+  mix-blend-mode: screen;
+  opacity: 0.7;
+}
+.crypt-cursor-glow {
+  position: fixed;
+  top: 0; left: 0;
+  width: 360px; height: 360px;
+  pointer-events: none;
+  z-index: 99;
+  transform: translate3d(-50%, -50%, 0);
+  background: radial-gradient(
+    circle,
+    rgba(26,255,77,0.10) 0%,
+    rgba(26,255,77,0.06) 22%,
+    rgba(26,255,77,0.02) 48%,
+    transparent 70%);
+  opacity: 0;
+  transition: opacity 320ms ease;
+  mix-blend-mode: screen;
+  filter: blur(2px);
+}
+.crypt-cursor-glow.is-on { opacity: 1; }
+
+/* whole document subtly flickers like a CRT */
+body { animation: crt-flicker-global 7s ease-in-out infinite; }
+
+/* --------------------------------------------- 5. title area / brand    */
+#titlearea {
+  border-bottom: 1px solid var(--phos-dim);
+  background:
+    linear-gradient(180deg, rgba(8,18,12,0.92) 0%, rgba(4,9,7,0.6) 100%);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.6), 0 0 24px -10px var(--phos-glow);
+  position: relative;
+}
+#titlearea::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: -2px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--phos) 50%, transparent);
+  pointer-events: none;
+}
+#projectname {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 1.8rem + 1.6vw, 3rem);
+  letter-spacing: 2px;
+  color: var(--phos-bright);
+  text-transform: uppercase;
+  text-shadow:
+    0 0 4px var(--phos),
+    0 0 14px var(--phos-glow),
+    0 0 28px rgba(26,255,77,0.25);
+  line-height: 1.05;
+  padding: 0.4rem 0 0.1rem;
+}
+#projectname::before {
+  content: "[ ";
+  color: var(--phos-dim);
+  font-weight: 400;
+}
+#projectname::after {
+  content: " ]";
+  color: var(--phos-dim);
+  font-weight: 400;
+}
+#projectnumber {
+  font-family: var(--font-ui);
+  color: var(--phos-dim);
+  font-size: 1.05rem;
+  letter-spacing: 2px;
+  vertical-align: middle;
+}
+#projectnumber::before { content: "BUILD "; opacity: 0.7; }
+#projectbrief {
+  font-family: var(--font-ui);
+  color: var(--phos);
+  letter-spacing: 2px;
+  font-size: 1.15rem;
+  text-transform: uppercase;
+  padding-bottom: 0.5rem;
+}
+.crypt-prompt   { color: var(--phos-bright); margin-right: 0.35rem; }
+.crypt-brief    { color: var(--phos); }
+.crypt-caret    { color: var(--phos-bright); animation: caret 1.05s steps(1) infinite; margin-left: 1px; }
+
+/* ------------------------------------------------ 6. sidebar / nav-tree */
+#side-nav {
+  border-right: 1px solid var(--phos-dim);
+  background:
+    linear-gradient(180deg, rgba(4,9,7,0.92) 0%, rgba(2,6,4,0.86) 100%) !important;
+  backdrop-filter: blur(4px);
+}
+#nav-tree {
+  background: transparent !important;
+  font-family: var(--font-ui);
+  color: var(--phos);
+  font-size: 1.05rem;
+  letter-spacing: 1px;
+  padding-top: 0.5rem;
+}
+#nav-tree .item {
+  position: relative;
+  padding: 1px 6px 1px 2px;
+  border-left: 2px solid transparent;
+  transition: background 140ms linear, border-color 140ms linear;
+}
+#nav-tree .item:hover {
+  background: rgba(26,255,77,0.10);
+  border-left-color: var(--phos);
+}
+#nav-tree a {
+  color: var(--phos);
+  text-decoration: none;
+  font-family: var(--font-ui);
+  font-size: 1.05rem;
+}
+#nav-tree a:hover { color: var(--phos-bright); text-shadow: 0 0 6px var(--phos-glow); }
+/* Note: doxygen-awesome's `#nav-tree .selected a` uses !important AND
+   var(--primary-color), which equals our background green => invisible.
+   Beat it with a compound selector (.item.selected) — higher specificity
+   than .selected alone — and !important on color. */
+#nav-tree .item.selected,
+#nav-tree div.item.selected {
+  background: var(--phos) !important;
+  border-left-color: var(--phos-bright) !important;
+}
+#nav-tree .item.selected,
+#nav-tree .item.selected *,
+#nav-tree .item.selected a,
+#nav-tree .item.selected a:hover,
+#nav-tree .item.selected a:visited,
+#nav-tree .item.selected span,
+#nav-tree .item.selected .label,
+#nav-tree .item.selected .label a {
+  color: var(--term-bg-deep) !important;
+  text-shadow: none !important;
+}
+#nav-tree .item.selected > a,
+#nav-tree .item.selected a.el {
+  font-weight: 700;
+}
+#nav-tree .item.selected .label a::before {
+  content: "> ";
+  color: var(--term-bg-deep);
+  font-weight: 700;
+  animation: caret 0.7s steps(1) infinite;
+}
+#nav-tree .item.selected .arrow { color: var(--term-bg-deep) !important; }
+#nav-tree .arrow {
+  color: var(--phos-dim);
+  transition: color 120ms linear;
+}
+#nav-tree .item:hover .arrow { color: var(--phos-bright); }
+
+/* ----------------------------------------------- 7. headings + prompts  */
+h1, h2, h3, h4, h5, h6,
+.title, .header .headertitle .title {
+  font-family: var(--font-heading);
+  color: var(--phos-bright);
+  letter-spacing: 2px;
+  font-weight: 400;
+  text-transform: uppercase;
+  text-shadow: 0 0 8px var(--phos-glow);
+}
+h1 {
+  font-size: clamp(2rem, 1.6rem + 1.5vw, 2.6rem);
+  margin: 1.2rem 0 1rem;
+  padding-bottom: 0.5rem;
+  position: relative;
+}
+h1::before {
+  content: ">_ ";
+  color: var(--phos);
+  text-shadow: 0 0 6px var(--phos-glow);
+}
+h1::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: repeating-linear-gradient(90deg,
+    var(--phos) 0, var(--phos) 6px,
+    transparent 6px, transparent 10px);
+  opacity: 0.7;
+}
+h2 {
+  font-size: clamp(1.5rem, 1.3rem + 0.6vw, 1.85rem);
+  margin: 2rem 0 0.8rem;
+  border-bottom: 1px dashed var(--phos-dim);
+  padding-bottom: 0.35rem;
+  position: relative;
+}
+h2::before {
+  content: "// ";
+  color: var(--phos-dim);
+}
+/* memtitle is its own thing; suppress the generic h2 prefix on member titles */
+h2.memtitle::before { content: "$ "; }
+h2.memtitle { border-bottom: 0; }
+/* groupheader (e.g. "Public Member Functions") = full-width banner */
+h2.groupheader {
+  margin: 2rem 0 0;
+  padding: 0.4rem 0.75rem;
+  background: linear-gradient(180deg, #07180e, #03100a);
+  border: 1px solid var(--phos-dim);
+  border-bottom: 1px solid var(--phos);
+  font-family: var(--font-ui);
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  color: var(--phos-bright);
+  text-shadow: 0 0 6px var(--phos-glow);
+}
+h2.groupheader::before { content: "[ "; color: var(--phos-dim); }
+h2.groupheader::after  { content: " ]"; color: var(--phos-dim); }
+h3 {
+  font-size: clamp(1.2rem, 1.1rem + 0.4vw, 1.4rem);
+  color: var(--phos);
+  margin: 1.6rem 0 0.6rem;
+  letter-spacing: 2.5px;
+}
+h3::before { content: "[ "; color: var(--phos-dim); }
+h3::after  { content: " ]"; color: var(--phos-dim); }
+h4 {
+  font-size: 1.05rem;
+  color: var(--phos-bright);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+h4::before { content: "* "; color: var(--phos-dim); }
+
+/* terminal-prompt prefix on first paragraph (JS adds .has-dropcap) */
+.has-dropcap {
+  position: relative;
+  padding-left: 1.4rem;
+}
+.has-dropcap::before {
+  content: ">";
+  position: absolute;
+  left: 0; top: 0.05em;
+  color: var(--phos-bright);
+  font-family: var(--font-ui);
+  font-size: 1.3em;
+  text-shadow: 0 0 6px var(--phos-glow);
+  animation: caret 1.05s steps(1) infinite;
+}
+
+/* -------------------------------------------------------- 8. body copy  */
+p, li, dd { color: var(--phos); }
+strong, b { color: var(--phos-bright); font-weight: 700; }
+em, i     { color: var(--amber); font-style: italic; }
+hr {
+  border: 0;
+  height: 1px;
+  background: repeating-linear-gradient(90deg,
+    var(--phos) 0, var(--phos) 8px,
+    transparent 8px, transparent 14px);
+  opacity: 0.7;
+  margin: 2rem 0;
+}
+
+/* ---------------------------------------------- 9. links + interactions */
+a, a:visited, a.el, a.elRef {
+  color: var(--phos-bright);
+  text-decoration: none;
+  background-image: linear-gradient(var(--phos-bright), var(--phos-bright));
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 200ms cubic-bezier(.2,.8,.2,1), color 140ms linear, text-shadow 140ms linear;
+  padding-bottom: 1px;
+}
+a:hover, a.el:hover {
+  color: var(--phos-blaze);
+  background-size: 100% 1px;
+  text-shadow: 0 0 8px var(--phos-glow);
+}
+a.psx-glitch {
+  animation: psx-jitter 180ms steps(3, end);
+  text-shadow: 0 0 10px var(--phos), 0 0 18px var(--phos-glow);
+}
+/* permalinks (◆ next to memtitle) — quiet by default */
+a.anchor, .permalink a {
+  background-image: none;
+  color: var(--phos-dim);
+}
+.permalink a:hover { color: var(--phos-bright); text-shadow: 0 0 6px var(--phos-glow); }
+
+/* ----------------------------------------- 10. code: fragments + inline */
+div.fragment, pre.fragment {
+  background: var(--fragment-background) !important;
+  color: var(--fragment-foreground);
+  font-family: var(--font-code);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  border: 1px solid var(--phos-dim);
+  border-radius: 0;
+  padding: 1rem 1.1rem !important;
+  margin: 1.2rem 0;
+  position: relative;
+  overflow: auto;
+  box-shadow:
+    inset 0 0 0 1px rgba(0,0,0,0.6),
+    inset 0 0 80px rgba(26,255,77,0.06),
+    0 0 24px -10px var(--phos-glow);
+}
+div.fragment::before {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(to bottom,
+      rgba(0,0,0,0)   0,
+      rgba(0,0,0,0)   1px,
+      rgba(0,0,0,.40) 1px,
+      rgba(0,0,0,.40) 2px);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  opacity: 0.55;
+}
+div.fragment::after {
+  /* phosphor screen tint */
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 50%, rgba(26,255,77,0.05), transparent 75%);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+div.fragment:hover { animation: crt-flicker 4s ease-in-out infinite; }
+
+/* "MONITOR" header strip on top of code blocks */
+div.fragment > .line:first-child { position: relative; }
+
+div.fragment .keyword,    .keyword    { color: var(--fragment-keyword) !important; font-weight: 500; }
+div.fragment .keywordtype,.keywordtype{ color: var(--fragment-keywordtype) !important; }
+div.fragment .keywordflow,.keywordflow{ color: var(--fragment-keywordflow) !important; font-weight: 500; }
+div.fragment .stringliteral, .stringliteral { color: var(--amber) !important; }
+div.fragment .charliteral,   .charliteral   { color: var(--amber-bright) !important; }
+div.fragment .comment,       .comment       { color: var(--phos-dim) !important; font-style: italic; }
+div.fragment .preprocessor,  .preprocessor  { color: var(--fragment-preprocessor) !important; }
+div.fragment .lineno,        .lineno        {
+  color: var(--fragment-linenumber-color) !important;
+  background: var(--fragment-linenumber-background) !important;
+  border-right: 1px solid var(--fragment-linenumber-border) !important;
+  user-select: none;
+}
+div.fragment a.code, a.code { color: var(--fragment-link) !important; }
+div.fragment a.code::before, div.fragment a.code::after,
+a.code::before, a.code::after { content: none; }
+
+/* inline code */
+code, tt, .tt, span.icode {
+  font-family: var(--font-code);
+  background: rgba(26,255,77,0.07);
+  color: var(--phos-bright);
+  border: 1px solid rgba(26,255,77,0.22);
+  padding: 1px 6px;
+  font-size: 0.95em;
+  letter-spacing: 0.5px;
+  border-radius: 0;
+}
+
+/* fragment copy button */
+doxygen-awesome-fragment-copy-button,
+.doxygen-awesome-fragment-copy-button {
+  background: rgba(4,9,7,0.85) !important;
+  border: 1px solid var(--phos-dim) !important;
+  color: var(--phos) !important;
+  border-radius: 0 !important;
+  font-family: var(--font-ui) !important;
+  letter-spacing: 1.5px;
+}
+doxygen-awesome-fragment-copy-button svg { fill: var(--phos) !important; }
+doxygen-awesome-fragment-copy-button:hover {
+  background: var(--phos) !important;
+  color: var(--term-bg-deep) !important;
+  text-shadow: none !important;
+}
+doxygen-awesome-fragment-copy-button:hover svg,
+doxygen-awesome-fragment-copy-button.success:hover svg {
+  fill: var(--term-bg-deep) !important;
+}
+
+/* ------------------------------------------------------- 11. tables    */
+/* Only style real content tables. Doxygen reuses <table> for layout
+   inside .memname / .mlabels / .fieldtable / .directory — those must
+   stay unstyled or they render as misplaced grey boxes. */
+table.markdownTable, table.doxtable {
+  border-collapse: separate;
+  border-spacing: 0;
+  background: rgba(26,255,77,0.025);
+  border: 1px solid var(--phos-dim);
+  margin: 1.2rem 0;
+  font-family: var(--font-body);
+  width: 100%;
+}
+table.markdownTable th, table.doxtable th {
+  background: var(--tablehead-background);
+  color: var(--phos-bright);
+  font-family: var(--font-ui);
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--phos) !important;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.95rem;
+  text-shadow: 0 0 6px var(--phos-glow);
+  text-align: left;
+}
+table.markdownTable td, table.doxtable td {
+  border: none;
+  border-bottom: 1px dashed rgba(26,255,77,0.18);
+  padding: 0.45rem 0.9rem;
+  background: transparent;
+}
+table.markdownTable tr:hover td, table.doxtable tr:hover td {
+  background: rgba(26,255,77,0.08);
+  box-shadow: inset 0 -1px 0 var(--phos);
+}
+
+/* Layout-only tables Doxygen scatters inside member docs — keep invisible. */
+table.memname, table.mlabels, table.fieldtable {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-collapse: collapse;
+  width: auto;
+  margin: 0;
+}
+table.memname td, table.mlabels td, table.fieldtable td {
+  border: 0 !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
+table.memname tr:hover td, table.mlabels tr:hover td { background: transparent !important; box-shadow: none !important; }
+
+/* --------------------------------------------- 12. admonition boxes    */
+dl.section.note, dl.section.warning, dl.section.attention,
+dl.section.todo, dl.section.deprecated, dl.section.remark,
+dl.section.bug, dl.section.test, dl.section.pre, dl.section.post,
+dl.section.invariant {
+  position: relative;
+  border: 1px solid;
+  border-left-width: 3px;
+  padding: 0.85rem 1.1rem 0.85rem 2.4rem;
+  margin: 1.2rem 0;
+  font-family: var(--font-body);
+  background-color: var(--note-background);
+}
+dl.section.note      { border-color: var(--phos);           background: var(--note-background); }
+dl.section.warning   { border-color: var(--warn-red);       background: var(--warning-background); }
+dl.section.attention { border-color: var(--amber);          background: var(--attention-background); }
+dl.section.todo      { border-color: var(--phos-blaze);     background: var(--todo-background); }
+dl.section.deprecated{ border-color: var(--warn-red);       background: rgba(255,48,48,0.08); }
+
+dl.section.note dt, dl.section.warning dt, dl.section.attention dt,
+dl.section.todo dt, dl.section.deprecated dt {
+  font-family: var(--font-ui);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: var(--phos-bright);
+  margin-bottom: 0.35rem;
+  text-shadow: 0 0 6px var(--phos-glow);
+}
+dl.section.warning dt   { color: var(--warn-red-bright); text-shadow: 0 0 6px rgba(255,48,48,0.45); }
+dl.section.attention dt { color: var(--amber-bright);   text-shadow: 0 0 6px rgba(255,176,0,0.5); }
+
+dl.section::before {
+  position: absolute;
+  left: 0.7rem; top: 0.85rem;
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+dl.section.note::before      { content: "[i]"; color: var(--phos-bright); }
+dl.section.warning::before   { content: "[!]"; color: var(--warn-red-bright); animation: warn-blink 1.1s steps(1) infinite; }
+dl.section.attention::before { content: "[*]"; color: var(--amber-bright); }
+dl.section.todo::before      { content: "[~]"; color: var(--phos-blaze); }
+dl.section.deprecated::before{ content: "[X]"; color: var(--warn-red); }
+
+/* ----------------------------------------------- 13. member docs       */
+/* Member-function title (one per function, sits above .memitem) */
+h2.memtitle {
+  display: inline-block;
+  margin: 1.6rem 0 -1px;
+  padding: 0.35rem 0.9rem;
+  font-family: var(--font-ui);
+  font-size: 1.15rem;
+  letter-spacing: 1.5px;
+  text-transform: none;
+  color: var(--phos-bright);
+  background: linear-gradient(180deg, #07180e, #03100a);
+  border: 1px solid var(--phos-dim);
+  border-bottom: 0;
+  text-shadow: 0 0 6px var(--phos-glow);
+}
+h2.memtitle::before { content: "$ "; color: var(--phos-dim); }
+h2.memtitle::after  { content: none; }
+h2.memtitle .permalink { margin-right: 0.25rem; }
+
+.memitem {
+  background: linear-gradient(180deg, var(--term-panel), var(--term-bg));
+  border: 1px solid var(--phos-dim);
+  border-radius: 0;
+  margin: 0 0 1.6rem;
+  position: relative;
+  box-shadow: var(--term-shadow);
+  overflow: visible;
+}
+/* terminal corner ticks (decorative; non-clipping) */
+.memitem::before, .memitem::after {
+  content: "";
+  position: absolute;
+  width: 10px; height: 10px;
+  border: 1px solid var(--phos);
+  pointer-events: none;
+  box-shadow: 0 0 6px var(--phos-glow);
+}
+.memitem::before { top: -1px; left: -1px;  border-right: 0; border-bottom: 0; }
+.memitem::after  { top: -1px; right: -1px; border-left: 0;  border-bottom: 0; }
+
+.memproto {
+  background: var(--memdef-proto-background) !important;
+  font-family: var(--font-code) !important;
+  color: var(--phos-bright);
+  border: 0 !important;
+  border-bottom: 1px solid var(--phos-dim) !important;
+  padding: 0.9rem 1.1rem !important;
+  font-size: 0.96rem;
+  position: relative;
+  overflow-x: auto;
+}
+.memproto, .memproto * { box-shadow: none !important; }
+.memproto .memname { font-family: var(--font-code); color: var(--phos-bright); white-space: pre-wrap; }
+.memproto .paramname, .memproto em.paramname,
+.memproto .paramname em, .memproto em {
+  color: var(--amber);
+  font-style: italic;
+}
+.memproto .paramtype       { color: var(--phos-dim); }
+.memproto a, .memproto a.el { color: var(--phos-bright) !important; }
+
+/* tag chips: "pure virtual", "nodiscard", "abstract", … */
+.mlabels-right { vertical-align: top; }
+span.mlabels { display: inline-flex; gap: 4px; }
+span.mlabel {
+  display: inline-block;
+  padding: 1px 7px;
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--phos);
+  background: rgba(26,255,77,0.08);
+  border: 1px solid var(--phos-dim);
+  border-radius: 0;
+  line-height: 1.4;
+  text-shadow: none;
+}
+span.mlabel.pure-virtual { color: var(--amber);          border-color: var(--amber);          background: rgba(255,176,0,0.10); }
+span.mlabel.nodiscard    { color: var(--phos-blaze);     border-color: var(--phos-blaze);     background: rgba(170,255,187,0.08); }
+span.mlabel.abstract     { color: var(--warn-red-bright);border-color: var(--warn-red);       background: rgba(255,48,48,0.08); }
+span.mlabel.deprecated   { color: var(--warn-red);       border-color: var(--warn-red);       background: rgba(255,48,48,0.10); }
+
+.memdoc {
+  padding: 1rem 1.2rem !important;
+  font-family: var(--font-body);
+  background: transparent !important;
+  color: var(--phos);
+  line-height: 1.65;
+}
+.memdoc dl.section { margin: 0.6rem 0; }
+p.definition {
+  font-family: var(--font-ui);
+  color: var(--phos-dim);
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  margin-top: 0.6rem;
+}
+p.definition::before { content: "// "; color: var(--phos-dim); }
+
+/* class index / member-decl tables */
+table.memberdecls {
+  background: transparent;
+  border: 1px solid var(--phos-dim);
+  border-top: 0;
+  margin: 0 0 1.6rem;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+table.memberdecls tr.heading td { padding: 0; background: transparent; }
+table.memberdecls tr.heading h2.groupheader {
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--phos-dim);
+  border-bottom: 1px solid var(--phos);
+}
+table.memberdecls td.memItemLeft,
+table.memberdecls td.memItemRight,
+table.memberdecls td.memTemplItemLeft,
+table.memberdecls td.memTemplItemRight,
+table.memberdecls td.memTemplParams,
+table.memberdecls td.mdescLeft,
+table.memberdecls td.mdescRight {
+  background: transparent !important;
+  border-top: 1px dashed rgba(26,255,77,0.18) !important;
+  padding: 0.45rem 0.9rem;
+  font-family: var(--font-code);
+  font-size: 0.93rem;
+  color: var(--phos);
+  vertical-align: top;
+}
+table.memberdecls td.memItemLeft   { white-space: nowrap; color: var(--phos-dim); }
+table.memberdecls td.mdescLeft     { width: 1px; }
+table.memberdecls td.mdescRight    { font-family: var(--font-body); color: var(--phos); padding-bottom: 0.7rem; }
+table.memberdecls tr.separator td  { padding: 0 !important; border: 0 !important; height: 0; }
+
+/* ------------------------------------------------ 14. search box       */
+#MSearchBox {
+  background: var(--searchbar-background) !important;
+  border: 1px solid var(--phos-dim) !important;
+  border-radius: 0 !important;
+  box-shadow: inset 0 0 8px rgba(0,0,0,0.55);
+  transition: box-shadow 200ms ease, border-color 200ms ease;
+}
+#MSearchBox:focus-within,
+#MSearchBox.focused {
+  border-color: var(--phos) !important;
+  box-shadow:
+    inset 0 0 8px rgba(0,0,0,0.55),
+    0 0 0 1px var(--phos),
+    0 0 28px -6px var(--phos-glow);
+}
+#MSearchField {
+  font-family: var(--font-ui) !important;
+  color: var(--phos-bright) !important;
+  font-size: 1.1rem !important;
+  letter-spacing: 2px;
+  background: transparent !important;
+  text-transform: uppercase;
+}
+#MSearchField::placeholder { color: var(--phos-dim); }
+#MSearchSelect, .left .MSearchSelect { color: var(--phos) !important; }
+#MSearchResultsWindow {
+  background: var(--term-panel) !important;
+  border: 1px solid var(--phos-dim) !important;
+  box-shadow: var(--term-shadow);
+  font-family: var(--font-body);
+  color: var(--phos);
+}
+
+/* ----------------------------------------- 15. tabs / nav strips        */
+.tabs, .tabs2, .tabs3, .navpath {
+  background: rgba(4,9,7,0.65) !important;
+  border-bottom: 1px solid var(--phos-dim);
+  font-family: var(--font-ui);
+}
+.tablist li a, .tablist li a span, .navpath ul li a {
+  color: var(--phos) !important;
+  text-shadow: none !important;
+  letter-spacing: 2px;
+  font-family: var(--font-ui);
+  font-size: 1.05rem;
+  background: transparent !important;
+  text-transform: uppercase;
+}
+.tablist li.current a, .tablist li:hover a {
+  color: var(--phos-bright) !important;
+  background: rgba(26,255,77,0.10) !important;
+  border-bottom: 2px solid var(--phos) !important;
+  text-shadow: 0 0 6px var(--phos-glow) !important;
+}
+.navpath ul { background: transparent !important; box-shadow: none !important; }
+.navpath ul li.navelem a { color: var(--phos) !important; }
+
+/* -------------------------------- 16. buttons / inputs / dark toggle    */
+button, input[type="button"], input[type="submit"] {
+  background: transparent;
+  color: var(--phos);
+  border: 1px solid var(--phos-dim);
+  border-radius: 0;
+  font-family: var(--font-ui);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: background 140ms linear, color 140ms linear, transform 100ms linear, box-shadow 140ms linear;
+}
+button svg, button path { fill: currentColor; transition: fill 140ms linear; }
+button:hover, input[type="button"]:hover, input[type="submit"]:hover {
+  background: var(--phos);
+  color: var(--term-bg-deep) !important;
+  text-shadow: none;
+  box-shadow: 0 0 14px -2px var(--phos-glow);
+}
+button:hover svg, button:hover path { fill: var(--term-bg-deep); }
+button:active { transform: translateY(1px); }
+
+doxygen-awesome-dark-mode-toggle,
+.doxygen-awesome-dark-mode-toggle {
+  background: transparent !important;
+  border: 1px solid var(--phos-dim) !important;
+  color: var(--phos) !important;
+  border-radius: 0 !important;
+  width: 32px !important; height: 32px !important;
+  transition: box-shadow 200ms ease, color 200ms ease, background 200ms ease;
+}
+doxygen-awesome-dark-mode-toggle svg,
+doxygen-awesome-dark-mode-toggle path { fill: var(--phos) !important; transition: fill 200ms ease; }
+doxygen-awesome-dark-mode-toggle:hover {
+  color: var(--phos-bright) !important;
+  box-shadow: 0 0 0 1px var(--phos), 0 0 18px -4px var(--phos-glow) !important;
+}
+doxygen-awesome-dark-mode-toggle:hover svg,
+doxygen-awesome-dark-mode-toggle:hover path { fill: var(--phos-bright) !important; }
+
+/* --------------------------------------------- 17. scrollbars + select  */
+::selection { background: var(--phos); color: var(--term-bg-deep); text-shadow: none; }
+* { scrollbar-color: var(--phos) var(--term-bg); scrollbar-width: thin; }
+::-webkit-scrollbar          { width: 10px; height: 10px; }
+::-webkit-scrollbar-track    { background: var(--term-bg); border-left: 1px solid var(--phos-dim); }
+::-webkit-scrollbar-thumb    {
+  background: var(--phos-dim);
+  border: 1px solid var(--term-bg-deep);
+  box-shadow: inset 0 0 0 1px var(--phos);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--phos); box-shadow: 0 0 8px var(--phos-glow); }
+
+/* ---------------------------------------------- 18. animations          */
+@keyframes caret {
+  50% { opacity: 0; }
+}
+@keyframes warn-blink {
+  50% { opacity: 0.35; }
+}
+@keyframes psx-jitter {
+  0%   { transform: translateX(-1px); }
+  33%  { transform: translateX( 1px); }
+  66%  { transform: translateX(-1px); }
+  100% { transform: translateX(0); }
+}
+@keyframes crt-flicker {
+  0%, 100% { filter: brightness(1.00); }
+  47%      { filter: brightness(0.94); }
+  48%      { filter: brightness(1.06); }
+  49%      { filter: brightness(0.97); }
+  92%      { filter: brightness(0.99); }
+}
+@keyframes crt-flicker-global {
+  0%, 100% { opacity: 1.000; }
+  47%      { opacity: 0.985; }
+  48%      { opacity: 1.000; }
+  49%      { opacity: 0.992; }
+  92%      { opacity: 1.000; }
+}
+@keyframes phos-grain {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(-1px, 1px); }
+  50%  { transform: translate(1px, -1px); }
+  75%  { transform: translate(-1px, -1px); }
+  100% { transform: translate(0, 0); }
+}
+@keyframes scan-drift {
+  0%   { background-position: 0 0; }
+  100% { background-position: 0 4px; }
+}
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(8px); filter: blur(2px); }
+  to   { opacity: 1; transform: translateY(0);   filter: blur(0); }
+}
+
+/* ----------------------------------------- 19. reveal-on-scroll          */
+.crypt-reveal {
+  opacity: 0;
+  transform: translateY(8px);
+  will-change: opacity, transform;
+}
+.crypt-reveal.is-revealed {
+  animation: reveal-up 520ms cubic-bezier(.2,.8,.2,1) both;
+}
+
+#titlearea { animation: reveal-up 420ms cubic-bezier(.2,.8,.2,1) both; }
+#side-nav  { animation: reveal-up 520ms 80ms  cubic-bezier(.2,.8,.2,1) both; }
+.contents  { animation: reveal-up 620ms 160ms cubic-bezier(.2,.8,.2,1) both; }
+
+/* --------------------------------------------- 20. responsive          */
+@media (max-width: 1200px) {
+  div.contents { padding: 1.25rem 1.25rem 2.5rem; }
+}
+@media (max-width: 900px) {
+  #projectbrief { font-size: 1rem; letter-spacing: 1.5px; }
+  div.fragment  { font-size: 0.88rem; padding: 0.85rem 0.95rem !important; }
+  .crypt-cursor-glow { display: none; }
+  .crypt-embers { opacity: 0.45; }
+  .crypt-runes__sigil::before { content: "ROBCO TERMLINK"; }
+}
+@media (max-width: 768px) {
+  .crypt-dither, .crypt-embers { display: none; }
+  .crypt-scanlines { opacity: 0.35; }
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.35rem; }
+  div.contents { padding: 1rem 1rem 2rem; }
+}
+@media (max-width: 480px) {
+  #projectbrief { display: none; }
+  .crypt-runes__sigil { display: none; }
+  table.markdownTable, table.doxtable {
+    display: block; overflow-x: auto;
+    -webkit-mask-image: linear-gradient(90deg, #000 92%, transparent);
+            mask-image: linear-gradient(90deg, #000 92%, transparent);
+  }
+}
+@media (pointer: coarse) {
+  .crypt-cursor-glow { display: none; }
+}
+
+/* ---------------------------------------- 21. amber alt mode (light-mode toggle) */
+/* Reuses doxygen-awesome's light-mode toggle to flip green->amber phosphor. */
+html.light-mode {
+  --phos-dim:    #b07a00;
+  --phos:        #ffb000;
+  --phos-bright: #ffd166;
+  --phos-blaze:  #fff0a8;
+  --phos-deep:   #2a1a00;
+  --phos-soft:   rgba(255,176,0,0.12);
+  --phos-glow:   rgba(255,176,0,0.45);
+
+  --term-bg-deep: #050300;
+  --term-bg:      #0a0600;
+  --term-panel:   #140d00;
+  --term-raised:  #1a1100;
+
+  --primary-color:         var(--phos);
+  --primary-dark-color:    var(--phos-bright);
+  --primary-light-color:   var(--phos-dim);
+  --page-foreground-color: var(--phos);
+  --side-nav-foreground:   var(--phos);
+
+  --code-foreground:       var(--phos);
+  --fragment-foreground:   var(--phos);
+  --fragment-keyword:      var(--phos-bright);
+  --fragment-keywordtype:  var(--phos-bright);
+  --fragment-keywordflow:  var(--phos-blaze);
+  --fragment-comment:      var(--phos-dim);
+  --fragment-link:         var(--phos-blaze);
+
+  --note-background:       rgba(255,176,0,0.08);
+  --attention-background:  rgba(255,176,0,0.15);
+
+  background-color: var(--term-bg-deep);
+}
+html.light-mode .crypt-stone {
+  background:
+    radial-gradient(ellipse at 50% 45%, #221500 0%, #120a00 55%, #050300 100%);
+}
+html.light-mode .crypt-stone::after {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1.00  0 0 0 0 0.69  0 0 0 0 0.00  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/></svg>");
+}
+html.light-mode .crypt-dither {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='4' height='4'><rect width='1' height='1' x='0' y='0' fill='%23ffb000' fill-opacity='0.20'/><rect width='1' height='1' x='2' y='2' fill='%23ffb000' fill-opacity='0.10'/><rect width='1' height='1' x='1' y='3' fill='%23ffb000' fill-opacity='0.06'/><rect width='1' height='1' x='3' y='1' fill='%23ffb000' fill-opacity='0.06'/></svg>");
+}
+html.light-mode .crypt-vignette {
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(255,176,0,0.08) 0%, transparent 35%),
+    radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.65) 95%);
+}
+html.light-mode #titlearea {
+  background: linear-gradient(180deg, rgba(20,13,0,0.92), rgba(10,6,0,0.6));
+}
+
+/* ------------------------------------------ 22. reduced motion + print */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  body { animation: none !important; opacity: 1 !important; }
+  .crypt-cursor-glow, .crypt-embers { display: none; }
+  .crypt-reveal { opacity: 1; transform: none; }
+}
+
+@media print {
+  .crypt-bg, .crypt-runes, .crypt-cursor-glow, .crypt-embers,
+  #side-nav, .tabs, .tabs2, .tabs3, .navpath, #MSearchBox { display: none !important; }
+  html, body { background: #fff !important; color: #000 !important; text-shadow: none !important; }
+  div.contents { box-shadow: none !important; padding: 0 !important; border: 0 !important; }
+  h1, h2, h3, h4 { color: #000 !important; text-shadow: none !important; }
+  a { color: #000 !important; text-decoration: underline; background: none !important; }
+  a::before, a::after { content: none !important; }
+  div.fragment { background: #f4f4f4 !important; color: #000 !important; border: 1px solid #999 !important; }
+  div.fragment::before, div.fragment::after { display: none !important; }
+}

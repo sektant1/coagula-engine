@@ -14,6 +14,10 @@ concurrency:
   group: pages
   cancel-in-progress: true
 
+env:
+  BUILD_DIR: build/docs
+  HTML_OUT:  build/docs/docs/html
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,28 +25,32 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Doxygen + Graphviz
+      - name: Install Doxygen + Graphviz + CMake
         run: |
           sudo apt-get update
-          sudo apt-get install -y doxygen graphviz
+          sudo apt-get install -y doxygen graphviz cmake
 
-      - name: Generate Doxyfile from template
+      - name: Configure (fetches doxygen-awesome-css via CMake FetchContent)
         run: |
-          sed "s|@CMAKE_SOURCE_DIR@|${GITHUB_WORKSPACE}|g" Doxyfile.in > Doxyfile
-          # Tag docs with commit short SHA
-          SHORT_SHA=$(git rev-parse --short HEAD)
-          sed -i "s|PROJECT_NUMBER         = \"dev\"|PROJECT_NUMBER         = \"${SHORT_SHA}\"|" Doxyfile
+          cmake -B "${BUILD_DIR}" -S . \
+                -DCMAKE_BUILD_TYPE=Release \
+                -DBUILD_TESTING=OFF
 
-      - name: Run Doxygen
-        run: doxygen Doxyfile
+      - name: Tag PROJECT_NUMBER with short SHA
+        run: |
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          sed -i "s|^PROJECT_NUMBER\s*=.*|PROJECT_NUMBER         = \"${SHORT_SHA}\"|" "${BUILD_DIR}/Doxyfile"
+
+      - name: Build engine-docs target
+        run: cmake --build "${BUILD_DIR}" --target engine-docs
 
       - name: Add .nojekyll
-        run: touch docs/generated/html/.nojekyll
+        run: touch "${HTML_OUT}/.nojekyll"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/generated/html
+          path: ${{ env.HTML_OUT }}
 
   deploy:
     needs: build
