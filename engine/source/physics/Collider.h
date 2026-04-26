@@ -31,21 +31,30 @@ protected:
     btCollisionShape *m_shape = nullptr;
 };
 
-/// @ingroup mnd_physics @brief Axis-aligned box collider; @p extents are *half*-sizes.
+/**
+ * @ingroup mnd_physics
+ * @brief Axis-aligned box collider; @p extents are *half*-sizes.
+ */
 class BoxCollider : public Collider
 {
 public:
     BoxCollider(const glm::vec3 &extents);
 };
 
-/// @ingroup mnd_physics @brief Sphere collider of the given @p radius.
+/**
+ * @ingroup mnd_physics
+ * @brief Sphere collider of the given @p radius.
+ */
 class SphereCollider : public Collider
 {
 public:
     SphereCollider(float radius);
 };
 
-/// @ingroup mnd_physics @brief Y-axis capsule collider (cylinder + hemispherical caps).
+/**
+ * @ingroup mnd_physics
+ * @brief Y-axis capsule collider (cylinder + hemispherical caps).
+ */
 class CapsuleCollider : public Collider
 {
 public:

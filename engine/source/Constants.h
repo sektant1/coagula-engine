@@ -1,3 +1,20 @@
+/**
+ * @file Constants.h
+ * @ingroup mnd_types
+ * @brief Engine-wide compile-time tunables and ANSI colour codes.
+ *
+ * Defaults that several subsystems read at startup live here so you can
+ * adjust window size, gravity, internal-resolution presets, log buffer
+ * limits and a few other knobs in one place. All values are
+ * `inline constexpr` to give every translation unit zero-cost access
+ * without ODR worries.
+ *
+ * @code
+ *   engine.Init(kDefaultWindowWidth, kDefaultWindowHeight);
+ *   physics.SetGravity({0.0F, kGravity, 0.0F});
+ * @endcode
+ */
+
 #pragma once
 
 #include <cstddef>

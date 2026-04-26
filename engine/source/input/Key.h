@@ -1,11 +1,28 @@
-#pragma once
+/**
+ * @file Key.h
+ * @ingroup mnd_input
+ * @brief Strongly-typed key codes; values mirror GLFW.
+ *
+ * Underlying integer values are deliberately identical to `GLFW_KEY_*`
+ * and `GLFW_MOUSE_BUTTON_*` (USB HID usage codes for letters/digits) so
+ * an `mnd::Key` can be passed straight to GLFW callbacks without a
+ * translation table, while still giving the C++ side type safety.
+ *
+ * @code
+ *   if (input.IsKeyDown(mnd::Key::W)) { ... }
+ *   if (input.IsMouseButtonPressed(mnd::Key::MouseLeft)) { ... }
+ * @endcode
+ */
 
-// Values mirror GLFW_KEY_* / GLFW_MOUSE_BUTTON_* (USB HID usage codes for letters/digits)
-// so engine code can pass an enum and the underlying int still indexes GLFW callback args.
+#pragma once
 
 namespace mnd
 {
 
+/**
+ * @ingroup mnd_input
+ * @brief Keyboard key + mouse button identifier (GLFW-compatible values).
+ */
 enum class Key : int
 {
     Unknown = -1,

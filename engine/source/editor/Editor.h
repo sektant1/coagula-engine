@@ -1,3 +1,21 @@
+/**
+ * @file Editor.h
+ * @ingroup mnd_editor
+ * @brief In-game ImGui overlay: hierarchy, inspector, console, stats.
+ *
+ * The Engine creates one Editor and drives its three-phase frame from
+ * mnd::Engine::Run(): `BeginFrame()` after polling input, `Draw()` to
+ * lay out every panel, and `EndFrame()` after the scene render so the
+ * GUI composites on top.
+ *
+ * Toggle visibility at runtime, or register your own debug panels:
+ * @code
+ *   engine.GetEditor().RegisterPanel("My Tool", [] {
+ *       ImGui::Text("hello from a custom panel");
+ *   });
+ * @endcode
+ */
+
 #pragma once
 
 #include <functional>
@@ -13,29 +31,42 @@ namespace mnd
 
 class GameObject;
 
-/// ImGui-based in-game editor overlay. Owned by the Engine singleton and driven
-/// from Engine::Run(). Provides scene hierarchy, inspector, asset browser, render
-/// settings (including internal-resolution pixelation) and stats panels.
+/**
+ * @ingroup mnd_editor
+ * @brief ImGui-based in-game editor overlay.
+ *
+ * Owned by the Engine singleton and driven from Engine::Run(). Provides
+ * scene hierarchy, inspector, asset browser, render settings (including
+ * internal-resolution pixelation) and stats panels.
+ */
 class Editor
 {
 public:
+    /// Custom-panel callback — render any ImGui widgets you like inside.
     using PanelFn = std::function<void()>;
 
+    /// Initialise ImGui against the given GLFW window. Call once at startup.
     bool Init(GLFWwindow *window);
+    /// Tear down ImGui state. Call before destroying the GL context.
     void Shutdown();
 
     void BeginFrame();  ///< Call after glfwPollEvents.
     void Draw();        ///< Builds all panels (no GL state changes yet).
     void EndFrame();    ///< Renders the ImGui draw data to the current framebuffer.
 
-    bool IsVisible() const { return m_visible; }
-    void ToggleVisible() { m_visible = !m_visible; }
+    bool IsVisible() const { return m_visible; }       ///< Editor overlay currently shown?
+    void ToggleVisible() { m_visible = !m_visible; }   ///< Flip overlay visibility.
 
+    /// Tell game code whether ImGui is consuming the mouse this frame
+    /// (e.g. when hovering a panel) — skip your own click handling if so.
     bool WantsCaptureMouse() const;
+    /// Same as WantsCaptureMouse() but for the keyboard.
     bool WantsCaptureKeyboard() const;
 
+    /// Stats panel hook: report per-frame draw call count.
     void NotifyDrawCount(int n) { m_lastDrawCount = n; }
 
+    /// Register a custom ImGui panel rendered alongside the built-ins.
     void RegisterPanel(std::string name, PanelFn fn)
     {
         m_customPanels.emplace_back(std::move(name), std::move(fn));

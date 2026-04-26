@@ -1,5 +1,5 @@
 # =============================================================================
-# Monad Engine — Doxygen config (ROBCO TERMLINK theme)
+# Monad Engine — Doxygen config (phosphor terminal theme)
 # Generated via configure_file(@ONLY); CMake @VAR@ tokens are substituted.
 # =============================================================================
 
@@ -26,7 +26,7 @@ SORT_MEMBERS_CTORS_1ST = YES
 # --- Input ----------------------------------------------------------------
 INPUT                  = @CMAKE_SOURCE_DIR@/engine/source \
                          @CMAKE_SOURCE_DIR@/docs
-FILE_PATTERNS          = *.h *.hpp *.cpp *.cc *.md
+FILE_PATTERNS          = *.h *.hpp *.cpp *.cc *.md *.dox
 RECURSIVE              = YES
 EXCLUDE_PATTERNS       = */thirdparty/* */build/* */bin/*
 USE_MDFILE_AS_MAINPAGE = @CMAKE_SOURCE_DIR@/docs/homepage.md
@@ -54,6 +54,8 @@ GENERATE_TREEVIEW      = YES
 DISABLE_INDEX          = NO
 FULL_SIDEBAR           = NO
 TREEVIEW_WIDTH         = 320
+PAGE_OUTLINE_PANEL     = NO
+HTML_COPY_CLIPBOARD    = NO
 
 # Theme: doxygen-awesome stack (order matters), Crypt overlay last.
 HTML_HEADER            = @CMAKE_SOURCE_DIR@/docs/header.html

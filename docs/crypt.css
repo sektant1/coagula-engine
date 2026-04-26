@@ -1,6 +1,6 @@
 /* =====================================================================
-   ROBCO TERMLINK — Coagula Engine docs theme
-   Fallout-style green phosphor CRT terminal.
+   Phosphor Terminal — Monad Engine docs theme
+   Retro green-phosphor CRT terminal aesthetic.
    Layered overlay on doxygen-awesome-css. Last in stylesheet stack.
 
    Sections:
@@ -31,102 +31,156 @@
 /* -------------------------------------------------------------- 1. vars */
 html {
   /* phosphor palette */
-  --term-bg-deep:    #020604;
-  --term-bg:         #040907;
-  --term-panel:      #06120a;
-  --term-raised:     #0a1d10;
+  --term-bg-deep: #020604;
+  --term-bg: #040907;
+  --term-panel: #06120a;
+  --term-raised: #0a1d10;
 
-  --phos-dim:        #0a8a2a;
-  --phos:            #1aff4d;
-  --phos-bright:     #66ff8a;
-  --phos-blaze:      #aaffbb;
-  --phos-deep:       #03260c;
-  --phos-soft:       rgba(26, 255, 77, 0.12);
-  --phos-glow:       rgba(26, 255, 77, 0.45);
+  /* phosphor — UI / accent (saturated neon, used sparingly) */
+  --phos-dim: #0a8a2a;
+  --phos: #1aff4d;
+  --phos-bright: #66ff8a;
+  --phos-blaze: #aaffbb;
+  --phos-deep: #03260c;
+  --phos-soft: rgba(26, 255, 77, 0.12);
+  --phos-glow: rgba(26, 255, 77, 0.45);
 
-  --amber:           #ffb000;
-  --amber-bright:    #ffd166;
-  --warn-red:        #ff3030;
+  /* mode-aware tints — every translucent fill / border in the stylesheet
+     pulls from these buckets so amber mode flips them too. */
+  --tint-1: rgba(26, 255, 77, 0.04); /* faintest wash */
+  --tint-2: rgba(26, 255, 77, 0.08); /* hover tint */
+  --tint-3: rgba(26, 255, 77, 0.18); /* dashed lines / soft borders */
+  --tint-4: rgba(26, 255, 77, 0.28); /* separators */
+
+  /* phosphor — reading tier (low-saturation off-whites tinted green;
+     these are the colors body text / paragraphs / table cells use,
+     so docs stay legible even at small sizes) */
+  --read-strong: #d8ffe2; /* H-importance text, strong */
+  --read: #b8f5c7; /* default body text */
+  --read-soft: #8fd4a3; /* secondary text */
+  --read-muted: #6ba07c; /* tertiary / metadata */
+  --read-faint: #3f6e51; /* disabled / decorative */
+
+  /* surface tiers (for boxes, panels, inputs) */
+  --surface-0: #020604; /* page bg */
+  --surface-1: #06120a; /* panel */
+  --surface-2: #0a1d10; /* raised */
+  --surface-3: #102a18; /* hovered raised */
+  --surface-line: rgba(184, 245, 199, 0.18); /* default border */
+  --surface-line-strong: rgba(102, 255, 138, 0.4);
+
+  /* accent (orthogonal hue for emphasis & links inside reading copy) */
+  --accent: #ffb000;
+  --accent-bright: #ffd166;
+  --accent-soft: #ffe6a8;
+  --amber: var(--accent);
+  --amber-bright: var(--accent-bright);
+
+  /* semantic */
+  --info: var(--phos);
+  --info-bright: var(--phos-bright);
+  --success: #66ff8a;
+  --success-bright: #aaffbb;
+  --warn: #ffb000;
+  --warn-bright: #ffd166;
+  --warn-red: #ff3030;
   --warn-red-bright: #ff6060;
+  --err: var(--warn-red);
+  --err-bright: var(--warn-red-bright);
+
+  /* syntax tokens — chosen for AA contrast on --surface-0 */
+  --tok-keyword: #b8f5c7;
+  --tok-type: #6ed3ff;
+  --tok-flow: #ff8aa3;
+  --tok-string: #ffd166;
+  --tok-char: #ffe6a8;
+  --tok-number: #ffb86b;
+  --tok-comment: #5a8a6a;
+  --tok-preproc: #c1a8ff;
+  --tok-link: #aaffbb;
 
   /* type */
   --font-display: "VT323", "Share Tech Mono", ui-monospace, monospace;
   --font-heading: "VT323", "Share Tech Mono", ui-monospace, monospace;
-  --font-body:    "Share Tech Mono", "IBM Plex Mono", ui-monospace, "Courier New", monospace;
-  --font-ui:      "VT323", "Share Tech Mono", ui-monospace, monospace;
-  --font-code:    "IBM Plex Mono", "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+  --font-body:
+    "Share Tech Mono", "IBM Plex Mono", ui-monospace, "Courier New", monospace;
+  --font-ui: "VT323", "Share Tech Mono", ui-monospace, monospace;
+  --font-code:
+    "IBM Plex Mono", "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
 
   /* doxygen-awesome overrides */
-  --primary-color:           var(--phos);
-  --primary-dark-color:      var(--phos-bright);
-  --primary-light-color:     var(--phos-dim);
-  --page-background-color:   transparent;
-  --page-foreground-color:   var(--phos);
+  --font-family: var(--font-body);
+  --font-family-monospace: var(--font-code);
+  --primary-color: var(--phos);
+  --primary-dark-color: var(--phos-bright);
+  --primary-light-color: var(--phos-dim);
+  --page-background-color: transparent;
+  --page-foreground-color: var(--phos);
   --page-secondary-foreground-color: var(--phos-dim);
-  --separator-color:         rgba(26, 255, 77, 0.28);
+  --separator-color: rgba(26, 255, 77, 0.28);
 
-  --side-nav-background:     transparent;
-  --side-nav-foreground:     var(--phos);
-  --searchbar-background:    rgba(4, 9, 7, 0.85);
-  --searchbar-border-color:  var(--phos-dim);
+  --side-nav-background: transparent;
+  --side-nav-foreground: var(--phos);
+  --searchbar-background: rgba(4, 9, 7, 0.85);
+  --searchbar-border-color: var(--phos-dim);
 
-  --code-background:         var(--term-bg-deep);
-  --code-foreground:         var(--phos);
-  --fragment-background:     var(--term-bg-deep);
-  --fragment-foreground:     var(--phos);
-  --fragment-keyword:        var(--phos-bright);
-  --fragment-keywordtype:    var(--phos-bright);
-  --fragment-keywordflow:    var(--phos-blaze);
-  --fragment-token:          var(--amber);
-  --fragment-comment:        var(--phos-dim);
-  --fragment-link:           var(--phos-blaze);
-  --fragment-preprocessor:   var(--amber-bright);
+  --code-background: var(--term-bg-deep);
+  --code-foreground: var(--read);
+  --fragment-background: var(--term-bg-deep);
+  --fragment-foreground: var(--read);
+  --fragment-keyword: var(--tok-keyword);
+  --fragment-keywordtype: var(--tok-type);
+  --fragment-keywordflow: var(--tok-flow);
+  --fragment-token: var(--tok-string);
+  --fragment-comment: var(--tok-comment);
+  --fragment-link: var(--tok-link);
+  --fragment-preprocessor: var(--tok-preproc);
   --fragment-linenumber-color: var(--phos-dim);
   --fragment-linenumber-background: #02100a;
-  --fragment-linenumber-border: rgba(26,255,77,0.18);
+  --fragment-linenumber-border: rgba(26, 255, 77, 0.18);
 
-  --memdef-border-color:     var(--phos-dim);
+  --memdef-border-color: var(--phos-dim);
   --memdef-title-background: linear-gradient(180deg, #07180e 0%, #03100a 100%);
   --memdef-proto-background: #04140c;
 
-  --tablehead-background:    #07180e;
-  --tablehead-foreground:    var(--phos-bright);
+  --tablehead-background: #07180e;
+  --tablehead-foreground: var(--phos-bright);
 
-  --note-background:         rgba(26,255,77,0.08);
-  --note-foreground:         var(--phos);
-  --note-color-primary:      var(--phos-bright);
-  --warning-background:      rgba(255,48,48,0.10);
-  --warning-foreground:      var(--warn-red-bright);
-  --warning-color-primary:   var(--warn-red);
-  --attention-background:    rgba(255,176,0,0.12);
-  --attention-foreground:    var(--amber-bright);
-  --attention-color-primary: var(--amber);
-  --todo-background:         rgba(170,255,187,0.08);
-  --todo-foreground:         var(--phos-blaze);
-  --todo-color-primary:      var(--phos-blaze);
+  --note-background: rgba(26, 255, 77, 0.08);
+  --note-foreground: var(--phos);
+  --note-color-primary: var(--phos-bright);
+  --warning-background: rgba(255, 48, 48, 0.1);
+  --warning-foreground: var(--warn-red-bright);
+  --warning-color-primary: var(--warn-red);
+  --attention-background: rgba(26, 255, 77, 0.1);
+  --attention-foreground: var(--phos-bright);
+  --attention-color-primary: var(--phos);
+  --todo-background: rgba(170, 255, 187, 0.08);
+  --todo-foreground: var(--phos-blaze);
+  --todo-color-primary: var(--phos-blaze);
 
-  --content-maxwidth:        62rem;
-  --spacing-large:           2rem;
+  --content-maxwidth: 62rem;
+  --spacing-large: 2rem;
 
-  --term-shadow:             inset 0 0 0 1px rgba(26,255,77,0.18),
-                             0 0 24px -10px var(--phos-glow);
-  --term-shadow-inset:       inset 0 0 60px rgba(26,255,77,0.05),
-                             inset 0 0 0 1px rgba(26,255,77,0.20);
+  --term-shadow: inset 0 0 0 1px var(--tint-3), 0 0 24px -10px var(--phos-glow);
+  --term-shadow-inset:
+    inset 0 0 60px var(--tint-1), inset 0 0 0 1px var(--tint-3);
 
   background-color: var(--term-bg-deep);
 }
 
 html.dark-mode {
-  --primary-color:         var(--phos);
+  --primary-color: var(--phos);
   --page-background-color: transparent;
   --page-foreground-color: var(--phos);
-  --side-nav-background:   transparent;
+  --side-nav-background: transparent;
 }
 
 /* ----------------------------------------------------- 2. resets, fonts */
-html, body {
+html,
+body {
   background: transparent !important;
-  color: var(--phos);
+  color: var(--read);
   font-family: var(--font-body);
   font-size: clamp(15px, 14.5px + 0.2vw, 17px);
   line-height: 1.65;
@@ -136,36 +190,50 @@ html, body {
   text-rendering: optimizeLegibility;
 }
 
-#top, #main-nav, #nav-path, .header, .contents, .textblock,
-#doc-content, #side-nav, #nav-tree {
+#top,
+#main-nav,
+#nav-path,
+.header,
+.contents,
+.textblock,
+#doc-content,
+#side-nav,
+#nav-tree {
   background: transparent !important;
 }
 
 div.contents {
   background:
-    linear-gradient(180deg, rgba(26,255,77,0.025), rgba(26,255,77,0.005)),
-    rgba(4,9,7,0.55);
+    linear-gradient(180deg, var(--tint-1), var(--tint-1)), rgba(4, 9, 7, 0.55);
   padding: 1.5rem 1.75rem 3rem;
-  border: 1px solid rgba(26,255,77,0.18);
+  border: 1px solid var(--tint-3);
   position: relative;
   box-shadow: var(--term-shadow-inset);
 }
 
 /* ----------------------------------------------- 3. atmosphere layers   */
 .crypt-bg {
-  position: fixed; inset: 0; z-index: -10;
+  position: fixed;
+  inset: 0;
+  z-index: -10;
   pointer-events: none;
   contain: strict;
 }
 .crypt-stone {
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse at 50% 45%, #082215 0%, #04120a 55%, #010604 100%);
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 45%,
+    #082215 0%,
+    #04120a 55%,
+    #010604 100%
+  );
 }
 .crypt-stone::after {
   /* phosphor noise grain */
   content: "";
-  position: absolute; inset: 0;
+  position: absolute;
+  inset: 0;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.10  0 0 0 0 1.00  0 0 0 0 0.30  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/></svg>");
   background-size: 240px 240px;
   opacity: 0.07;
@@ -173,43 +241,67 @@ div.contents {
   animation: phos-grain 1.2s steps(4) infinite;
 }
 .crypt-dither {
-  position: absolute; inset: 0;
+  position: absolute;
+  inset: 0;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='4' height='4'><rect width='1' height='1' x='0' y='0' fill='%231aff4d' fill-opacity='0.20'/><rect width='1' height='1' x='2' y='2' fill='%231aff4d' fill-opacity='0.10'/><rect width='1' height='1' x='1' y='3' fill='%231aff4d' fill-opacity='0.06'/><rect width='1' height='1' x='3' y='1' fill='%231aff4d' fill-opacity='0.06'/></svg>");
   background-size: 4px 4px;
   opacity: 0.12;
   mix-blend-mode: screen;
 }
 .crypt-scanlines {
-  position: absolute; inset: 0;
+  position: absolute;
+  inset: 0;
   background: repeating-linear-gradient(
     to bottom,
-    rgba(0,0,0,0)     0,
-    rgba(0,0,0,0)     1px,
-    rgba(0,0,0,0.55)  1px,
-    rgba(0,0,0,0.55)  2px
+    rgba(0, 0, 0, 0) 0,
+    rgba(0, 0, 0, 0) 1px,
+    rgba(0, 0, 0, 0.55) 1px,
+    rgba(0, 0, 0, 0.55) 2px
   );
   opacity: 0.55;
   mix-blend-mode: multiply;
   animation: scan-drift 8s linear infinite;
 }
 .crypt-vignette {
-  position: absolute; inset: 0;
+  position: absolute;
+  inset: 0;
   /* CRT corner darken + center glow */
   background:
-    radial-gradient(ellipse at 50% 50%, rgba(26,255,77,0.08) 0%, transparent 35%),
-    radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.65) 95%);
+    radial-gradient(ellipse at 50% 50%, var(--tint-2) 0%, transparent 35%),
+    radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.65) 95%);
 }
 .crypt-vignette::after {
   /* CRT curvature corners — quarter-circle masks */
   content: "";
-  position: absolute; inset: 0;
+  position: absolute;
+  inset: 0;
   background:
-    radial-gradient(circle at 0 0,         transparent 16px, rgba(0,0,0,0.85) 22px),
-    radial-gradient(circle at 100% 0,      transparent 16px, rgba(0,0,0,0.85) 22px),
-    radial-gradient(circle at 0 100%,      transparent 16px, rgba(0,0,0,0.85) 22px),
-    radial-gradient(circle at 100% 100%,   transparent 16px, rgba(0,0,0,0.85) 22px);
-  background-size: 50% 50%, 50% 50%, 50% 50%, 50% 50%;
-  background-position: 0 0, 100% 0, 0 100%, 100% 100%;
+    radial-gradient(circle at 0 0, transparent 16px, rgba(0, 0, 0, 0.85) 22px),
+    radial-gradient(
+      circle at 100% 0,
+      transparent 16px,
+      rgba(0, 0, 0, 0.85) 22px
+    ),
+    radial-gradient(
+      circle at 0 100%,
+      transparent 16px,
+      rgba(0, 0, 0, 0.85) 22px
+    ),
+    radial-gradient(
+      circle at 100% 100%,
+      transparent 16px,
+      rgba(0, 0, 0, 0.85) 22px
+    );
+  background-size:
+    50% 50%,
+    50% 50%,
+    50% 50%,
+    50% 50%;
+  background-position:
+    0 0,
+    100% 0,
+    0 100%,
+    100% 100%;
   background-repeat: no-repeat;
   mix-blend-mode: multiply;
   pointer-events: none;
@@ -217,13 +309,26 @@ div.contents {
 
 /* ------------------------------------------- 4. top status + ember/canvas */
 .crypt-runes {
-  position: fixed; top: 0; left: 0; right: 0;
-  height: 2px; z-index: 100;
-  background: linear-gradient(90deg, transparent, var(--phos-dim) 20%, var(--phos) 50%, var(--phos-dim) 80%, transparent);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 100;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--phos-dim) 20%,
+    var(--phos) 50%,
+    var(--phos-dim) 80%,
+    transparent
+  );
   box-shadow: 0 0 12px var(--phos-glow);
 }
 .crypt-runes__sigil {
-  position: fixed; top: -2px; left: 12px;
+  position: fixed;
+  top: -2px;
+  left: 12px;
   font-family: var(--font-ui);
   font-size: 14px;
   letter-spacing: 2px;
@@ -233,11 +338,13 @@ div.contents {
   pointer-events: none;
 }
 .crypt-runes__sigil::before {
-  content: "ROBCO TERMLINK \2014  COA-OS v0.1.4  \2014  CONNECTION SECURE";
+  content: "MONAD SYSTEMS \2014  MONAD-OS v0.1.4  \2014  LINK SECURE";
 }
 .crypt-embers {
-  position: fixed; inset: 0;
-  width: 100%; height: 100%;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   z-index: 98;
   mix-blend-mode: screen;
@@ -245,40 +352,55 @@ div.contents {
 }
 .crypt-cursor-glow {
   position: fixed;
-  top: 0; left: 0;
-  width: 360px; height: 360px;
+  top: 0;
+  left: 0;
+  width: 360px;
+  height: 360px;
   pointer-events: none;
   z-index: 99;
   transform: translate3d(-50%, -50%, 0);
   background: radial-gradient(
     circle,
-    rgba(26,255,77,0.10) 0%,
-    rgba(26,255,77,0.06) 22%,
-    rgba(26,255,77,0.02) 48%,
-    transparent 70%);
+    var(--tint-2) 0%,
+    var(--tint-1) 22%,
+    rgba(26, 255, 77, 0.02) 48%,
+    transparent 70%
+  );
   opacity: 0;
   transition: opacity 320ms ease;
   mix-blend-mode: screen;
   filter: blur(2px);
 }
-.crypt-cursor-glow.is-on { opacity: 1; }
+.crypt-cursor-glow.is-on {
+  opacity: 1;
+}
 
 /* whole document subtly flickers like a CRT */
-body { animation: crt-flicker-global 7s ease-in-out infinite; }
+body {
+  animation: crt-flicker-global 7s ease-in-out infinite;
+}
 
 /* --------------------------------------------- 5. title area / brand    */
 #titlearea {
   border-bottom: 1px solid var(--phos-dim);
-  background:
-    linear-gradient(180deg, rgba(8,18,12,0.92) 0%, rgba(4,9,7,0.6) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(8, 18, 12, 0.92) 0%,
+    rgba(4, 9, 7, 0.6) 100%
+  );
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  box-shadow: 0 1px 0 rgba(0,0,0,0.6), 0 0 24px -10px var(--phos-glow);
+  box-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.6),
+    0 0 24px -10px var(--phos-glow);
   position: relative;
 }
 #titlearea::after {
   content: "";
-  position: absolute; left: 0; right: 0; bottom: -2px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--phos) 50%, transparent);
   pointer-events: none;
@@ -292,7 +414,7 @@ body { animation: crt-flicker-global 7s ease-in-out infinite; }
   text-shadow:
     0 0 4px var(--phos),
     0 0 14px var(--phos-glow),
-    0 0 28px rgba(26,255,77,0.25);
+    0 0 28px var(--tint-4);
   line-height: 1.05;
   padding: 0.4rem 0 0.1rem;
 }
@@ -313,7 +435,10 @@ body { animation: crt-flicker-global 7s ease-in-out infinite; }
   letter-spacing: 2px;
   vertical-align: middle;
 }
-#projectnumber::before { content: "BUILD "; opacity: 0.7; }
+#projectnumber::before {
+  content: "BUILD ";
+  opacity: 0.7;
+}
 #projectbrief {
   font-family: var(--font-ui);
   color: var(--phos);
@@ -322,15 +447,27 @@ body { animation: crt-flicker-global 7s ease-in-out infinite; }
   text-transform: uppercase;
   padding-bottom: 0.5rem;
 }
-.crypt-prompt   { color: var(--phos-bright); margin-right: 0.35rem; }
-.crypt-brief    { color: var(--phos); }
-.crypt-caret    { color: var(--phos-bright); animation: caret 1.05s steps(1) infinite; margin-left: 1px; }
+.crypt-prompt {
+  color: var(--phos-bright);
+  margin-right: 0.35rem;
+}
+.crypt-brief {
+  color: var(--phos);
+}
+.crypt-caret {
+  color: var(--phos-bright);
+  animation: caret 1.05s steps(1) infinite;
+  margin-left: 1px;
+}
 
 /* ------------------------------------------------ 6. sidebar / nav-tree */
 #side-nav {
   border-right: 1px solid var(--phos-dim);
-  background:
-    linear-gradient(180deg, rgba(4,9,7,0.92) 0%, rgba(2,6,4,0.86) 100%) !important;
+  background: linear-gradient(
+    180deg,
+    rgba(4, 9, 7, 0.92) 0%,
+    rgba(2, 6, 4, 0.86) 100%
+  ) !important;
   backdrop-filter: blur(4px);
 }
 #nav-tree {
@@ -345,10 +482,12 @@ body { animation: crt-flicker-global 7s ease-in-out infinite; }
   position: relative;
   padding: 1px 6px 1px 2px;
   border-left: 2px solid transparent;
-  transition: background 140ms linear, border-color 140ms linear;
+  transition:
+    background 140ms linear,
+    border-color 140ms linear;
 }
 #nav-tree .item:hover {
-  background: rgba(26,255,77,0.10);
+  background: var(--tint-2);
   border-left-color: var(--phos);
 }
 #nav-tree a {
@@ -357,7 +496,10 @@ body { animation: crt-flicker-global 7s ease-in-out infinite; }
   font-family: var(--font-ui);
   font-size: 1.05rem;
 }
-#nav-tree a:hover { color: var(--phos-bright); text-shadow: 0 0 6px var(--phos-glow); }
+#nav-tree a:hover {
+  color: var(--phos-bright);
+  text-shadow: 0 0 6px var(--phos-glow);
+}
 /* Note: doxygen-awesome's `#nav-tree .selected a` uses !important AND
    var(--primary-color), which equals our background green => invisible.
    Beat it with a compound selector (.item.selected) — higher specificity
@@ -388,16 +530,26 @@ body { animation: crt-flicker-global 7s ease-in-out infinite; }
   font-weight: 700;
   animation: caret 0.7s steps(1) infinite;
 }
-#nav-tree .item.selected .arrow { color: var(--term-bg-deep) !important; }
+#nav-tree .item.selected .arrow {
+  color: var(--term-bg-deep) !important;
+}
 #nav-tree .arrow {
   color: var(--phos-dim);
   transition: color 120ms linear;
 }
-#nav-tree .item:hover .arrow { color: var(--phos-bright); }
+#nav-tree .item:hover .arrow {
+  color: var(--phos-bright);
+}
 
 /* ----------------------------------------------- 7. headings + prompts  */
-h1, h2, h3, h4, h5, h6,
-.title, .header .headertitle .title {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.title,
+.header .headertitle .title {
   font-family: var(--font-heading);
   color: var(--phos-bright);
   letter-spacing: 2px;
@@ -418,11 +570,18 @@ h1::before {
 }
 h1::after {
   content: "";
-  position: absolute; left: 0; right: 0; bottom: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
   height: 1px;
-  background: repeating-linear-gradient(90deg,
-    var(--phos) 0, var(--phos) 6px,
-    transparent 6px, transparent 10px);
+  background: repeating-linear-gradient(
+    90deg,
+    var(--phos) 0,
+    var(--phos) 6px,
+    transparent 6px,
+    transparent 10px
+  );
   opacity: 0.7;
 }
 h2 {
@@ -437,8 +596,12 @@ h2::before {
   color: var(--phos-dim);
 }
 /* memtitle is its own thing; suppress the generic h2 prefix on member titles */
-h2.memtitle::before { content: "$ "; }
-h2.memtitle { border-bottom: 0; }
+h2.memtitle::before {
+  content: "$ ";
+}
+h2.memtitle {
+  border-bottom: 0;
+}
 /* groupheader (e.g. "Public Member Functions") = full-width banner */
 h2.groupheader {
   margin: 2rem 0 0;
@@ -447,28 +610,55 @@ h2.groupheader {
   border: 1px solid var(--phos-dim);
   border-bottom: 1px solid var(--phos);
   font-family: var(--font-ui);
-  font-size: 1.1rem;
-  letter-spacing: 2px;
+  font-size: 1.05rem;
+  letter-spacing: 1px;
   color: var(--phos-bright);
   text-shadow: 0 0 6px var(--phos-glow);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  /* doxygen-awesome paints a wide horizontal box-shadow behind .groupheader
+     to fake a separator bar — strip it; we already draw our own borders. */
+  box-shadow: none !important;
 }
-h2.groupheader::before { content: "[ "; color: var(--phos-dim); }
-h2.groupheader::after  { content: " ]"; color: var(--phos-dim); }
+h2.groupheader::before {
+  content: "[";
+  color: var(--phos-dim);
+  flex: 0 0 auto;
+}
+h2.groupheader::after {
+  content: "]";
+  color: var(--phos-dim);
+  flex: 0 0 auto;
+  margin-left: auto;
+}
 h3 {
   font-size: clamp(1.2rem, 1.1rem + 0.4vw, 1.4rem);
   color: var(--phos);
   margin: 1.6rem 0 0.6rem;
   letter-spacing: 2.5px;
 }
-h3::before { content: "[ "; color: var(--phos-dim); }
-h3::after  { content: " ]"; color: var(--phos-dim); }
+h3::before {
+  content: "[ ";
+  color: var(--phos-dim);
+}
+h3::after {
+  content: " ]";
+  color: var(--phos-dim);
+}
 h4 {
   font-size: 1.05rem;
   color: var(--phos-bright);
   letter-spacing: 2px;
   text-transform: uppercase;
 }
-h4::before { content: "* "; color: var(--phos-dim); }
+h4::before {
+  content: "* ";
+  color: var(--phos-dim);
+}
 
 /* terminal-prompt prefix on first paragraph (JS adds .has-dropcap) */
 .has-dropcap {
@@ -478,7 +668,8 @@ h4::before { content: "* "; color: var(--phos-dim); }
 .has-dropcap::before {
   content: ">";
   position: absolute;
-  left: 0; top: 0.05em;
+  left: 0;
+  top: 0.05em;
   color: var(--phos-bright);
   font-family: var(--font-ui);
   font-size: 1.3em;
@@ -487,48 +678,78 @@ h4::before { content: "* "; color: var(--phos-dim); }
 }
 
 /* -------------------------------------------------------- 8. body copy  */
-p, li, dd { color: var(--phos); }
-strong, b { color: var(--phos-bright); font-weight: 700; }
-em, i     { color: var(--amber); font-style: italic; }
+p,
+li,
+dd {
+  color: var(--read);
+}
+strong,
+b {
+  color: var(--read-strong);
+  font-weight: 700;
+}
+em,
+i {
+  color: var(--accent-soft);
+  font-style: italic;
+}
 hr {
   border: 0;
   height: 1px;
-  background: repeating-linear-gradient(90deg,
-    var(--phos) 0, var(--phos) 8px,
-    transparent 8px, transparent 14px);
+  background: repeating-linear-gradient(
+    90deg,
+    var(--phos) 0,
+    var(--phos) 8px,
+    transparent 8px,
+    transparent 14px
+  );
   opacity: 0.7;
   margin: 2rem 0;
 }
 
 /* ---------------------------------------------- 9. links + interactions */
-a, a:visited, a.el, a.elRef {
+a,
+a:visited,
+a.el,
+a.elRef {
   color: var(--phos-bright);
   text-decoration: none;
   background-image: linear-gradient(var(--phos-bright), var(--phos-bright));
   background-size: 0% 1px;
   background-repeat: no-repeat;
   background-position: 0 100%;
-  transition: background-size 200ms cubic-bezier(.2,.8,.2,1), color 140ms linear, text-shadow 140ms linear;
+  transition:
+    background-size 200ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    color 140ms linear,
+    text-shadow 140ms linear;
   padding-bottom: 1px;
 }
-a:hover, a.el:hover {
+a:hover,
+a.el:hover {
   color: var(--phos-blaze);
   background-size: 100% 1px;
   text-shadow: 0 0 8px var(--phos-glow);
 }
 a.psx-glitch {
   animation: psx-jitter 180ms steps(3, end);
-  text-shadow: 0 0 10px var(--phos), 0 0 18px var(--phos-glow);
+  text-shadow:
+    0 0 10px var(--phos),
+    0 0 18px var(--phos-glow);
 }
 /* permalinks (◆ next to memtitle) — quiet by default */
-a.anchor, .permalink a {
+a.anchor,
+.permalink a {
   background-image: none;
   color: var(--phos-dim);
 }
-.permalink a:hover { color: var(--phos-bright); text-shadow: 0 0 6px var(--phos-glow); }
+.permalink a:hover {
+  color: var(--phos-bright);
+  text-shadow: 0 0 6px var(--phos-glow);
+}
 
 /* ----------------------------------------- 10. code: fragments + inline */
-div.fragment, pre.fragment {
+div.fragment,
+pre.fragment {
   background: var(--fragment-background) !important;
   color: var(--fragment-foreground);
   font-family: var(--font-code);
@@ -541,19 +762,21 @@ div.fragment, pre.fragment {
   position: relative;
   overflow: auto;
   box-shadow:
-    inset 0 0 0 1px rgba(0,0,0,0.6),
-    inset 0 0 80px rgba(26,255,77,0.06),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.6),
+    inset 0 0 80px var(--tint-1),
     0 0 24px -10px var(--phos-glow);
 }
 div.fragment::before {
   content: "";
-  position: absolute; inset: 0;
-  background:
-    repeating-linear-gradient(to bottom,
-      rgba(0,0,0,0)   0,
-      rgba(0,0,0,0)   1px,
-      rgba(0,0,0,.40) 1px,
-      rgba(0,0,0,.40) 2px);
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0,
+    rgba(0, 0, 0, 0) 1px,
+    rgba(0, 0, 0, 0.4) 1px,
+    rgba(0, 0, 0, 0.4) 2px
+  );
   mix-blend-mode: multiply;
   pointer-events: none;
   opacity: 0.55;
@@ -561,39 +784,83 @@ div.fragment::before {
 div.fragment::after {
   /* phosphor screen tint */
   content: "";
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 50% 50%, rgba(26,255,77,0.05), transparent 75%);
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    var(--tint-1),
+    transparent 75%
+  );
   pointer-events: none;
   mix-blend-mode: screen;
 }
-div.fragment:hover { animation: crt-flicker 4s ease-in-out infinite; }
+div.fragment:hover {
+  animation: crt-flicker 4s ease-in-out infinite;
+}
 
 /* "MONITOR" header strip on top of code blocks */
-div.fragment > .line:first-child { position: relative; }
+div.fragment > .line:first-child {
+  position: relative;
+}
 
-div.fragment .keyword,    .keyword    { color: var(--fragment-keyword) !important; font-weight: 500; }
-div.fragment .keywordtype,.keywordtype{ color: var(--fragment-keywordtype) !important; }
-div.fragment .keywordflow,.keywordflow{ color: var(--fragment-keywordflow) !important; font-weight: 500; }
-div.fragment .stringliteral, .stringliteral { color: var(--amber) !important; }
-div.fragment .charliteral,   .charliteral   { color: var(--amber-bright) !important; }
-div.fragment .comment,       .comment       { color: var(--phos-dim) !important; font-style: italic; }
-div.fragment .preprocessor,  .preprocessor  { color: var(--fragment-preprocessor) !important; }
-div.fragment .lineno,        .lineno        {
+div.fragment .keyword,
+.keyword {
+  color: var(--fragment-keyword) !important;
+  font-weight: 500;
+}
+div.fragment .keywordtype,
+.keywordtype {
+  color: var(--fragment-keywordtype) !important;
+}
+div.fragment .keywordflow,
+.keywordflow {
+  color: var(--fragment-keywordflow) !important;
+  font-weight: 500;
+}
+div.fragment .stringliteral,
+.stringliteral {
+  color: var(--amber) !important;
+}
+div.fragment .charliteral,
+.charliteral {
+  color: var(--amber-bright) !important;
+}
+div.fragment .comment,
+.comment {
+  color: var(--phos-dim) !important;
+  font-style: italic;
+}
+div.fragment .preprocessor,
+.preprocessor {
+  color: var(--fragment-preprocessor) !important;
+}
+div.fragment .lineno,
+.lineno {
   color: var(--fragment-linenumber-color) !important;
   background: var(--fragment-linenumber-background) !important;
   border-right: 1px solid var(--fragment-linenumber-border) !important;
   user-select: none;
 }
-div.fragment a.code, a.code { color: var(--fragment-link) !important; }
-div.fragment a.code::before, div.fragment a.code::after,
-a.code::before, a.code::after { content: none; }
+div.fragment a.code,
+a.code {
+  color: var(--fragment-link) !important;
+}
+div.fragment a.code::before,
+div.fragment a.code::after,
+a.code::before,
+a.code::after {
+  content: none;
+}
 
 /* inline code */
-code, tt, .tt, span.icode {
+code,
+tt,
+.tt,
+span.icode {
   font-family: var(--font-code);
-  background: rgba(26,255,77,0.07);
+  background: var(--tint-2);
   color: var(--phos-bright);
-  border: 1px solid rgba(26,255,77,0.22);
+  border: 1px solid var(--tint-3);
   padding: 1px 6px;
   font-size: 0.95em;
   letter-spacing: 0.5px;
@@ -603,14 +870,16 @@ code, tt, .tt, span.icode {
 /* fragment copy button */
 doxygen-awesome-fragment-copy-button,
 .doxygen-awesome-fragment-copy-button {
-  background: rgba(4,9,7,0.85) !important;
+  background: rgba(4, 9, 7, 0.85) !important;
   border: 1px solid var(--phos-dim) !important;
   color: var(--phos) !important;
   border-radius: 0 !important;
   font-family: var(--font-ui) !important;
   letter-spacing: 1.5px;
 }
-doxygen-awesome-fragment-copy-button svg { fill: var(--phos) !important; }
+doxygen-awesome-fragment-copy-button svg {
+  fill: var(--phos) !important;
+}
 doxygen-awesome-fragment-copy-button:hover {
   background: var(--phos) !important;
   color: var(--term-bg-deep) !important;
@@ -625,16 +894,18 @@ doxygen-awesome-fragment-copy-button.success:hover svg {
 /* Only style real content tables. Doxygen reuses <table> for layout
    inside .memname / .mlabels / .fieldtable / .directory — those must
    stay unstyled or they render as misplaced grey boxes. */
-table.markdownTable, table.doxtable {
+table.markdownTable,
+table.doxtable {
   border-collapse: separate;
   border-spacing: 0;
-  background: rgba(26,255,77,0.025);
+  background: var(--tint-1);
   border: 1px solid var(--phos-dim);
   margin: 1.2rem 0;
   font-family: var(--font-body);
   width: 100%;
 }
-table.markdownTable th, table.doxtable th {
+table.markdownTable th,
+table.doxtable th {
   background: var(--tablehead-background);
   color: var(--phos-bright);
   font-family: var(--font-ui);
@@ -647,19 +918,23 @@ table.markdownTable th, table.doxtable th {
   text-shadow: 0 0 6px var(--phos-glow);
   text-align: left;
 }
-table.markdownTable td, table.doxtable td {
+table.markdownTable td,
+table.doxtable td {
   border: none;
-  border-bottom: 1px dashed rgba(26,255,77,0.18);
+  border-bottom: 1px dashed var(--tint-3);
   padding: 0.45rem 0.9rem;
   background: transparent;
 }
-table.markdownTable tr:hover td, table.doxtable tr:hover td {
-  background: rgba(26,255,77,0.08);
+table.markdownTable tr:hover td,
+table.doxtable tr:hover td {
+  background: var(--tint-2);
   box-shadow: inset 0 -1px 0 var(--phos);
 }
 
 /* Layout-only tables Doxygen scatters inside member docs — keep invisible. */
-table.memname, table.mlabels, table.fieldtable {
+table.memname,
+table.mlabels,
+table.fieldtable {
   border: 0 !important;
   background: transparent !important;
   box-shadow: none !important;
@@ -667,17 +942,35 @@ table.memname, table.mlabels, table.fieldtable {
   width: auto;
   margin: 0;
 }
-table.memname td, table.mlabels td, table.fieldtable td {
+table.memname td,
+table.mlabels td,
+table.fieldtable td {
   border: 0 !important;
   background: transparent !important;
   padding: 0 !important;
 }
-table.memname tr:hover td, table.mlabels tr:hover td { background: transparent !important; box-shadow: none !important; }
+table.memname tr:hover td,
+table.mlabels tr:hover td {
+  background: transparent !important;
+  box-shadow: none !important;
+}
 
 /* --------------------------------------------- 12. admonition boxes    */
-dl.section.note, dl.section.warning, dl.section.attention,
-dl.section.todo, dl.section.deprecated, dl.section.remark,
-dl.section.bug, dl.section.test, dl.section.pre, dl.section.post,
+dl.section.note,
+dl.section.warning,
+dl.section.attention,
+dl.section.todo,
+dl.todo,
+dl.section.deprecated,
+dl.deprecated,
+dl.section.remark,
+dl.remark,
+dl.section.bug,
+dl.bug,
+dl.section.test,
+dl.test,
+dl.section.pre,
+dl.section.post,
 dl.section.invariant {
   position: relative;
   border: 1px solid;
@@ -687,14 +980,54 @@ dl.section.invariant {
   font-family: var(--font-body);
   background-color: var(--note-background);
 }
-dl.section.note      { border-color: var(--phos);           background: var(--note-background); }
-dl.section.warning   { border-color: var(--warn-red);       background: var(--warning-background); }
-dl.section.attention { border-color: var(--amber);          background: var(--attention-background); }
-dl.section.todo      { border-color: var(--phos-blaze);     background: var(--todo-background); }
-dl.section.deprecated{ border-color: var(--warn-red);       background: rgba(255,48,48,0.08); }
+dl.section.note {
+  border-color: var(--phos);
+  background: var(--note-background);
+}
+dl.section.warning {
+  border-color: var(--warn-red);
+  background: var(--warning-background);
+}
+dl.section.attention {
+  border-color: var(--phos);
+  background: var(--attention-background);
+}
+dl.section.todo,
+dl.todo {
+  border-color: var(--phos-blaze);
+  background: var(--todo-background);
+}
+dl.section.deprecated,
+dl.deprecated {
+  border-color: var(--warn-red);
+  background: rgba(255, 48, 48, 0.08);
+}
+dl.section.bug,
+dl.bug {
+  border-color: var(--warn-red);
+  background: rgba(255, 48, 48, 0.06);
+}
+dl.section.remark,
+dl.remark,
+dl.section.test,
+dl.test {
+  border-color: var(--phos-dim);
+  background: var(--tint-2);
+}
 
-dl.section.note dt, dl.section.warning dt, dl.section.attention dt,
-dl.section.todo dt, dl.section.deprecated dt {
+dl.section.note dt,
+dl.section.warning dt,
+dl.section.attention dt,
+dl.section.todo dt,
+dl.todo dt,
+dl.section.deprecated dt,
+dl.deprecated dt,
+dl.section.bug dt,
+dl.bug dt,
+dl.section.remark dt,
+dl.remark dt,
+dl.section.test dt,
+dl.test dt {
   font-family: var(--font-ui);
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -703,22 +1036,120 @@ dl.section.todo dt, dl.section.deprecated dt {
   margin-bottom: 0.35rem;
   text-shadow: 0 0 6px var(--phos-glow);
 }
-dl.section.warning dt   { color: var(--warn-red-bright); text-shadow: 0 0 6px rgba(255,48,48,0.45); }
-dl.section.attention dt { color: var(--amber-bright);   text-shadow: 0 0 6px rgba(255,176,0,0.5); }
+dl.section.warning dt,
+dl.section.bug dt,
+dl.bug dt,
+dl.section.deprecated dt,
+dl.deprecated dt {
+  color: var(--warn-red-bright);
+  text-shadow: 0 0 6px rgba(255, 48, 48, 0.45);
+}
+dl.section.attention dt {
+  color: var(--phos-bright);
+  text-shadow: 0 0 6px var(--phos-glow);
+}
+dl.section.todo dt,
+dl.todo dt {
+  color: var(--phos-blaze);
+  text-shadow: 0 0 6px var(--phos-glow);
+}
 
-dl.section::before {
+dl.section::before,
+dl.todo::before,
+dl.deprecated::before,
+dl.bug::before,
+dl.remark::before,
+dl.test::before {
   position: absolute;
-  left: 0.7rem; top: 0.85rem;
+  left: 0.7rem;
+  top: 0.85rem;
   font-family: var(--font-ui);
   font-size: 1rem;
   letter-spacing: 1px;
   line-height: 1;
 }
-dl.section.note::before      { content: "[i]"; color: var(--phos-bright); }
-dl.section.warning::before   { content: "[!]"; color: var(--warn-red-bright); animation: warn-blink 1.1s steps(1) infinite; }
-dl.section.attention::before { content: "[*]"; color: var(--amber-bright); }
-dl.section.todo::before      { content: "[~]"; color: var(--phos-blaze); }
-dl.section.deprecated::before{ content: "[X]"; color: var(--warn-red); }
+dl.section.note::before {
+  content: "[i]";
+  color: var(--phos-bright);
+}
+dl.section.warning::before {
+  content: "[!]";
+  color: var(--warn-red-bright);
+  animation: warn-blink 1.1s steps(1) infinite;
+}
+dl.section.attention::before {
+  content: "[*]";
+  color: var(--phos-bright);
+}
+dl.section.todo::before,
+dl.todo::before {
+  content: "[~]";
+  color: var(--phos-blaze);
+}
+dl.section.deprecated::before,
+dl.deprecated::before {
+  content: "[X]";
+  color: var(--warn-red);
+}
+dl.section.bug::before,
+dl.bug::before {
+  content: "[#]";
+  color: var(--warn-red-bright);
+}
+dl.section.remark::before,
+dl.remark::before {
+  content: "[+]";
+  color: var(--phos-bright);
+}
+dl.section.test::before,
+dl.test::before {
+  content: "[T]";
+  color: var(--phos-bright);
+}
+
+/* todo aggregate page (todo.html) — list of @todo items linked back to source */
+dl.reflist {
+  border: 1px solid var(--phos-dim);
+  border-left: 3px solid var(--phos-blaze);
+  background: var(--todo-background);
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  font-family: var(--font-body);
+  box-shadow: var(--term-shadow);
+}
+dl.reflist dt {
+  font-family: var(--font-ui);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--phos-blaze);
+  text-shadow: 0 0 6px var(--phos-glow);
+  font-size: 0.95rem;
+  padding: 0.3rem 0;
+  border-bottom: 1px dashed var(--tint-3);
+  margin-bottom: 0.45rem;
+}
+dl.reflist dt::before {
+  content: "[~] ";
+  color: var(--phos-blaze);
+  font-family: var(--font-ui);
+}
+dl.reflist dt a,
+dl.reflist dt a.el {
+  color: var(--phos-bright);
+  background-image: none;
+}
+dl.reflist dt a:hover {
+  color: var(--phos-blaze);
+  text-shadow: 0 0 6px var(--phos-glow);
+}
+dl.reflist dd {
+  color: var(--read);
+  padding: 0 0 0.6rem;
+  margin: 0 0 0.4rem;
+}
+dl.reflist dd + dt {
+  margin-top: 0.6rem;
+}
 
 /* ----------------------------------------------- 13. member docs       */
 /* Member-function title (one per function, sits above .memitem) */
@@ -736,9 +1167,16 @@ h2.memtitle {
   border-bottom: 0;
   text-shadow: 0 0 6px var(--phos-glow);
 }
-h2.memtitle::before { content: "$ "; color: var(--phos-dim); }
-h2.memtitle::after  { content: none; }
-h2.memtitle .permalink { margin-right: 0.25rem; }
+h2.memtitle::before {
+  content: "$ ";
+  color: var(--phos-dim);
+}
+h2.memtitle::after {
+  content: none;
+}
+h2.memtitle .permalink {
+  margin-right: 0.25rem;
+}
 
 .memitem {
   background: linear-gradient(180deg, var(--term-panel), var(--term-bg));
@@ -750,16 +1188,28 @@ h2.memtitle .permalink { margin-right: 0.25rem; }
   overflow: visible;
 }
 /* terminal corner ticks (decorative; non-clipping) */
-.memitem::before, .memitem::after {
+.memitem::before,
+.memitem::after {
   content: "";
   position: absolute;
-  width: 10px; height: 10px;
+  width: 10px;
+  height: 10px;
   border: 1px solid var(--phos);
   pointer-events: none;
   box-shadow: 0 0 6px var(--phos-glow);
 }
-.memitem::before { top: -1px; left: -1px;  border-right: 0; border-bottom: 0; }
-.memitem::after  { top: -1px; right: -1px; border-left: 0;  border-bottom: 0; }
+.memitem::before {
+  top: -1px;
+  left: -1px;
+  border-right: 0;
+  border-bottom: 0;
+}
+.memitem::after {
+  top: -1px;
+  right: -1px;
+  border-left: 0;
+  border-bottom: 0;
+}
 
 .memproto {
   background: var(--memdef-proto-background) !important;
@@ -772,19 +1222,38 @@ h2.memtitle .permalink { margin-right: 0.25rem; }
   position: relative;
   overflow-x: auto;
 }
-.memproto, .memproto * { box-shadow: none !important; }
-.memproto .memname { font-family: var(--font-code); color: var(--phos-bright); white-space: pre-wrap; }
-.memproto .paramname, .memproto em.paramname,
-.memproto .paramname em, .memproto em {
+.memproto,
+.memproto * {
+  box-shadow: none !important;
+}
+.memproto .memname {
+  font-family: var(--font-code);
+  color: var(--phos-bright);
+  white-space: pre-wrap;
+}
+.memproto .paramname,
+.memproto em.paramname,
+.memproto .paramname em,
+.memproto em {
   color: var(--amber);
   font-style: italic;
 }
-.memproto .paramtype       { color: var(--phos-dim); }
-.memproto a, .memproto a.el { color: var(--phos-bright) !important; }
+.memproto .paramtype {
+  color: var(--phos-dim);
+}
+.memproto a,
+.memproto a.el {
+  color: var(--phos-bright) !important;
+}
 
 /* tag chips: "pure virtual", "nodiscard", "abstract", … */
-.mlabels-right { vertical-align: top; }
-span.mlabels { display: inline-flex; gap: 4px; }
+.mlabels-right {
+  vertical-align: top;
+}
+span.mlabels {
+  display: inline-flex;
+  gap: 4px;
+}
 span.mlabel {
   display: inline-block;
   padding: 1px 7px;
@@ -793,25 +1262,43 @@ span.mlabel {
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: var(--phos);
-  background: rgba(26,255,77,0.08);
+  background: var(--tint-2);
   border: 1px solid var(--phos-dim);
   border-radius: 0;
   line-height: 1.4;
   text-shadow: none;
 }
-span.mlabel.pure-virtual { color: var(--amber);          border-color: var(--amber);          background: rgba(255,176,0,0.10); }
-span.mlabel.nodiscard    { color: var(--phos-blaze);     border-color: var(--phos-blaze);     background: rgba(170,255,187,0.08); }
-span.mlabel.abstract     { color: var(--warn-red-bright);border-color: var(--warn-red);       background: rgba(255,48,48,0.08); }
-span.mlabel.deprecated   { color: var(--warn-red);       border-color: var(--warn-red);       background: rgba(255,48,48,0.10); }
+span.mlabel.pure-virtual {
+  color: var(--amber);
+  border-color: var(--amber);
+  background: rgba(255, 176, 0, 0.1);
+}
+span.mlabel.nodiscard {
+  color: var(--phos-blaze);
+  border-color: var(--phos-blaze);
+  background: rgba(170, 255, 187, 0.08);
+}
+span.mlabel.abstract {
+  color: var(--warn-red-bright);
+  border-color: var(--warn-red);
+  background: rgba(255, 48, 48, 0.08);
+}
+span.mlabel.deprecated {
+  color: var(--warn-red);
+  border-color: var(--warn-red);
+  background: rgba(255, 48, 48, 0.1);
+}
 
 .memdoc {
   padding: 1rem 1.2rem !important;
   font-family: var(--font-body);
   background: transparent !important;
-  color: var(--phos);
+  color: var(--read);
   line-height: 1.65;
 }
-.memdoc dl.section { margin: 0.6rem 0; }
+.memdoc dl.section {
+  margin: 0.6rem 0;
+}
 p.definition {
   font-family: var(--font-ui);
   color: var(--phos-dim);
@@ -819,7 +1306,10 @@ p.definition {
   letter-spacing: 1px;
   margin-top: 0.6rem;
 }
-p.definition::before { content: "// "; color: var(--phos-dim); }
+p.definition::before {
+  content: "// ";
+  color: var(--phos-dim);
+}
 
 /* class index / member-decl tables */
 table.memberdecls {
@@ -831,7 +1321,10 @@ table.memberdecls {
   border-collapse: separate;
   border-spacing: 0;
 }
-table.memberdecls tr.heading td { padding: 0; background: transparent; }
+table.memberdecls tr.heading td {
+  padding: 0;
+  background: transparent;
+}
 table.memberdecls tr.heading h2.groupheader {
   margin: 0;
   border: 0;
@@ -842,35 +1335,78 @@ table.memberdecls td.memItemLeft,
 table.memberdecls td.memItemRight,
 table.memberdecls td.memTemplItemLeft,
 table.memberdecls td.memTemplItemRight,
-table.memberdecls td.memTemplParams,
+table.memberdecls td.memTemplParams {
+  background: transparent !important;
+  border-top: 1px dashed var(--tint-3) !important;
+  padding: 0.55rem 0.9rem 0.2rem;
+  font-family: var(--font-code);
+  font-size: 0.95rem;
+  color: var(--phos-bright);
+  vertical-align: top;
+}
+table.memberdecls td.memItemLeft {
+  white-space: nowrap;
+  color: var(--phos-dim);
+}
+table.memberdecls td.memItemRight {
+  color: var(--phos-bright);
+  font-weight: 500;
+}
+
+/* Description row: render flush under the signature, dim + italic, indented
+   with a phosphor rule so it visually pairs with the line above. */
 table.memberdecls td.mdescLeft,
 table.memberdecls td.mdescRight {
   background: transparent !important;
-  border-top: 1px dashed rgba(26,255,77,0.18) !important;
-  padding: 0.45rem 0.9rem;
-  font-family: var(--font-code);
-  font-size: 0.93rem;
-  color: var(--phos);
+  border-top: 0 !important;
+  padding: 0 0.9rem 0.7rem;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--read-soft);
+  font-style: italic;
+  line-height: 1.55;
   vertical-align: top;
 }
-table.memberdecls td.memItemLeft   { white-space: nowrap; color: var(--phos-dim); }
-table.memberdecls td.mdescLeft     { width: 1px; }
-table.memberdecls td.mdescRight    { font-family: var(--font-body); color: var(--phos); padding-bottom: 0.7rem; }
-table.memberdecls tr.separator td  { padding: 0 !important; border: 0 !important; height: 0; }
+table.memberdecls td.mdescLeft {
+  width: 1px;
+  padding: 0;
+}
+table.memberdecls td.mdescRight {
+  padding-left: 1.6rem;
+  border-left: 1px dashed var(--tint-3) !important;
+  margin-left: 0.5rem;
+}
+table.memberdecls td.mdescRight a,
+table.memberdecls td.mdescRight a.el {
+  color: var(--phos);
+}
+table.memberdecls tr.separator td {
+  padding: 0 !important;
+  border: 0 !important;
+  height: 0;
+}
+table.memberdecls tr:hover td.memItemLeft,
+table.memberdecls tr:hover td.memItemRight,
+table.memberdecls tr:hover td.mdescLeft,
+table.memberdecls tr:hover td.mdescRight {
+  background: var(--tint-1) !important;
+}
 
 /* ------------------------------------------------ 14. search box       */
 #MSearchBox {
   background: var(--searchbar-background) !important;
   border: 1px solid var(--phos-dim) !important;
   border-radius: 0 !important;
-  box-shadow: inset 0 0 8px rgba(0,0,0,0.55);
-  transition: box-shadow 200ms ease, border-color 200ms ease;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.55);
+  transition:
+    box-shadow 200ms ease,
+    border-color 200ms ease;
 }
 #MSearchBox:focus-within,
 #MSearchBox.focused {
   border-color: var(--phos) !important;
   box-shadow:
-    inset 0 0 8px rgba(0,0,0,0.55),
+    inset 0 0 8px rgba(0, 0, 0, 0.55),
     0 0 0 1px var(--phos),
     0 0 28px -6px var(--phos-glow);
 }
@@ -882,8 +1418,13 @@ table.memberdecls tr.separator td  { padding: 0 !important; border: 0 !important
   background: transparent !important;
   text-transform: uppercase;
 }
-#MSearchField::placeholder { color: var(--phos-dim); }
-#MSearchSelect, .left .MSearchSelect { color: var(--phos) !important; }
+#MSearchField::placeholder {
+  color: var(--phos-dim);
+}
+#MSearchSelect,
+.left .MSearchSelect {
+  color: var(--phos) !important;
+}
 #MSearchResultsWindow {
   background: var(--term-panel) !important;
   border: 1px solid var(--phos-dim) !important;
@@ -892,13 +1433,28 @@ table.memberdecls tr.separator td  { padding: 0 !important; border: 0 !important
   color: var(--phos);
 }
 
+/* doxygen-awesome's main-menu uses CSS vars for focus colors; remap them
+   so smartmenu hover matches the rest of the theme. */
+html {
+  --menu-focus-background: var(--phos);
+  --menu-focus-foreground: var(--term-bg-deep);
+  --menu-selected-background: rgba(26, 255, 77, 0.1);
+  --header-foreground: var(--phos);
+  --header-background: transparent;
+}
+
 /* ----------------------------------------- 15. tabs / nav strips        */
-.tabs, .tabs2, .tabs3, .navpath {
-  background: rgba(4,9,7,0.65) !important;
+.tabs,
+.tabs2,
+.tabs3,
+.navpath {
+  background: rgba(4, 9, 7, 0.65) !important;
   border-bottom: 1px solid var(--phos-dim);
   font-family: var(--font-ui);
 }
-.tablist li a, .tablist li a span, .navpath ul li a {
+.tablist li a,
+.tablist li a span,
+.navpath ul li a {
   color: var(--phos) !important;
   text-shadow: none !important;
   letter-spacing: 2px;
@@ -907,17 +1463,103 @@ table.memberdecls tr.separator td  { padding: 0 !important; border: 0 !important
   background: transparent !important;
   text-transform: uppercase;
 }
-.tablist li.current a, .tablist li:hover a {
+.tablist li:hover a,
+.tablist li:hover a span,
+.sm-dox a:hover,
+.sm-dox a:hover span,
+.sm-dox a:active,
+.sm-dox a:focus:hover {
+  color: var(--term-bg-deep) !important;
+  background: var(--phos) !important;
+  border-bottom: 2px solid var(--phos) !important;
+  text-shadow: none !important;
+  box-shadow: 0 0 14px -2px var(--phos-glow);
+}
+.sm-dox a,
+.sm-dox a:focus,
+.sm-dox a span {
+  color: var(--phos) !important;
+  background: transparent !important;
+  font-family: var(--font-ui);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+/* dropdown submenus — dox-awesome paints the panel with
+   --page-background-color which we set to transparent, so the menu
+   was invisible. Give it a real surface and bordered chrome. */
+.sm-dox ul {
+  background: var(--term-panel) !important;
+  border: 1px solid var(--phos-dim) !important;
+  border-radius: 0 !important;
+  box-shadow: var(--term-shadow) !important;
+  padding: 4px !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.sm-dox ul a,
+.sm-dox ul a span {
+  color: var(--phos) !important;
+  background: transparent !important;
+  font-family: var(--font-ui);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding: 4px 12px !important;
+  border-left: 2px solid transparent;
+}
+.sm-dox ul a:hover,
+.sm-dox ul a:active,
+.sm-dox ul a:focus,
+.sm-dox ul a:hover span,
+.sm-dox ul a:active span,
+.sm-dox ul a:focus span {
+  color: var(--term-bg-deep) !important;
+  background: var(--phos) !important;
+  border-left-color: var(--phos-bright);
+  text-shadow: none !important;
+  box-shadow: 0 0 14px -4px var(--phos-glow);
+}
+/* arrow pointing to the menu (the small triangle/notch above the panel) */
+.sm-dox > li > ul::before {
+  border-bottom-color: var(--phos-dim) !important;
+}
+.sm-dox > li > ul::after {
+  border-bottom-color: var(--term-panel) !important;
+}
+/* sub-menu arrows on items that have children */
+.sm-dox a span.sub-arrow,
+#main-menu a.has-submenu span.sub-arrow {
+  color: var(--phos-dim) !important;
+}
+.sm-dox a:hover span.sub-arrow,
+#main-menu a.has-submenu:hover span.sub-arrow {
+  color: var(--term-bg-deep) !important;
+}
+.tablist li.current a,
+.tablist li.current a span {
   color: var(--phos-bright) !important;
-  background: rgba(26,255,77,0.10) !important;
+  background: var(--tint-2) !important;
   border-bottom: 2px solid var(--phos) !important;
   text-shadow: 0 0 6px var(--phos-glow) !important;
 }
-.navpath ul { background: transparent !important; box-shadow: none !important; }
-.navpath ul li.navelem a { color: var(--phos) !important; }
+.tablist li.current:hover a,
+.tablist li.current:hover a span {
+  color: var(--term-bg-deep) !important;
+  background: var(--phos) !important;
+  text-shadow: none !important;
+}
+.navpath ul {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.navpath ul li.navelem a {
+  color: var(--phos) !important;
+}
 
 /* -------------------------------- 16. buttons / inputs / dark toggle    */
-button, input[type="button"], input[type="submit"] {
+button,
+input[type="button"],
+input[type="submit"] {
   background: transparent;
   color: var(--phos);
   border: 1px solid var(--phos-dim);
@@ -927,17 +1569,32 @@ button, input[type="button"], input[type="submit"] {
   text-transform: uppercase;
   padding: 6px 14px;
   cursor: pointer;
-  transition: background 140ms linear, color 140ms linear, transform 100ms linear, box-shadow 140ms linear;
+  transition:
+    background 140ms linear,
+    color 140ms linear,
+    transform 100ms linear,
+    box-shadow 140ms linear;
 }
-button svg, button path { fill: currentColor; transition: fill 140ms linear; }
-button:hover, input[type="button"]:hover, input[type="submit"]:hover {
+button svg,
+button path {
+  fill: currentColor;
+  transition: fill 140ms linear;
+}
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover {
   background: var(--phos);
   color: var(--term-bg-deep) !important;
   text-shadow: none;
   box-shadow: 0 0 14px -2px var(--phos-glow);
 }
-button:hover svg, button:hover path { fill: var(--term-bg-deep); }
-button:active { transform: translateY(1px); }
+button:hover svg,
+button:hover path {
+  fill: var(--term-bg-deep);
+}
+button:active {
+  transform: translateY(1px);
+}
 
 doxygen-awesome-dark-mode-toggle,
 .doxygen-awesome-dark-mode-toggle {
@@ -945,71 +1602,154 @@ doxygen-awesome-dark-mode-toggle,
   border: 1px solid var(--phos-dim) !important;
   color: var(--phos) !important;
   border-radius: 0 !important;
-  width: 32px !important; height: 32px !important;
-  transition: box-shadow 200ms ease, color 200ms ease, background 200ms ease;
+  width: 32px !important;
+  height: 32px !important;
+  transition:
+    box-shadow 200ms ease,
+    color 200ms ease,
+    background 200ms ease;
 }
 doxygen-awesome-dark-mode-toggle svg,
-doxygen-awesome-dark-mode-toggle path { fill: var(--phos) !important; transition: fill 200ms ease; }
+doxygen-awesome-dark-mode-toggle path {
+  fill: var(--phos) !important;
+  transition: fill 200ms ease;
+}
 doxygen-awesome-dark-mode-toggle:hover {
   color: var(--phos-bright) !important;
-  box-shadow: 0 0 0 1px var(--phos), 0 0 18px -4px var(--phos-glow) !important;
+  box-shadow:
+    0 0 0 1px var(--phos),
+    0 0 18px -4px var(--phos-glow) !important;
 }
 doxygen-awesome-dark-mode-toggle:hover svg,
-doxygen-awesome-dark-mode-toggle:hover path { fill: var(--phos-bright) !important; }
+doxygen-awesome-dark-mode-toggle:hover path {
+  fill: var(--phos-bright) !important;
+}
 
 /* --------------------------------------------- 17. scrollbars + select  */
-::selection { background: var(--phos); color: var(--term-bg-deep); text-shadow: none; }
-* { scrollbar-color: var(--phos) var(--term-bg); scrollbar-width: thin; }
-::-webkit-scrollbar          { width: 10px; height: 10px; }
-::-webkit-scrollbar-track    { background: var(--term-bg); border-left: 1px solid var(--phos-dim); }
-::-webkit-scrollbar-thumb    {
+::selection {
+  background: var(--phos);
+  color: var(--term-bg-deep);
+  text-shadow: none;
+}
+* {
+  scrollbar-color: var(--phos) var(--term-bg);
+  scrollbar-width: thin;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--term-bg);
+  border-left: 1px solid var(--phos-dim);
+}
+::-webkit-scrollbar-thumb {
   background: var(--phos-dim);
   border: 1px solid var(--term-bg-deep);
   box-shadow: inset 0 0 0 1px var(--phos);
 }
-::-webkit-scrollbar-thumb:hover { background: var(--phos); box-shadow: 0 0 8px var(--phos-glow); }
+::-webkit-scrollbar-thumb:hover {
+  background: var(--phos);
+  box-shadow: 0 0 8px var(--phos-glow);
+}
 
 /* ---------------------------------------------- 18. animations          */
 @keyframes caret {
-  50% { opacity: 0; }
+  50% {
+    opacity: 0;
+  }
 }
 @keyframes warn-blink {
-  50% { opacity: 0.35; }
+  50% {
+    opacity: 0.35;
+  }
 }
 @keyframes psx-jitter {
-  0%   { transform: translateX(-1px); }
-  33%  { transform: translateX( 1px); }
-  66%  { transform: translateX(-1px); }
-  100% { transform: translateX(0); }
+  0% {
+    transform: translateX(-1px);
+  }
+  33% {
+    transform: translateX(1px);
+  }
+  66% {
+    transform: translateX(-1px);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 @keyframes crt-flicker {
-  0%, 100% { filter: brightness(1.00); }
-  47%      { filter: brightness(0.94); }
-  48%      { filter: brightness(1.06); }
-  49%      { filter: brightness(0.97); }
-  92%      { filter: brightness(0.99); }
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  47% {
+    filter: brightness(0.94);
+  }
+  48% {
+    filter: brightness(1.06);
+  }
+  49% {
+    filter: brightness(0.97);
+  }
+  92% {
+    filter: brightness(0.99);
+  }
 }
 @keyframes crt-flicker-global {
-  0%, 100% { opacity: 1.000; }
-  47%      { opacity: 0.985; }
-  48%      { opacity: 1.000; }
-  49%      { opacity: 0.992; }
-  92%      { opacity: 1.000; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  47% {
+    opacity: 0.985;
+  }
+  48% {
+    opacity: 1;
+  }
+  49% {
+    opacity: 0.992;
+  }
+  92% {
+    opacity: 1;
+  }
 }
 @keyframes phos-grain {
-  0%   { transform: translate(0, 0); }
-  25%  { transform: translate(-1px, 1px); }
-  50%  { transform: translate(1px, -1px); }
-  75%  { transform: translate(-1px, -1px); }
-  100% { transform: translate(0, 0); }
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-1px, 1px);
+  }
+  50% {
+    transform: translate(1px, -1px);
+  }
+  75% {
+    transform: translate(-1px, -1px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
 }
 @keyframes scan-drift {
-  0%   { background-position: 0 0; }
-  100% { background-position: 0 4px; }
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 4px;
+  }
 }
 @keyframes reveal-up {
-  from { opacity: 0; transform: translateY(8px); filter: blur(2px); }
-  to   { opacity: 1; transform: translateY(0);   filter: blur(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
 }
 
 /* ----------------------------------------- 19. reveal-on-scroll          */
@@ -1019,82 +1759,168 @@ doxygen-awesome-dark-mode-toggle:hover path { fill: var(--phos-bright) !importan
   will-change: opacity, transform;
 }
 .crypt-reveal.is-revealed {
-  animation: reveal-up 520ms cubic-bezier(.2,.8,.2,1) both;
+  animation: reveal-up 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
-#titlearea { animation: reveal-up 420ms cubic-bezier(.2,.8,.2,1) both; }
-#side-nav  { animation: reveal-up 520ms 80ms  cubic-bezier(.2,.8,.2,1) both; }
-.contents  { animation: reveal-up 620ms 160ms cubic-bezier(.2,.8,.2,1) both; }
+#titlearea {
+  animation: reveal-up 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+#side-nav {
+  animation: reveal-up 520ms 80ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.contents {
+  animation: reveal-up 620ms 160ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
 
 /* --------------------------------------------- 20. responsive          */
 @media (max-width: 1200px) {
-  div.contents { padding: 1.25rem 1.25rem 2.5rem; }
+  div.contents {
+    padding: 1.25rem 1.25rem 2.5rem;
+  }
 }
 @media (max-width: 900px) {
-  #projectbrief { font-size: 1rem; letter-spacing: 1.5px; }
-  div.fragment  { font-size: 0.88rem; padding: 0.85rem 0.95rem !important; }
-  .crypt-cursor-glow { display: none; }
-  .crypt-embers { opacity: 0.45; }
-  .crypt-runes__sigil::before { content: "ROBCO TERMLINK"; }
+  #projectbrief {
+    font-size: 1rem;
+    letter-spacing: 1.5px;
+  }
+  div.fragment {
+    font-size: 0.88rem;
+    padding: 0.85rem 0.95rem !important;
+  }
+  .crypt-cursor-glow {
+    display: none;
+  }
+  .crypt-embers {
+    opacity: 0.45;
+  }
+  .crypt-runes__sigil::before {
+    content: "MONAD SYSTEMS";
+  }
 }
 @media (max-width: 768px) {
-  .crypt-dither, .crypt-embers { display: none; }
-  .crypt-scanlines { opacity: 0.35; }
-  h1 { font-size: 1.8rem; }
-  h2 { font-size: 1.35rem; }
-  div.contents { padding: 1rem 1rem 2rem; }
+  .crypt-dither,
+  .crypt-embers {
+    display: none;
+  }
+  .crypt-scanlines {
+    opacity: 0.35;
+  }
+  h1 {
+    font-size: 1.8rem;
+  }
+  h2 {
+    font-size: 1.35rem;
+  }
+  div.contents {
+    padding: 1rem 1rem 2rem;
+  }
 }
 @media (max-width: 480px) {
-  #projectbrief { display: none; }
-  .crypt-runes__sigil { display: none; }
-  table.markdownTable, table.doxtable {
-    display: block; overflow-x: auto;
+  #projectbrief {
+    display: none;
+  }
+  .crypt-runes__sigil {
+    display: none;
+  }
+  table.markdownTable,
+  table.doxtable {
+    display: block;
+    overflow-x: auto;
     -webkit-mask-image: linear-gradient(90deg, #000 92%, transparent);
-            mask-image: linear-gradient(90deg, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, #000 92%, transparent);
   }
 }
 @media (pointer: coarse) {
-  .crypt-cursor-glow { display: none; }
+  .crypt-cursor-glow {
+    display: none;
+  }
 }
 
 /* ---------------------------------------- 21. amber alt mode (light-mode toggle) */
 /* Reuses doxygen-awesome's light-mode toggle to flip green->amber phosphor. */
 html.light-mode {
-  --phos-dim:    #b07a00;
-  --phos:        #ffb000;
+  /* amber accent tier */
+  --phos-dim: #b07a00;
+  --phos: #ffb000;
   --phos-bright: #ffd166;
-  --phos-blaze:  #fff0a8;
-  --phos-deep:   #2a1a00;
-  --phos-soft:   rgba(255,176,0,0.12);
-  --phos-glow:   rgba(255,176,0,0.45);
+  --phos-blaze: #fff0a8;
+  --phos-deep: #2a1a00;
+  --phos-soft: rgba(255, 176, 0, 0.12);
+  --phos-glow: rgba(255, 176, 0, 0.45);
 
-  --term-bg-deep: #050300;
-  --term-bg:      #0a0600;
-  --term-panel:   #140d00;
-  --term-raised:  #1a1100;
+  --tint-1: rgba(255, 176, 0, 0.04);
+  --tint-2: rgba(255, 176, 0, 0.08);
+  --tint-3: rgba(255, 176, 0, 0.18);
+  --tint-4: rgba(255, 176, 0, 0.28);
 
-  --primary-color:         var(--phos);
-  --primary-dark-color:    var(--phos-bright);
-  --primary-light-color:   var(--phos-dim);
-  --page-foreground-color: var(--phos);
-  --side-nav-foreground:   var(--phos);
+  --separator-color: rgba(255, 176, 0, 0.28);
+  --fragment-linenumber-border: rgba(255, 176, 0, 0.18);
+  --note-background: rgba(255, 176, 0, 0.08);
+  --attention-background: rgba(255, 176, 0, 0.1);
+  --menu-selected-background: rgba(255, 176, 0, 0.1);
+  --todo-background: rgba(255, 240, 168, 0.08);
 
-  --code-foreground:       var(--phos);
-  --fragment-foreground:   var(--phos);
-  --fragment-keyword:      var(--phos-bright);
-  --fragment-keywordtype:  var(--phos-bright);
-  --fragment-keywordflow:  var(--phos-blaze);
-  --fragment-comment:      var(--phos-dim);
-  --fragment-link:         var(--phos-blaze);
+  /* amber reading tier (low-saturation off-whites tinted warm,
+     designed for AA contrast on the near-black amber surface) */
+  --read-strong: #fff5d6;
+  --read: #ffe6b3;
+  --read-soft: #d9b876;
+  --read-muted: #a08552;
+  --read-faint: #6b5630;
 
-  --note-background:       rgba(255,176,0,0.08);
-  --attention-background:  rgba(255,176,0,0.15);
+  --surface-0: #050300;
+  --surface-1: #140d00;
+  --surface-2: #1a1100;
+  --surface-3: #271a00;
+  --surface-line: rgba(255, 230, 179, 0.18);
+  --surface-line-strong: rgba(255, 209, 102, 0.4);
+
+  /* in amber mode, accent flips to a cool blue so emphasis still pops */
+  --accent: #6ed3ff;
+  --accent-bright: #a8e6ff;
+  --accent-soft: #c8eeff;
+
+  --tok-keyword: #ffe6b3;
+  --tok-type: #ffd166;
+  --tok-flow: #ff9b6b;
+  --tok-string: #c8eeff;
+  --tok-char: #a8e6ff;
+  --tok-number: #ffb86b;
+  --tok-comment: #8a6f3a;
+  --tok-preproc: #ff9b6b;
+  --tok-link: #fff0a8;
+
+  --term-bg-deep: var(--surface-0);
+  --term-bg: #0a0600;
+  --term-panel: var(--surface-1);
+  --term-raised: var(--surface-2);
+
+  --primary-color: var(--phos);
+  --primary-dark-color: var(--phos-bright);
+  --primary-light-color: var(--phos-dim);
+  --page-foreground-color: var(--read);
+  --side-nav-foreground: var(--read);
+
+  --code-foreground: var(--read);
+  --fragment-foreground: var(--read);
+  --fragment-keyword: var(--tok-keyword);
+  --fragment-keywordtype: var(--tok-type);
+  --fragment-keywordflow: var(--tok-flow);
+  --fragment-comment: var(--tok-comment);
+  --fragment-link: var(--tok-link);
+
+  --note-background: rgba(255, 176, 0, 0.08);
+  --attention-background: rgba(255, 176, 0, 0.15);
 
   background-color: var(--term-bg-deep);
 }
 html.light-mode .crypt-stone {
-  background:
-    radial-gradient(ellipse at 50% 45%, #221500 0%, #120a00 55%, #050300 100%);
+  background: radial-gradient(
+    ellipse at 50% 45%,
+    #221500 0%,
+    #120a00 55%,
+    #050300 100%
+  );
 }
 html.light-mode .crypt-stone::after {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1.00  0 0 0 0 0.69  0 0 0 0 0.00  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/></svg>");
@@ -1104,34 +1930,621 @@ html.light-mode .crypt-dither {
 }
 html.light-mode .crypt-vignette {
   background:
-    radial-gradient(ellipse at 50% 50%, rgba(255,176,0,0.08) 0%, transparent 35%),
-    radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.65) 95%);
+    radial-gradient(
+      ellipse at 50% 50%,
+      rgba(255, 176, 0, 0.08) 0%,
+      transparent 35%
+    ),
+    radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.65) 95%);
 }
 html.light-mode #titlearea {
-  background: linear-gradient(180deg, rgba(20,13,0,0.92), rgba(10,6,0,0.6));
+  background: linear-gradient(
+    180deg,
+    rgba(20, 13, 0, 0.92),
+    rgba(10, 6, 0, 0.6)
+  );
 }
 
 /* ------------------------------------------ 22. reduced motion + print */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
-  body { animation: none !important; opacity: 1 !important; }
-  .crypt-cursor-glow, .crypt-embers { display: none; }
-  .crypt-reveal { opacity: 1; transform: none; }
+  body {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+  .crypt-cursor-glow,
+  .crypt-embers {
+    display: none;
+  }
+  .crypt-reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ============================================================
+   23. cross-page consistency: directory tables, dyn sections,
+       alphabetical indexes, search results page, footer/navpath,
+       summary bar, page icons, code tooltips
+   ============================================================ */
+
+/* file/dir tree tables on files.html, dir_*.html, hierarchy.html */
+table.directory {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--tint-1);
+  border: 1px solid var(--phos-dim);
+  font-family: var(--font-body);
+  margin: 1rem 0 1.6rem;
+}
+table.directory td {
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px dashed var(--tint-3) !important;
+  padding: 0.4rem 0.7rem !important;
+  font-family: var(--font-code);
+  font-size: 0.95rem;
+  color: var(--read);
+  vertical-align: top;
+}
+table.directory tr.even td,
+table.directory tr.odd td {
+  background: transparent !important;
+}
+table.directory tr:hover td {
+  background: var(--tint-2) !important;
+  box-shadow: inset 0 -1px 0 var(--phos);
+}
+table.directory td.entry a,
+table.directory td.entry a.el {
+  color: var(--phos-bright);
+}
+table.directory td.desc {
+  font-family: var(--font-body);
+  color: var(--read-soft);
+  font-size: 0.92rem;
+  font-style: italic;
+}
+.directory .levels {
+  font-family: var(--font-ui);
+  letter-spacing: 1.5px;
+  color: var(--phos-dim);
+  font-size: 0.9rem;
+  padding: 0.35rem 0;
+}
+.directory .levels span {
+  color: var(--phos);
+  cursor: pointer;
+  margin: 0 3px;
+  border-bottom: 1px dashed var(--phos-dim);
+}
+.directory .levels span:hover {
+  color: var(--phos-bright);
+  text-shadow: 0 0 6px var(--phos-glow);
+}
+
+/* folder / file icons in directory tree */
+.iconfolder,
+.folder-icon,
+.icondoc,
+.doc-icon {
+  filter: hue-rotate(70deg) saturate(2) brightness(1.1);
+}
+span.icona,
+span.icon {
+  background: var(--phos-deep) !important;
+  color: var(--phos-bright) !important;
+  border: 1px solid var(--phos-dim);
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+  border-radius: 0;
+  text-shadow: none;
+}
+
+/* alphabetical class index (classes.html) */
+div.qindex {
+  background: rgba(4, 9, 7, 0.65);
+  border: 1px solid var(--phos-dim);
+  border-radius: 0;
+  padding: 0.5rem 0.8rem;
+  margin: 0.6rem 0 1rem;
+  font-family: var(--font-ui);
+  letter-spacing: 1.5px;
+  text-align: center;
+  color: var(--phos);
+  text-transform: uppercase;
+  box-shadow: inset 0 0 0 1px var(--tint-3);
+}
+div.qindex a {
+  color: var(--phos-bright);
+  padding: 0 0.45rem;
+  background-image: none;
+}
+div.qindex a:hover {
+  color: var(--phos-blaze);
+  text-shadow: 0 0 6px var(--phos-glow);
+}
+.alphachar a {
+  font-family: var(--font-display);
+  color: var(--phos-bright);
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  text-shadow: 0 0 8px var(--phos-glow);
+  background-image: none;
+}
+table.classindex {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0.6rem 0 1.4rem;
+}
+table.classindex td {
+  padding: 0.35rem 0.7rem;
+  border-bottom: 1px dashed var(--tint-3);
+  font-family: var(--font-code);
+  vertical-align: top;
+}
+.classindex.even {
+  background: transparent;
+}
+.classindex.odd {
+  background: var(--tint-1);
+}
+.classindex .ai {
+  color: var(--phos-bright) !important;
+}
+
+/* directory tab header (.dirtab) e.g. on file lists */
+table.dirtab {
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--phos-dim);
+  background: rgba(4, 9, 7, 0.65);
+  margin: 0.5rem 0 1.2rem;
+  font-family: var(--font-ui);
+}
+table.dirtab th {
+  background: var(--tablehead-background);
+  color: var(--phos-bright);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--phos);
+  padding: 0.45rem 0.9rem;
+  text-shadow: 0 0 6px var(--phos-glow);
+}
+table.dirtab td {
+  padding: 0.4rem 0.9rem;
+  border-bottom: 1px dashed var(--tint-3);
+  color: var(--phos);
+}
+
+/* dyn-section collapsibles (dependency / collaboration graphs) */
+.dynheader {
+  font-family: var(--font-ui);
+  color: var(--phos-bright);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--phos-dim);
+  background: linear-gradient(180deg, #07180e, #03100a);
+  margin-top: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.dynheader:hover {
+  border-color: var(--phos);
+  box-shadow: 0 0 14px -6px var(--phos-glow);
+  color: var(--phos-blaze);
+}
+.dyncontent {
+  border: 1px solid var(--phos-dim);
+  border-top: 0;
+  background: rgba(4, 9, 7, 0.55);
+  padding: 0.8rem;
+}
+.dynsummary {
+  font-family: var(--font-ui);
+  color: var(--phos-dim);
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  padding: 0.25rem 0.6rem 0;
+}
+.dynarrow .arrowhead {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+.dynarrow .arrowhead.closed {
+  border-width: 5px 0 5px 7px;
+  border-color: transparent transparent transparent var(--phos);
+}
+.dynarrow .arrowhead.opened {
+  border-width: 7px 5px 0 5px;
+  border-color: var(--phos) transparent transparent transparent;
+}
+
+/* generic "Returns:" / "See also:" / "Precondition:" admonitions
+   that don't have crypt-styled icons in section 12 */
+dl.section.return,
+dl.section.see,
+dl.section.pre,
+dl.section.post,
+dl.section.invariant,
+dl.section.remark,
+dl.section.bug,
+dl.section.test {
+  position: relative;
+  border: 1px solid var(--phos-dim);
+  border-left: 3px solid var(--phos-dim);
+  padding: 0.7rem 1rem 0.7rem 2.4rem;
+  margin: 1rem 0;
+  background: var(--tint-1);
+  font-family: var(--font-body);
+}
+dl.section.return dt,
+dl.section.see dt,
+dl.section.pre dt,
+dl.section.post dt,
+dl.section.invariant dt,
+dl.section.remark dt,
+dl.section.bug dt,
+dl.section.test dt {
+  font-family: var(--font-ui);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: var(--phos-bright);
+  margin-bottom: 0.3rem;
+  text-shadow: 0 0 6px var(--phos-glow);
+}
+dl.section.return::before {
+  content: "[<-]";
+  position: absolute;
+  left: 0.55rem;
+  top: 0.7rem;
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  color: var(--phos-bright);
+  letter-spacing: 0;
+}
+dl.section.see::before {
+  content: "[?]";
+  position: absolute;
+  left: 0.7rem;
+  top: 0.7rem;
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  color: var(--phos-bright);
+}
+dl.section.pre::before {
+  content: "[>>]";
+  position: absolute;
+  left: 0.55rem;
+  top: 0.7rem;
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  color: var(--phos-bright);
+}
+dl.section.post::before {
+  content: "[<<]";
+  position: absolute;
+  left: 0.55rem;
+  top: 0.7rem;
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  color: var(--phos-bright);
+}
+dl.section.invariant::before {
+  content: "[=]";
+  position: absolute;
+  left: 0.7rem;
+  top: 0.7rem;
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  color: var(--phos-bright);
+}
+
+/* class summary links bar (Public Member Functions | ...) */
+div.summary {
+  background: rgba(4, 9, 7, 0.6);
+  border: 1px solid var(--phos-dim);
+  padding: 0.45rem 0.8rem;
+  margin: 0 0 1rem;
+  font-family: var(--font-ui);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-size: 0.92rem;
+  color: var(--phos-dim);
+  text-align: right;
+}
+div.summary a {
+  color: var(--phos);
+  padding: 0 0.4rem;
+  background-image: none;
+}
+div.summary a:hover {
+  color: var(--phos-bright);
+  text-shadow: 0 0 6px var(--phos-glow);
+}
+div.summary a + a {
+  border-left: 1px solid var(--phos-dim);
+}
+
+/* page header title block (sits above .contents on every page) */
+div.header {
+  background: linear-gradient(
+    180deg,
+    rgba(7, 24, 14, 0.85),
+    rgba(3, 16, 10, 0.65)
+  );
+  border: 1px solid var(--phos-dim);
+  border-bottom: 0;
+  padding: 0.9rem 1.5rem 0.8rem;
+  margin-top: 1rem;
+  position: relative;
+}
+div.header .headertitle .title,
+div.header .title {
+  font-family: var(--font-display);
+  color: var(--phos-bright);
+  font-size: clamp(1.7rem, 1.4rem + 1vw, 2.2rem);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 6px var(--phos),
+    0 0 16px var(--phos-glow);
+  margin: 0;
+  padding: 0;
+}
+div.header .summary {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin-top: 0.4rem;
+}
+/* line up the contents block flush under the header */
+div.header + .contents,
+div.header + div.contents {
+  border-top: 0;
+  margin-top: 0;
+}
+
+/* search results page (search.html) */
+.SRPage {
+  background: var(--term-panel);
+  border: 1px solid var(--phos-dim);
+  padding: 1rem 1.2rem;
+  font-family: var(--font-body);
+  color: var(--phos);
+  box-shadow: var(--term-shadow);
+}
+.SRPage .SRStatus,
+#Loading,
+#Searching,
+#NoMatches {
+  font-family: var(--font-ui);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--phos-bright);
+  background: transparent !important;
+  text-shadow: 0 0 6px var(--phos-glow);
+}
+#SRIndex .SRSymbol,
+#SRIndex a.SRSymbol {
+  color: var(--phos-bright) !important;
+  font-family: var(--font-code);
+}
+#SRIndex .SRScope {
+  color: var(--phos-dim);
+  font-family: var(--font-code);
+}
+
+/* footer / nav-path bar at bottom of every page */
+#nav-path,
+.navpath {
+  background: rgba(4, 9, 7, 0.7) !important;
+  border-top: 1px solid var(--phos-dim);
+  border-bottom: 0;
+  font-family: var(--font-ui);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 0.35rem 0.75rem;
+}
+#nav-path ul,
+.navpath ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#nav-path li,
+.navpath li.navelem,
+.navpath li.footer {
+  display: inline-block;
+  color: var(--phos-dim);
+  font-size: 0.88rem;
+  padding: 0 0.5rem;
+}
+.navpath li.navelem + li.navelem::before {
+  content: "/";
+  color: var(--phos-dim);
+  margin-right: 0.5rem;
+  opacity: 0.7;
+}
+.navpath li.footer {
+  color: var(--phos-dim);
+  float: right;
+}
+.navpath li.footer a {
+  color: var(--phos);
+  background-image: none;
+}
+.navpath li.footer img.footer {
+  filter: hue-rotate(70deg) saturate(2) brightness(0.9);
+  opacity: 0.7;
+}
+
+/* code-symbol hover tooltip (appears on .ttc lookups in source listings) */
+div.ttc {
+  background: var(--term-panel) !important;
+  border: 1px solid var(--phos-dim) !important;
+  color: var(--read) !important;
+  font-family: var(--font-code);
+  font-size: 0.88rem;
+  border-radius: 0;
+  box-shadow: var(--term-shadow);
+  padding: 0.5rem 0.7rem;
+}
+div.ttc .ttname,
+div.ttc a.ttname {
+  color: var(--phos-bright);
+  font-weight: 500;
+}
+div.ttc .ttdeci {
+  color: var(--phos);
+  font-family: var(--font-code);
+}
+div.ttc .ttdef {
+  color: var(--phos-dim);
+}
+div.ttc .ttdoc {
+  color: var(--phos-dim);
+  font-family: var(--font-body);
+  font-style: italic;
+}
+
+/* line numbers in source-listing pages need the ::before/::after content
+   from a.code suppressed (we already do this) AND the .line wrapper to
+   stay transparent so the dotted scan overlay shows through */
+div.fragment .line {
+  background: transparent !important;
+}
+a.line,
+a.lineno-anchor {
+  color: var(--phos-dim);
+  background-image: none;
+}
+
+/* params table inside .memdoc — keep readable */
+table.params,
+table.retval {
+  border: 1px solid var(--phos-dim);
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0.6rem 0;
+  background: rgba(26, 255, 77, 0.03);
+  width: auto;
+  min-width: 50%;
+}
+table.params td,
+table.retval td {
+  border: 0 !important;
+  border-bottom: 1px dashed var(--tint-3) !important;
+  padding: 0.35rem 0.7rem;
+  font-family: var(--font-code);
+  font-size: 0.92rem;
+  background: transparent !important;
+  vertical-align: top;
+}
+table.params td.paramname,
+table.params td.paramdir {
+  color: var(--amber);
+  font-style: italic;
+  white-space: nowrap;
+}
+table.params td.paramtype {
+  color: var(--phos-dim);
+}
+
+/* right-side per-page TOC panel — removed entirely (also disabled at the
+   doxygen level via PAGE_OUTLINE_PANEL=NO). Hide any leftover DOM. */
+#page-nav,
+.page-nav-panel,
+#page-nav-tree,
+#page-nav-contents,
+#page-nav-resize-handle {
+  display: none !important;
+}
+
+/* keep the tree-view sync icon visible against the dark sidebar */
+#nav-sync img,
+.sync img {
+  filter: hue-rotate(70deg) saturate(2) brightness(1.2);
+  opacity: 0.8;
 }
 
 @media print {
-  .crypt-bg, .crypt-runes, .crypt-cursor-glow, .crypt-embers,
-  #side-nav, .tabs, .tabs2, .tabs3, .navpath, #MSearchBox { display: none !important; }
-  html, body { background: #fff !important; color: #000 !important; text-shadow: none !important; }
-  div.contents { box-shadow: none !important; padding: 0 !important; border: 0 !important; }
-  h1, h2, h3, h4 { color: #000 !important; text-shadow: none !important; }
-  a { color: #000 !important; text-decoration: underline; background: none !important; }
-  a::before, a::after { content: none !important; }
-  div.fragment { background: #f4f4f4 !important; color: #000 !important; border: 1px solid #999 !important; }
-  div.fragment::before, div.fragment::after { display: none !important; }
+  .crypt-bg,
+  .crypt-runes,
+  .crypt-cursor-glow,
+  .crypt-embers,
+  #side-nav,
+  .tabs,
+  .tabs2,
+  .tabs3,
+  .navpath,
+  #MSearchBox {
+    display: none !important;
+  }
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    text-shadow: none !important;
+  }
+  div.contents {
+    box-shadow: none !important;
+    padding: 0 !important;
+    border: 0 !important;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: #000 !important;
+    text-shadow: none !important;
+  }
+  a {
+    color: #000 !important;
+    text-decoration: underline;
+    background: none !important;
+  }
+  a::before,
+  a::after {
+    content: none !important;
+  }
+  div.fragment {
+    background: #f4f4f4 !important;
+    color: #000 !important;
+    border: 1px solid #999 !important;
+  }
+  div.fragment::before,
+  div.fragment::after {
+    display: none !important;
+  }
+}
+
+dl.warning .tt,
+dl.note .tt,
+dl.attention .tt,
+dl.important .tt {
+  background-color: #0a0805;
+}
+
+@media screen and (min-width: 768px) {
+  .sm-dox a span.sub-arrow {
+    border-color: green;
+  }
 }

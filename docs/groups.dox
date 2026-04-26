@@ -1,0 +1,123 @@
+/**
+ * @defgroup mnd_core Engine Core
+ * @brief Engine lifecycle, application contract, and shared types.
+ *
+ * The Core module hosts the entry points every game touches:
+ *   - mnd::Engine — singleton that owns every subsystem and drives the
+ *     main loop.
+ *   - mnd::Application — abstract base your game subclasses to receive
+ *     Init / Update / Destroy callbacks.
+ *
+ * Every subsystem in the engine is reachable from `Engine::GetInstance()`,
+ * so once a frame has begun all of them can be queried without passing
+ * references through layers.
+ *
+ * @see @ref overview
+ */
+
+/**
+ * @defgroup mnd_types Types & Utilities
+ * @brief Primitive type aliases, math types, log macros, shared structs.
+ *
+ * These headers are dependency-free building blocks pulled in by
+ * essentially everything else:
+ *   - mnd::Types — `u8`/`f32`/`vec3`/`mat4`/... aliases over stdint and GLM.
+ *   - mnd::Log — `LOG_INFO`/`LOG_WARN`/`LOG_ERROR`/`LOG_FATAL` macros.
+ *   - mnd::CameraData / mnd::LightData — frame-local transfer structs.
+ *   - Constants.h — engine-wide compile-time tunables (window size,
+ *     gravity, internal-resolution presets, ANSI colour codes...).
+ */
+
+/**
+ * @defgroup mnd_scene Scene Graph
+ * @brief Object/component model and the active world container.
+ *
+ * Monad uses a flat scene of mnd::GameObject nodes; behaviour is layered
+ * on by attaching mnd::Component subclasses through `AddComponent<T>()`.
+ * The active mnd::Scene owns the object list, holds the main camera and
+ * lights, and is queried by the renderer once per frame.
+ *
+ * @see mnd_components
+ */
+
+/**
+ * @defgroup mnd_components Components
+ * @brief First-party Components shipped with the engine.
+ *
+ * These cover the bread-and-butter behaviours every prototype needs:
+ *   - mnd::CameraComponent — view/projection matrices.
+ *   - mnd::MeshComponent — submits one draw per frame.
+ *   - mnd::LightComponent — point light forwarded to the renderer.
+ *   - mnd::PhysicsComponent — rigid body driven by Bullet.
+ *   - mnd::PlayerControllerComponent — first-person walker.
+ *   - mnd::AnimationComponent / mnd::AudioComponent /
+ *     mnd::AudioListenerComponent — assorted runtime helpers.
+ *
+ * Subclass mnd::Component and use the `COMPONENT(MyType)` macro to
+ * register your own.
+ */
+
+/**
+ * @defgroup mnd_render Rendering
+ * @brief High-level mesh/material/queue layer.
+ *
+ * Game code never calls OpenGL directly — it submits draw commands to
+ * mnd::RenderQueue using meshes built via mnd::Builder and materials
+ * wrapping a mnd::ShaderProgram. The queue is drained once per frame by
+ * mnd::Engine::Run().
+ */
+
+/**
+ * @defgroup mnd_graphics Graphics (Low-level GL)
+ * @brief Thin OpenGL wrappers — shaders, textures, vertex layouts, FBOs.
+ *
+ * The lowest-level layer. Built on GLEW/GLFW; mostly used internally by
+ * the render module but exposed in case you need to drop into raw GL
+ * (e.g. custom post-process passes).
+ */
+
+/**
+ * @defgroup mnd_physics Physics
+ * @brief Bullet-backed rigid body and character controller wrappers.
+ *
+ * mnd::PhysicsManager owns one `btDiscreteDynamicsWorld`. Game code
+ * builds rigid bodies through mnd::RigidBody / mnd::Collider and either
+ * attaches a mnd::PhysicsComponent or uses
+ * mnd::KinematicCharacterController for an FPS-style walker.
+ */
+
+/**
+ * @defgroup mnd_audio Audio
+ * @brief miniaudio-backed playback and 3D listener positioning.
+ *
+ * Load mnd::Audio clips from disk, play them through a
+ * mnd::AudioComponent attached to a GameObject, and have the listener
+ * follow the camera by attaching mnd::AudioListenerComponent.
+ */
+
+/**
+ * @defgroup mnd_input Input
+ * @brief Keyboard and mouse polling on top of GLFW.
+ *
+ * mnd::InputManager exposes per-frame "is held / went down / went up"
+ * queries plus mouse delta. Use mnd::Key for keyboard codes — its enum
+ * values mirror GLFW so you can pass them straight to native callbacks.
+ */
+
+/**
+ * @defgroup mnd_io I/O
+ * @brief Asset path resolution and small file utilities.
+ *
+ * mnd::FileSystem rewrites relative asset paths to be anchored on
+ * `ASSETS_DIR` (set by CMake at configure time). mnd::FileReader is a
+ * tiny "read whole file to string" helper used by the shader loader.
+ */
+
+/**
+ * @defgroup mnd_editor Editor
+ * @brief In-game ImGui overlay: hierarchy, inspector, console, stats.
+ *
+ * mnd::Editor is owned by the Engine. Toggle visibility at runtime,
+ * register custom panels via mnd::Editor::RegisterPanel(), and the
+ * Console panel automatically tails the engine log buffer.
+ */

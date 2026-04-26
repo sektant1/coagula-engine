@@ -1,3 +1,14 @@
+/**
+ * @file RenderTarget.h
+ * @ingroup mnd_graphics
+ * @brief Offscreen colour+depth framebuffer with a nearest-blit upscale.
+ *
+ * Used to implement the engine's "internal resolution" pixelation
+ * effect. Render the scene at a small size (e.g. 320x240) into the
+ * RenderTarget, then BlitNearest() it into the window framebuffer. The
+ * non-filtered upscale produces crisp PSX-era chunky pixels.
+ */
+
 #pragma once
 
 #include "GL/glew.h"
@@ -5,9 +16,13 @@
 namespace mnd
 {
 
-/// Offscreen color+depth framebuffer used for low-res "internal resolution" rendering.
-/// Call Bind() to redirect subsequent draws; then BlitNearest() to upscale into the
-/// default framebuffer with nearest-neighbor sampling for a pixelated look.
+/**
+ * @ingroup mnd_graphics
+ * @brief Offscreen colour+depth FBO for low-resolution rendering.
+ *
+ * Call Bind() to redirect subsequent draws; then BlitNearest() to
+ * upscale into the default framebuffer with nearest-neighbour sampling.
+ */
 class RenderTarget
 {
 public:
