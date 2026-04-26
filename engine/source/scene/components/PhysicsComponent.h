@@ -1,6 +1,6 @@
 /**
  * @file PhysicsComponent.h
- * @ingroup coa_components
+ * @ingroup mnd_components
  * @brief Attaches a @ref RigidBody to a GameObject and syncs its transform.
  */
 
@@ -8,10 +8,10 @@
 #include "physics/RigidBody.h"
 #include "scene/Component.h"
 
-namespace COA
+namespace mnd
 {
 /**
- * @ingroup coa_components
+ * @ingroup mnd_components
  * @brief Component bridge between a @ref GameObject and the physics world.
  *
  * Reads `collider` and `body` blocks from its JSON definition in a scene file,
@@ -43,4 +43,4 @@ public:
 private:
     std::shared_ptr<RigidBody> m_rigidBody;
 };
-}  // namespace COA
+}  // namespace mnd

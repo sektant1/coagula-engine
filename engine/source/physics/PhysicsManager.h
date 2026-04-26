@@ -1,6 +1,6 @@
 /**
  * @file PhysicsManager.h
- * @ingroup coa_physics
+ * @ingroup mnd_physics
  * @brief Owns the Bullet dynamics world and steps it each frame.
  */
 
@@ -14,12 +14,12 @@ class btCollisionDispatcher;
 class btSequentialImpulseConstraintSolver;
 class btDiscreteDynamicsWorld;
 
-namespace COA
+namespace mnd
 {
 class RigidBody;
 
 /**
- * @ingroup coa_physics
+ * @ingroup mnd_physics
  * @brief Owns the Bullet `btDiscreteDynamicsWorld` and all auxiliary collision
  *        structures (broadphase, dispatcher, solver).
  *
@@ -55,5 +55,5 @@ private:
     std::unique_ptr<btSequentialImpulseConstraintSolver> m_solver;
     std::unique_ptr<btDiscreteDynamicsWorld>             m_world;
 };
-}  // namespace COA
+}  // namespace mnd
 

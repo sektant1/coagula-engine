@@ -4,7 +4,7 @@
 
 #include "Types.h"
 
-namespace COA
+namespace mnd
 {
 Collider::~Collider()
 {
@@ -34,4 +34,4 @@ CapsuleCollider::CapsuleCollider(float radius, float height)
 {
     m_shape = new btCapsuleShape(btScalar(radius), btScalar(height));
 }
-}  // namespace COA
+}  // namespace mnd

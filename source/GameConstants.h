@@ -3,15 +3,15 @@
 #include "Types.h"
 
 // -- Window ------------------------------------------------------------------
-inline constexpr COA::i32 kWindowWidth  = 1280;
-inline constexpr COA::i32 kWindowHeight = 720;
+inline constexpr mnd::i32 kWindowWidth  = 1280;
+inline constexpr mnd::i32 kWindowHeight = 720;
 
 // -- Scene -------------------------------------------------------------------
 inline constexpr const char *kInitialScenePath = "scenes/scene2.json";
 
 // -- Player ------------------------------------------------------------------
-inline constexpr COA::f32 kPlayerWalkSpeed = 5.0F;
-inline constexpr COA::f32 kPlayerRunSpeed  = 10.0F;
+inline constexpr mnd::f32 kPlayerWalkSpeed = 5.0F;
+inline constexpr mnd::f32 kPlayerRunSpeed  = 10.0F;
 
 // Child object names looked up at Player::Init
 inline constexpr const char *kChildBulletName = "bullet_33";
@@ -25,15 +25,15 @@ inline constexpr const char *kSfxStep   = "step";
 inline constexpr const char *kAnimShoot = "shoot";
 
 // -- Bullet ------------------------------------------------------------------
-inline constexpr COA::f32 kBulletLifetime = 4.0F;
+inline constexpr mnd::f32 kBulletLifetime = 4.0F;
 
 // -- LabObject ---------------------------------------------------------------
-inline constexpr COA::f32 kLabDefaultTimeScale = 0.3F;
-inline constexpr COA::f32 kLabTimeScale1       = 0.25F;
-inline constexpr COA::f32 kLabTimeScale2       = 0.5F;
-inline constexpr COA::f32 kLabTimeScale3       = 1.0F;
-inline constexpr COA::f32 kLabTimeScale4       = 1.5F;
-inline constexpr COA::f32 kLabTimeScale5       = -1.5F;
+inline constexpr mnd::f32 kLabDefaultTimeScale = 0.3F;
+inline constexpr mnd::f32 kLabTimeScale1       = 0.25F;
+inline constexpr mnd::f32 kLabTimeScale2       = 0.5F;
+inline constexpr mnd::f32 kLabTimeScale3       = 1.0F;
+inline constexpr mnd::f32 kLabTimeScale4       = 1.5F;
+inline constexpr mnd::f32 kLabTimeScale5       = -1.5F;
 
 // Shader uniforms
 inline constexpr const char *kUniformResolution = "iResolution";

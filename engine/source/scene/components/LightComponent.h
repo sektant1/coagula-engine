@@ -1,6 +1,6 @@
 /**
  * @file LightComponent.h
- * @ingroup coa_components
+ * @ingroup mnd_components
  * @brief Tags a GameObject as a point light source in the scene.
  *
  * When a GameObject has a LightComponent, Scene::CollectLight() picks it up
@@ -26,7 +26,7 @@
 #pragma once
 #include "scene/Component.h"
 
-namespace COA
+namespace mnd
 {
 
 /**
@@ -57,4 +57,4 @@ private:
     vec3 m_color = vec3(1.0F);  ///< Emission colour; default is full-intensity white.
 };
 
-}  // namespace COA
+}  // namespace mnd

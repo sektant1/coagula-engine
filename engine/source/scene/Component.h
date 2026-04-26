@@ -1,6 +1,6 @@
 /**
  * @file Component.h
- * @ingroup coa_scene
+ * @ingroup mnd_scene
  * @brief Abstract base for all GameObject components and the COMPONENT macro.
  *
  * ## Entity-Component pattern
@@ -16,10 +16,10 @@
  * 4. Attach via GameObject::AddComponent(new MyComponent(...)).
  *
  * @code
- *   class SpinComponent : public COA::Component {
+ *   class SpinComponent : public mnd::Component {
  *       COMPONENT(SpinComponent)
  *   public:
- *       void Update(COA::f32 dt) override { m_owner->SetRotation(...); }
+ *       void Update(mnd::f32 dt) override { m_owner->SetRotation(...); }
  *   };
  * @endcode
  *
@@ -31,7 +31,7 @@
 #include "Types.h"
 #include "nlohmann/json.hpp"
 
-namespace COA
+namespace mnd
 {
 class GameObject;
 
@@ -106,7 +106,7 @@ private:
 public: \
     static size_t TypeId() \
     { \
-        return COA::Component::StaticTypeId<ComponentClass>(); \
+        return mnd::Component::StaticTypeId<ComponentClass>(); \
     } \
     size_t GetTypeId() const override \
     { \
@@ -114,6 +114,6 @@ public: \
     } \
     static void Register() \
     { \
-        COA::ComponentFactory::GetInstance().RegisterComponent<ComponentClass>(std::string(#ComponentClass)); \
+        mnd::ComponentFactory::GetInstance().RegisterComponent<ComponentClass>(std::string(#ComponentClass)); \
     }
-}  // namespace COA
+}  // namespace mnd

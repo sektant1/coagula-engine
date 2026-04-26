@@ -2,7 +2,7 @@
 
 #include "scene/GameObject.h"
 
-namespace COA
+namespace mnd
 {
 void AnimationComponent::Update(float deltaTime)
 {
@@ -216,4 +216,4 @@ bool AnimationComponent::IsPlaying()
     return m_isPlaying;
 }
 
-}  // namespace COA
+}  // namespace mnd

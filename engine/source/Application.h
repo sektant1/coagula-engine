@@ -1,6 +1,6 @@
 /**
  * @file Application.h
- * @ingroup coa_core
+ * @ingroup mnd_core
  * @brief Abstract base class for the user-defined game or lab application.
  *
  * ## How to use
@@ -10,7 +10,7 @@
  *    NeedsToBeClosed() returns true or the OS window is closed.
  *
  * @code
- *   class Game : public COA::Application {
+ *   class Game : public mnd::Application {
  *   public:
  *       bool Init()   override { ... return true; }
  *       void Update(float dt) override { ... }
@@ -23,7 +23,7 @@
 
 #pragma once
 
-namespace COA
+namespace mnd
 {
 
 /**
@@ -72,4 +72,4 @@ private:
     bool m_needsToBeClosed = false;  ///< Shutdown flag polled by the main loop.
 };
 
-}  // namespace COA
+}  // namespace mnd

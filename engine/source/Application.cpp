@@ -1,6 +1,6 @@
 #include "Application.h"
 
-namespace COA
+namespace mnd
 {
 
 void Application::RegisterTypes() {}
@@ -15,4 +15,4 @@ bool Application::NeedsToBeClosed() const
     return m_needsToBeClosed;
 }
 
-}  // namespace COA
+}  // namespace mnd

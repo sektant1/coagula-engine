@@ -1,6 +1,6 @@
 # Monad Engine
 
-Small C++17 game engine for learning. OpenGL 3.3, GLFW, GLEW, Bullet, glm.
+Small C++17 game engine for learning. OpenGL 3.3, GLFW, GLEW, Bullet, glm, imgui.
 
 ## Build
 
@@ -35,10 +35,10 @@ assets/
 
 ### New application
 
-Subclass `COA::Application`, then point `source/main.cpp` at it.
+Subclass `mnd::Application`, then point `source/main.cpp` at it.
 
 ```cpp
-class MyApp : public COA::Application {
+class MyApp : public mnd::Application {
 public:
     bool Init() override        { return true; }
     void RegisterTypes() override {}
@@ -52,8 +52,8 @@ public:
 Scenes live in `assets/scenes/*.json`. Load once in `Init()`.
 
 ```cpp
-auto scene = COA::Scene::Load("scenes/scene.json");
-COA::Engine::GetInstance().SetScene(scene.get());
+auto scene = mnd::Scene::Load("scenes/scene.json");
+mnd::Engine::GetInstance().SetScene(scene.get());
 m_scene = scene; // keep the shared_ptr alive
 ```
 
@@ -64,7 +64,7 @@ In `Update(dt)`, call `m_scene->Update(dt)`.
 ```cpp
 auto *obj = scene->CreateObject("Crate");
 obj->SetPosition(vec3(0, 1, -3));
-obj->AddComponent(new COA::MeshComponent(material, mesh));
+obj->AddComponent(new mnd::MeshComponent(material, mesh));
 ```
 
 Child objects: `scene->CreateObject("Camera", parentObj);`.
@@ -74,7 +74,7 @@ Child objects: `scene->CreateObject("Camera", parentObj);`.
 Use the `COMPONENT(T)` macro and register the type in `RegisterTypes()`.
 
 ```cpp
-class HealthComponent : public COA::Component {
+class HealthComponent : public mnd::Component {
     COMPONENT(HealthComponent)
 public:
     void Update(float dt) override {}
@@ -90,7 +90,7 @@ Same pattern for game-object subclasses (see `source/Player.h` — `GAMEOBJECT(T
 ### Read input
 
 ```cpp
-auto &input = COA::Engine::GetInstance().GetInputManager();
+auto &input = mnd::Engine::GetInstance().GetInputManager();
 if (input.IsKeyPressed(GLFW_KEY_W))     { /* forward */ }
 if (input.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT)) { /* fire */ }
 ```
@@ -102,7 +102,7 @@ Mouse position: `glfwGetCursorPos` on the current context.
 ```cpp
 auto *l = scene->CreateObject("Sun");
 l->SetPosition(vec3(10, 20, 5));
-auto *lc = new COA::LightComponent();
+auto *lc = new mnd::LightComponent();
 lc->SetColor(vec3(1.0f, 0.95f, 0.8f));   // warm white
 l->AddComponent(lc);
 ```
@@ -125,8 +125,8 @@ Easiest path: declare it in the scene JSON — `PhysicsComponent` reads
 In code:
 
 ```cpp
-auto body = std::make_shared<COA::RigidBody>(/*...*/);
-obj->AddComponent(new COA::PhysicsComponent(body));
+auto body = std::make_shared<mnd::RigidBody>(/*...*/);
+obj->AddComponent(new mnd::PhysicsComponent(body));
 ```
 
 The component copies the simulated transform back onto its GameObject each frame.
@@ -134,7 +134,7 @@ The component copies the simulated transform back onto its GameObject each frame
 ### glTF model
 
 ```cpp
-auto *gltfRoot = COA::GameObject::LoadGLTF("models/scene.glb", scene);
+auto *gltfRoot = mnd::GameObject::LoadGLTF("models/scene.glb", scene);
 gltfRoot->SetPosition(vec3(0, 0, -5));
 ```
 

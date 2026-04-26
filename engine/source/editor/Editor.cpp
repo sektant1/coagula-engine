@@ -26,7 +26,7 @@
 #include "scene/components/MeshComponent.h"
 #include "scene/components/PlayerControllerComponent.h"
 
-namespace COA
+namespace mnd
 {
 
 bool Editor::Init(GLFWwindow *window)
@@ -636,4 +636,4 @@ void Editor::DrawStats()
     ImGui::End();
 }
 
-}  // namespace COA
+}  // namespace mnd

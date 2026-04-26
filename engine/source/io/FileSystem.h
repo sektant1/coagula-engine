@@ -1,6 +1,6 @@
 /**
  * @file FileSystem.h
- * @ingroup coa_io
+ * @ingroup mnd_io
  * @brief Asset-path resolution and file loading for the engine.
  *
  * FileSystem abstracts the difference between source-tree paths and the
@@ -15,7 +15,7 @@
 
 #include <filesystem>
 
-namespace COA
+namespace mnd
 {
 
 /**
@@ -65,4 +65,4 @@ public:
     std::string LoadAssetFileText(const std::string &relativePath);
 };
 
-}  // namespace COA
+}  // namespace mnd

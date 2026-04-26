@@ -1,16 +1,16 @@
 #pragma once
 
-#include "COA.h"
+#include "Monad.h"
 
-class Game : public COA::Application
+class Game : public mnd::Application
 {
-public:
+ public:
     bool Init() override;
     void Update(float deltaTime) override;
     void Destroy() override;
 
     void RegisterTypes() override;
 
-private:
-    std::shared_ptr<COA::Scene> m_scene;
+ private:
+    std::shared_ptr<mnd::Scene> m_scene;
 };

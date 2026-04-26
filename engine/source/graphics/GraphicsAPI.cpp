@@ -6,7 +6,7 @@
 #include "render/Material.h"
 #include "render/Mesh.h"
 
-namespace COA
+namespace mnd
 {
 
 bool GraphicsAPI::Init()
@@ -235,4 +235,4 @@ void GraphicsAPI::DrawMesh(Mesh *mesh)
     }
 }
 
-}  // namespace COA
+}  // namespace mnd

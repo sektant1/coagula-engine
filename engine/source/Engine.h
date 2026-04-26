@@ -1,6 +1,6 @@
 /**
  * @file Engine.h
- * @ingroup coa_core
+ * @ingroup mnd_core
  * @brief Central singleton that owns and coordinates all engine subsystems.
  *
  * ## Startup sequence (see main.cpp)
@@ -45,7 +45,7 @@
 
 struct GLFWwindow;
 
-namespace COA
+namespace mnd
 {
 class Application;
 
@@ -165,4 +165,4 @@ private:
     RenderSettings m_renderSettings;  ///< Editor-tweakable render params.
 };
 
-}  // namespace COA
+}  // namespace mnd

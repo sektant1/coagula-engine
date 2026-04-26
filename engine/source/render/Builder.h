@@ -1,6 +1,6 @@
 /**
  * @file Builder.h
- * @ingroup coa_render
+ * @ingroup mnd_render
  * @brief Static factory methods for creating common primitive mesh shapes.
  *
  * Builder produces MeshData — plain CPU-side geometry bundles (vertices,
@@ -30,7 +30,7 @@
 #include "graphics/VertexLayout.h"
 #include "render/Mesh.h"
 
-namespace COA
+namespace mnd
 {
 
 /**
@@ -92,4 +92,4 @@ public:
     static MeshData CreateFullscreenQuad();
 };
 
-}  // namespace COA
+}  // namespace mnd

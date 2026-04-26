@@ -1,6 +1,6 @@
 /**
  * @file RigidBody.h
- * @ingroup coa_physics
+ * @ingroup mnd_physics
  * @brief Bullet `btRigidBody` wrapper pairing a @ref Collider with mass and type.
  */
 
@@ -14,10 +14,10 @@
 
 class btRigidBody;
 
-namespace COA
+namespace mnd
 {
 /**
- * @ingroup coa_physics
+ * @ingroup mnd_physics
  * @brief Simulation category for a @ref RigidBody.
  *
  * - **Static**    — never moves; contributes collision only (mass ignored).
@@ -32,7 +32,7 @@ enum class BodyType
 };
 
 /**
- * @ingroup coa_physics
+ * @ingroup mnd_physics
  * @brief Owning wrapper around `btRigidBody`; holds a shared @ref Collider,
  *        mass, friction, and body type.
  */
@@ -74,4 +74,4 @@ private:
     float                        m_friction     = 0.5f;
     bool                         m_addedToWorld = false;
 };
-}  // namespace COA
+}  // namespace mnd

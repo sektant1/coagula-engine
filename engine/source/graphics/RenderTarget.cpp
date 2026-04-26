@@ -3,7 +3,7 @@
 #include "Constants.h"
 #include "Log.h"
 
-namespace COA
+namespace mnd
 {
 
 bool RenderTarget::Create(int w, int h)
@@ -176,4 +176,4 @@ void BlitNearest(GLuint srcTexture, int dstW, int dstH)
     glEnable(GL_DEPTH_TEST);
 }
 
-}  // namespace COA
+}  // namespace mnd

@@ -3,7 +3,7 @@
 #include "Constants.h"
 #include "Types.h"
 
-namespace COA
+namespace mnd
 {
 
 struct RenderSettings
@@ -24,4 +24,4 @@ struct RenderSettings
     f32  ditherStrength = 0.0F;
 };
 
-}  // namespace COA
+}  // namespace mnd

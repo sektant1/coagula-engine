@@ -1,6 +1,6 @@
 /**
  * @file ShaderProgram.h
- * @ingroup coa_graphics
+ * @ingroup mnd_graphics
  * @brief Wrapper around a linked OpenGL GLSL program with uniform caching.
  *
  * ShaderProgram objects are created by GraphicsAPI::CreateShaderProgram() from
@@ -28,7 +28,7 @@
 
 #include "Types.h"
 
-namespace COA
+namespace mnd
 {
 class Texture;
 
@@ -88,4 +88,4 @@ private:
     int                                    m_currentTextureUnit = 0; ///< Next free texture unit index.
 };
 
-}  // namespace COA
+}  // namespace mnd

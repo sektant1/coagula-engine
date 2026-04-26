@@ -1,6 +1,6 @@
 /**
  * @file RenderQueue.h
- * @ingroup coa_render
+ * @ingroup mnd_render
  * @brief Per-frame command list that batches and issues all draw calls.
  *
  * ## Why a command queue?
@@ -27,7 +27,7 @@
 #include "Common.h"
 #include "Types.h"
 
-namespace COA
+namespace mnd
 {
 class Mesh;
 class Material;
@@ -82,4 +82,4 @@ private:
     std::vector<RenderCommand> m_commands;  ///< Commands accumulated this frame; cleared after Draw().
 };
 
-}  // namespace COA
+}  // namespace mnd

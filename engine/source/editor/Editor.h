@@ -8,7 +8,7 @@
 
 struct GLFWwindow;
 
-namespace COA
+namespace mnd
 {
 
 class GameObject;
@@ -65,4 +65,4 @@ private:
     std::vector<std::pair<std::string, PanelFn>> m_customPanels;
 };
 
-}  // namespace COA
+}  // namespace mnd

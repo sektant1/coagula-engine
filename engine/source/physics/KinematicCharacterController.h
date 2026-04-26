@@ -1,6 +1,6 @@
 /**
  * @file KinematicCharacterController.h
- * @ingroup coa_physics
+ * @ingroup mnd_physics
  * @brief Capsule-shaped character controller backed by Bullet's
  *        `btKinematicCharacterController`.
  */
@@ -14,11 +14,11 @@
 class btPairCachingGhostObject;
 class btKinematicCharacterController;
 
-namespace COA
+namespace mnd
 {
 
 /**
- * @ingroup coa_physics
+ * @ingroup mnd_physics
  * @brief High-level capsule character controller: walks, jumps, detects ground.
  *
  * Unlike a @ref RigidBody, this object is **not** force-driven. Game code calls
@@ -56,4 +56,4 @@ private:
     std::unique_ptr<btKinematicCharacterController> m_controller;
 };
 
-}  // namespace COA
+}  // namespace mnd

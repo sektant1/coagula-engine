@@ -10,7 +10,7 @@
 #include "render/Material.h"
 #include "render/Mesh.h"
 
-namespace COA
+namespace mnd
 {
 
 void RenderQueue::Submit(const RenderCommand &command)
@@ -75,4 +75,4 @@ void RenderQueue::Draw(GraphicsAPI &graphicsAPI, const CameraData &cameraData, c
     Engine::GetInstance().GetEditor().NotifyDrawCount(drawn);
 }
 
-}  // namespace COA
+}  // namespace mnd

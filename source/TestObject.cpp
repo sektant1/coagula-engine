@@ -15,8 +15,8 @@ TestObject::TestObject()
 {
     LOG_INFO("TestObject constructing");
 
-    COA::FileReader vertShader(kLabVertShaderPath);
-    COA::FileReader fragShader(kLabFragShaderPath);
+    mnd::FileReader vertShader(kLabVertShaderPath);
+    mnd::FileReader fragShader(kLabFragShaderPath);
     std::string     vertexShaderSource   = vertShader.ReadToString();
     std::string     fragmentShaderSource = fragShader.ReadToString();
 
@@ -26,40 +26,40 @@ TestObject::TestObject()
                   fragmentShaderSource.size());
     }
 
-    auto &graphicsAPI   = COA::Engine::GetInstance().GetGraphicsAPI();
+    auto &graphicsAPI   = mnd::Engine::GetInstance().GetGraphicsAPI();
     auto  shaderProgram = graphicsAPI.CreateShaderProgram(vertexShaderSource, fragmentShaderSource);
     if (!shaderProgram) {
         LOG_ERROR("TestObject failed to create shader program");
     }
 
-    auto material = std::make_shared<COA::Material>();
+    auto material = std::make_shared<mnd::Material>();
     material->SetShaderProgram(shaderProgram);
 
-    auto mesh = COA::Builder::CreateCube(1.0F, 1.0F).buildMesh();
+    auto mesh = mnd::Builder::CreateCube(1.0F, 1.0F).buildMesh();
 
-    AddComponent(new COA::MeshComponent(material, mesh));
+    AddComponent(new mnd::MeshComponent(material, mesh));
 
     LOG_INFO("TestObject constructed");
 }
 
-void TestObject::Update(COA::f32 deltaTime)
+void TestObject::Update(mnd::f32 deltaTime)
 {
-    COA::GameObject::Update(deltaTime);
+    mnd::GameObject::Update(deltaTime);
 
 #if 0
     auto position = GetPosition();
 
-    auto &input = COA::Engine::GetInstance().GetInputManager();
-    if (input.IsKeyPressed(COA::Key::W)) {
+    auto &input = mnd::Engine::GetInstance().GetInputManager();
+    if (input.IsKeyPressed(mnd::Key::W)) {
         position.y += 1.0F * deltaTime;
     }
-    if (input.IsKeyPressed(COA::Key::A)) {
+    if (input.IsKeyPressed(mnd::Key::A)) {
         position.x -= 1.0F * deltaTime;
     }
-    if (input.IsKeyPressed(COA::Key::S)) {
+    if (input.IsKeyPressed(mnd::Key::S)) {
         position.y -= 1.0F * deltaTime;
     }
-    if (input.IsKeyPressed(COA::Key::D)) {
+    if (input.IsKeyPressed(mnd::Key::D)) {
         position.x += 1.0F * deltaTime;
     }
     SetPosition(position);

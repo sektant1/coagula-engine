@@ -1,6 +1,6 @@
 /**
  * @file Scene.h
- * @ingroup coa_scene
+ * @ingroup mnd_scene
  * @brief Owns the game object tree and provides per-frame update + light collection.
  *
  * The Scene is the top-level container for all GameObjects. It owns them
@@ -41,7 +41,7 @@
 #include "nlohmann/json.hpp"
 #include "scene/GameObject.h"
 
-namespace COA
+namespace mnd
 {
 
 /**
@@ -148,4 +148,4 @@ private:
     bool        m_isUpdating;
 };
 
-}  // namespace COA
+}  // namespace mnd

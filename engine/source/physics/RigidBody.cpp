@@ -6,7 +6,7 @@
 #include "Engine.h"
 #include "LinearMath/btVector3.h"
 
-namespace COA
+namespace mnd
 {
 RigidBody::RigidBody(BodyType type, const std::shared_ptr<Collider> &collider, float mass, float friction)
     : m_type(type)
@@ -131,4 +131,4 @@ void RigidBody::ApplyImpulse(const vec3 &impulse)
     m_body->applyCentralImpulse(btVector3(btScalar(impulse.x), btScalar(impulse.y), btScalar(impulse.z)));
 }
 
-}  // namespace COA
+}  // namespace mnd

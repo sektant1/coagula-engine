@@ -2,7 +2,7 @@
 #define TYPES_H
 
 /** @file Types.h
- * @ingroup coa_types
+ * @ingroup mnd_types
  * @brief Engine-wide primitive type aliases and GLM math imports.
  *
  * Every engine subsystem uses these aliases instead of raw stdint or GLM types.
@@ -20,7 +20,7 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-namespace COA
+namespace mnd
 {
 
 /// @defgroup Types Primitive Type Aliases
@@ -88,6 +88,6 @@ using glm::value_ptr;
 
 /// @}
 
-}  // namespace COA
+}  // namespace mnd
 
 #endif

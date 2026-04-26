@@ -1,13 +1,13 @@
 #pragma once
 
-#include "COA.h"
+#include "Monad.h"
 
-class TestObject : public COA::GameObject
+class TestObject : public mnd::GameObject
 {
 public:
     TestObject();
 
-    void Update(COA::f32 deltaTime) override;
+    void Update(mnd::f32 deltaTime) override;
 
 private:
 };

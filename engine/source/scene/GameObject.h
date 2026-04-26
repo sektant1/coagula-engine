@@ -1,6 +1,6 @@
 /**
  * @file GameObject.h
- * @ingroup coa_scene
+ * @ingroup mnd_scene
  * @brief Scene node with a 3D transform and an attachable component list.
  *
  * ## Scene graph overview
@@ -36,7 +36,7 @@
 #include "Types.h"
 #include "scene/Component.h"
 
-namespace COA
+namespace mnd
 {
 class Scene;
 
@@ -236,7 +236,7 @@ private:
 public: \
     static void Register() \
     { \
-        COA::GameObjectFactory::GetInstance().RegisterObject<ObjectClass>(std::string(#ObjectClass)); \
+        mnd::GameObjectFactory::GetInstance().RegisterObject<ObjectClass>(std::string(#ObjectClass)); \
     }
 
-}  // namespace COA
+}  // namespace mnd

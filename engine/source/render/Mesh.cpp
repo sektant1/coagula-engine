@@ -9,7 +9,7 @@
 #include "graphics/GraphicsAPI.h"
 #include "graphics/VertexLayout.h"
 
-namespace COA
+namespace mnd
 {
 
 Mesh::Mesh(const VertexLayout &layout, const std::vector<float> &vertices, const std::vector<uint32_t> &indices)
@@ -252,7 +252,7 @@ std::shared_ptr<Mesh> Mesh::CreateBox(const glm::vec3 &extents)
             20, 22, 23
         };
 
-        COA::VertexLayout vertexLayout;
+        mnd::VertexLayout vertexLayout;
 
         // Postion
         vertexLayout.elements.push_back({
@@ -286,7 +286,7 @@ std::shared_ptr<Mesh> Mesh::CreateBox(const glm::vec3 &extents)
     // clang-format on
     vertexLayout.stride = sizeof(float) * kStandardVertexFloats;
 
-    auto result = std::make_shared<COA::Mesh>(vertexLayout, vertices, indices);
+    auto result = std::make_shared<mnd::Mesh>(vertexLayout, vertices, indices);
 
     return result;
 }
@@ -355,7 +355,7 @@ std::shared_ptr<Mesh> Mesh::CreateSphere(f32 radius, int sectors, int stacks)
         }
     }
 
-    COA::VertexLayout vertexLayout;
+    mnd::VertexLayout vertexLayout;
 
     // Postion
     vertexLayout.elements.push_back({VertexElement::PositionIndex, 3, GL_FLOAT, 0});
@@ -365,9 +365,9 @@ std::shared_ptr<Mesh> Mesh::CreateSphere(f32 radius, int sectors, int stacks)
     vertexLayout.elements.push_back({VertexElement::UVIndex, 2, GL_FLOAT, sizeof(float) * 6});
     vertexLayout.stride = sizeof(float) * 8;
 
-    auto result = std::make_shared<COA::Mesh>(vertexLayout, vertices, indices);
+    auto result = std::make_shared<mnd::Mesh>(vertexLayout, vertices, indices);
 
     return result;
 }
 
-}  // namespace COA
+}  // namespace mnd

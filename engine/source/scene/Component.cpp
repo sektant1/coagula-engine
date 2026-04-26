@@ -1,6 +1,6 @@
 #include "scene/Component.h"
 
-namespace COA
+namespace mnd
 {
 
 size_t Component::nextId = 1;
@@ -20,4 +20,4 @@ ComponentFactory &ComponentFactory::GetInstance()
     return instance;
 }
 
-}  // namespace COA
+}  // namespace mnd

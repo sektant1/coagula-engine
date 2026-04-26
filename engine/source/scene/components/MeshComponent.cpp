@@ -7,7 +7,7 @@
 #include "render/RenderQueue.h"
 #include "scene/GameObject.h"
 
-namespace COA
+namespace mnd
 {
 
 MeshComponent::MeshComponent(const std::shared_ptr<Material> &material, const std::shared_ptr<Mesh> &mesh)
@@ -75,4 +75,4 @@ void MeshComponent::LoadProperties(const nlohmann::json &json)
     }
 }
 
-}  // namespace COA
+}  // namespace mnd

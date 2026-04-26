@@ -3,7 +3,7 @@
 #include "Log.h"
 #include "graphics/Texture.h"
 
-namespace COA
+namespace mnd
 {
 ShaderProgram::ShaderProgram(GLuint shaderProgramID)
     : m_shaderProgramID(shaderProgramID)
@@ -83,4 +83,4 @@ void ShaderProgram::SetTexture(const std::string &name, Texture *texture)
     ++m_currentTextureUnit;
 }
 
-}  // namespace COA
+}  // namespace mnd

@@ -6,7 +6,7 @@
 
 #include "Engine.h"
 
-namespace COA
+namespace mnd
 {
 
 KinematicCharacterController::KinematicCharacterController(float radius, float height, const glm::vec3 &position)
@@ -85,4 +85,4 @@ bool KinematicCharacterController::OnGround() const
     return m_controller->onGround();
 }
 
-}  // namespace COA
+}  // namespace mnd

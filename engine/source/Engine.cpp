@@ -13,7 +13,7 @@
 #include "render/RenderQueue.h"
 #include "scene/components/CameraComponent.h"
 
-namespace COA
+namespace mnd
 {
 void KeyCallback(GLFWwindow *window, int key, int, int action, int)
 {
@@ -324,4 +324,4 @@ FileSystem &Engine::GetFileSystem()
     return m_fileSystem;
 }
 
-}  // namespace COA
+}  // namespace mnd

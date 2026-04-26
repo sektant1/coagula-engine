@@ -1,6 +1,6 @@
 /**
  * @file InputManager.h
- * @ingroup coa_input
+ * @ingroup mnd_input
  * @brief Keyboard and mouse state cache updated each frame by the engine.
  *
  * Engine::Run() feeds GLFW callbacks into InputManager; game code reads state
@@ -20,7 +20,7 @@
 #include "Types.h"
 #include "input/Key.h"
 
-namespace COA
+namespace mnd
 {
 
 /**
@@ -110,4 +110,4 @@ private:
     friend class Engine;
 };
 
-}  // namespace COA
+}  // namespace mnd

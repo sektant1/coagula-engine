@@ -3,7 +3,7 @@
 // Values mirror GLFW_KEY_* / GLFW_MOUSE_BUTTON_* (USB HID usage codes for letters/digits)
 // so engine code can pass an enum and the underlying int still indexes GLFW callback args.
 
-namespace COA
+namespace mnd
 {
 
 enum class Key : int
@@ -138,4 +138,4 @@ enum class MouseButton : int
     Btn8   = 7,
 };
 
-}  // namespace COA
+}  // namespace mnd

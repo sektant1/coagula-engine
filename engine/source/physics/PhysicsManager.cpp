@@ -6,7 +6,7 @@
 #include "Constants.h"
 #include "physics/RigidBody.h"
 
-namespace COA
+namespace mnd
 {
 PhysicsManager::PhysicsManager() {}
 
@@ -61,4 +61,4 @@ btDiscreteDynamicsWorld *PhysicsManager::GetWorld()
 {
     return m_world.get();
 }
-}  // namespace COA
+}  // namespace mnd

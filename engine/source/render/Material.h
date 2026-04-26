@@ -1,6 +1,6 @@
 /**
  * @file Material.h
- * @ingroup coa_render
+ * @ingroup mnd_render
  * @brief Container that pairs a ShaderProgram with typed uniform parameters.
  *
  * A Material answers the question "how should this surface look?". It holds:
@@ -35,7 +35,7 @@
 #include "Types.h"
 #include "graphics/Texture.h"
 
-namespace COA
+namespace mnd
 {
 class ShaderProgram;
 class Texture;
@@ -93,4 +93,4 @@ private:
     std::unordered_map<std::string, std::shared_ptr<Texture>>               m_textures;      ///< Sampler2D uniforms.
 };
 
-}  // namespace COA
+}  // namespace mnd

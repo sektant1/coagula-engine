@@ -7,7 +7,7 @@
 
 struct ma_engine;
 
-namespace COA
+namespace mnd
 {
 class AudioManager
 {
@@ -23,4 +23,4 @@ public:
 private:
     std::unique_ptr<ma_engine> m_engine;
 };
-}  // namespace COA
+}  // namespace mnd

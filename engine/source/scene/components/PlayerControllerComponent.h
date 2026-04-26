@@ -1,6 +1,6 @@
 /**
  * @file PlayerControllerComponent.h
- * @ingroup coa_components
+ * @ingroup mnd_components
  * @brief First-person camera and movement controller driven by InputManager.
  *
  * Attach to a GameObject that also has a CameraComponent. Each frame Update()
@@ -17,7 +17,7 @@
 #include "physics/KinematicCharacterController.h"
 #include "scene/Component.h"
 
-namespace COA
+namespace mnd
 {
 
 /**
@@ -60,4 +60,4 @@ private:
     std::unique_ptr<KinematicCharacterController> m_kinematicController;
 };
 
-}  // namespace COA
+}  // namespace mnd

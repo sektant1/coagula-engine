@@ -1,4 +1,4 @@
-#include "COA.h"
+#include "Monad.h"
 #include "Game.h"
 #include "GameConstants.h"
 
@@ -8,7 +8,7 @@ int main()
 
     Game *game = new Game();
 
-    COA::Engine &engine = COA::Engine::GetInstance();
+    mnd::Engine &engine = mnd::Engine::GetInstance();
 
     engine.SetApplication(game);
 

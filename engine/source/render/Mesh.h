@@ -1,6 +1,6 @@
 /**
  * @file Mesh.h
- * @ingroup coa_render
+ * @ingroup mnd_render
  * @brief GPU mesh: Vertex Array Object wrapping a VBO and optional EBO.
  *
  * A Mesh holds the GPU-side geometry for a drawable object. It is created by
@@ -29,7 +29,7 @@
 #include "Types.h"
 #include "graphics/VertexLayout.h"
 
-namespace COA
+namespace mnd
 {
 
 /**
@@ -88,4 +88,4 @@ private:
     size_t m_indexCount  = 0;  ///< Number of indices (used for glDrawElements; 0 if non-indexed).
 };
 
-}  // namespace COA
+}  // namespace mnd

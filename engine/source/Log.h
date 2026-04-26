@@ -1,6 +1,6 @@
 /**
  * @file Log.h
- * @ingroup coa_types
+ * @ingroup mnd_types
  * @brief Console logging macros for all engine and game code.
  *
  * Four severity levels: INFO, WARN, ERROR, FATAL. Each macro prefixes the
@@ -20,16 +20,16 @@
 #include "Constants.h"
 #include "Types.h"
 
-namespace COA
+namespace mnd
 {
 
 inline const char *shortFile(const char *file)
 {
     static char buffer[kLogPrefixBufSize];
 
-    const char *ptr = std::strstr(file, "coagula-engine/");
+    const char *ptr = std::strstr(file, "monad-engine/");
     if (ptr != nullptr) {
-        ptr += 15;
+        ptr += 13;
     } else {
         ptr = file;
     }
@@ -74,9 +74,9 @@ const std::deque<LogEntry> &LogGetEntries();
 /// Clear the in-memory log buffer.
 void LogClear();
 
-}  // namespace COA
+}  // namespace mnd
 
-#define LOG_INFO(fmt, ...)  ::COA::LogEmit(::COA::LogLevel::Info,  __FILE__, __LINE__, fmt, ##__VA_ARGS__)
-#define LOG_WARN(fmt, ...)  ::COA::LogEmit(::COA::LogLevel::Warn,  __FILE__, __LINE__, fmt, ##__VA_ARGS__)
-#define LOG_ERROR(fmt, ...) ::COA::LogEmit(::COA::LogLevel::Error, __FILE__, __LINE__, fmt, ##__VA_ARGS__)
-#define LOG_FATAL(fmt, ...) do { ::COA::LogEmit(::COA::LogLevel::Fatal, __FILE__, __LINE__, fmt, ##__VA_ARGS__); std::abort(); } while (0)
+#define LOG_INFO(fmt, ...)  ::mnd::LogEmit(::mnd::LogLevel::Info,  __FILE__, __LINE__, fmt, ##__VA_ARGS__)
+#define LOG_WARN(fmt, ...)  ::mnd::LogEmit(::mnd::LogLevel::Warn,  __FILE__, __LINE__, fmt, ##__VA_ARGS__)
+#define LOG_ERROR(fmt, ...) ::mnd::LogEmit(::mnd::LogLevel::Error, __FILE__, __LINE__, fmt, ##__VA_ARGS__)
+#define LOG_FATAL(fmt, ...) do { ::mnd::LogEmit(::mnd::LogLevel::Fatal, __FILE__, __LINE__, fmt, ##__VA_ARGS__); std::abort(); } while (0)

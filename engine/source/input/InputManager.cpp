@@ -4,7 +4,7 @@
 #include "Log.h"
 #include "editor/Editor.h"
 
-namespace COA
+namespace mnd
 {
 
 static bool EditorSwallowsInput()
@@ -98,4 +98,4 @@ bool InputManager::IsMousePositionChanged() const
     return m_mousePositionChanged;
 }
 
-}  // namespace COA
+}  // namespace mnd

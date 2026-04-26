@@ -1,6 +1,6 @@
 /**
  * @file FileReader.h
- * @ingroup coa_io
+ * @ingroup mnd_io
  * @brief Thin wrapper around std::ifstream for reading a single file.
  *
  * Construct with an absolute or relative path, check Exists(), then call
@@ -22,7 +22,7 @@
 #include "Log.h"
 #include "Types.h"
 
-namespace COA
+namespace mnd
 {
 
 /**
@@ -83,4 +83,4 @@ public:
     std::string GetPath();
 };
 
-}  // namespace COA
+}  // namespace mnd

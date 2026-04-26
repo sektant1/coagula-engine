@@ -7,7 +7,7 @@
 #include "editor/Editor.h"
 #include "input/InputManager.h"
 
-namespace COA
+namespace mnd
 {
 
 void PlayerControllerComponent::Init()
@@ -108,4 +108,4 @@ f32 PlayerControllerComponent::GetMoveSpeed() const
     return m_moveSpeed;
 }
 
-}  // namespace COA
+}  // namespace mnd

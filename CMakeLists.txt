@@ -11,7 +11,15 @@ if(CCACHE_PROGRAM)
   set(CMAKE_CXX_COMPILER_LAUNCHER ${CCACHE_PROGRAM})
 endif()
 
-set(PROJECT_SOURCE_FILES source/main.cpp source/Game.h source/Game.cpp source/Player.h source/Player.cpp source/Bullet.h source/Bullet.cpp)
+set(PROJECT_SOURCE_FILES
+    source/main.cpp
+    source/Game.h
+    source/Game.cpp
+    source/Player.h
+    source/Player.cpp
+    source/Bullet.h
+    source/Bullet.cpp)
+
 # Add the application
 include_directories(source)
 include_directories(engine/thirdparty/glew/include)
@@ -31,28 +39,29 @@ target_link_libraries(${PROJECT_NAME} Engine)
 add_custom_command(
   TARGET ${PROJECT_NAME}
   POST_BUILD
-  COMMAND ${CMAKE_COMMAND} -E create_symlink
-          "${CMAKE_BINARY_DIR}/compile_commands.json"
+  COMMAND ${CMAKE_COMMAND} -E create_symlink "${CMAKE_BINARY_DIR}/compile_commands.json"
           "${CMAKE_SOURCE_DIR}/compile_commands.json"
   VERBATIM)
 
-configure_file("scripts/build_config.sh" "${CMAKE_BINARY_DIR}/build_config.sh"
-               @ONLY)
+configure_file("scripts/build_config.sh" "${CMAKE_BINARY_DIR}/build_config.sh" @ONLY)
 
 # Doxygen documentation target
 find_package(Doxygen)
+
 if(DOXYGEN_FOUND)
+
   include(FetchContent)
   FetchContent_Declare(
     doxygen-awesome-css
     GIT_REPOSITORY https://github.com/jothepro/doxygen-awesome-css.git
-    GIT_TAG        v2.3.4
-  )
+    GIT_TAG v2.3.4)
   FetchContent_MakeAvailable(doxygen-awesome-css)
   FetchContent_GetProperties(doxygen-awesome-css SOURCE_DIR DOXYGEN_AWESOME_CSS_DIR)
-  set(DOXYGEN_AWESOME_CSS_DIR "${DOXYGEN_AWESOME_CSS_DIR}" CACHE INTERNAL "")
-  configure_file("${CMAKE_SOURCE_DIR}/Doxyfile.in"
-                 "${CMAKE_BINARY_DIR}/Doxyfile" @ONLY)
+
+  set(DOXYGEN_AWESOME_CSS_DIR
+      "${DOXYGEN_AWESOME_CSS_DIR}"
+      CACHE INTERNAL "")
+  configure_file("${CMAKE_SOURCE_DIR}/Doxyfile.in" "${CMAKE_BINARY_DIR}/Doxyfile" @ONLY)
   add_custom_target(
     engine-docs
     COMMAND ${DOXYGEN_EXECUTABLE} "${CMAKE_BINARY_DIR}/Doxyfile"

@@ -2,7 +2,7 @@
 
 #include "GL/glew.h"
 
-namespace COA
+namespace mnd
 {
 
 /// Offscreen color+depth framebuffer used for low-res "internal resolution" rendering.
@@ -35,4 +35,4 @@ private:
 /// Lazily compiles its own vertex-less shader on first call. Safe to call every frame.
 void BlitNearest(GLuint srcTexture, int dstW, int dstH);
 
-}  // namespace COA
+}  // namespace mnd

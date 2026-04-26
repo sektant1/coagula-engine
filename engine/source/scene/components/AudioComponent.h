@@ -2,7 +2,7 @@
 #include "audio/Audio.h"
 #include "scene/Component.h"
 
-namespace COA
+namespace mnd
 {
 class AudioComponent : public Component
 {
@@ -19,5 +19,5 @@ public:
 private:
     std::unordered_map<std::string, std::shared_ptr<Audio>> m_clips;
 };
-}  // namespace COA
+}  // namespace mnd
 

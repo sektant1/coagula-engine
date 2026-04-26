@@ -18,7 +18,7 @@
 #include "scene/components/PhysicsComponent.h"
 #include "scene/components/PlayerControllerComponent.h"
 
-namespace COA
+namespace mnd
 {
 
 void Scene::RegisterTypes()
@@ -438,4 +438,4 @@ bool Scene::SetParent(GameObject *obj, GameObject *parent)
 
     return result;
 }
-}  // namespace COA
+}  // namespace mnd

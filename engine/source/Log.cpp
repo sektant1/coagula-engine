@@ -2,7 +2,7 @@
 
 #include <cstdio>
 
-namespace COA
+namespace mnd
 {
 
 namespace
@@ -69,4 +69,4 @@ void LogClear()
     g_entries.clear();
 }
 
-}  // namespace COA
+}  // namespace mnd

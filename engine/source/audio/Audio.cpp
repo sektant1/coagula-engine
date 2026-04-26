@@ -4,7 +4,7 @@
 
 #include "Engine.h"
 
-namespace COA
+namespace mnd
 {
 Audio::~Audio()
 {
@@ -95,5 +95,5 @@ std::shared_ptr<Audio> Audio::Load(const std::string &path)
     ma_sound_set_spatialization_enabled(audio->m_sound.get(), MA_TRUE);
     return audio;
 }
-}  // namespace COA
+}  // namespace mnd
 

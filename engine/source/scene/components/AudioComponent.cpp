@@ -2,7 +2,7 @@
 
 #include "scene/GameObject.h"
 
-namespace COA
+namespace mnd
 {
 void AudioComponent::LoadProperties(const nlohmann::json &json)
 {
@@ -78,5 +78,5 @@ bool AudioComponent::IsPlaying(const std::string &name)
 
     return false;
 }
-}  // namespace COA
+}  // namespace mnd
 

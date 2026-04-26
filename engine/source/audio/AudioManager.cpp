@@ -2,7 +2,7 @@
 #define MINIAUDIO_IMPLEMENTATION
 #include <miniaudio.h>
 
-namespace COA
+namespace mnd
 {
 AudioManager::AudioManager()
 {
@@ -35,5 +35,5 @@ void AudioManager::SetListenerPosition(const glm::vec3 &pos)
         ma_engine_listener_set_position(m_engine.get(), 0, pos.x, pos.y, pos.z);
     }
 }
-}  // namespace COA
+}  // namespace mnd
 

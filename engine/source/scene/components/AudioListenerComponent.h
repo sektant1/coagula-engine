@@ -1,7 +1,7 @@
 #pragma once
 #include "scene/Component.h"
 
-namespace COA
+namespace mnd
 {
 class AudioListenerComponent : public Component
 {
@@ -9,5 +9,5 @@ class AudioListenerComponent : public Component
 public:
     void Update(float deltaTime) override;
 };
-}  // namespace COA
+}  // namespace mnd
 

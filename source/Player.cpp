@@ -5,7 +5,7 @@
 #include <GLFW/glfw3.h>
 
 #include "Bullet.h"
-#include "COA.h"
+#include "Monad.h"
 #include "GameConstants.h"
 #include "physics/Collider.h"
 #include "physics/RigidBody.h"
@@ -18,7 +18,7 @@
 #include "scene/components/PhysicsComponent.h"
 #include "scene/components/PlayerControllerComponent.h"
 
-using namespace COA;
+using namespace mnd;
 
 void Player::Init()
 {
@@ -34,11 +34,11 @@ void Player::Init()
 
     if (auto gun = FindChildByName(kChildGunName))
     {
-        m_animationComponent = gun->GetComponent<COA::AnimationComponent>();
+        m_animationComponent = gun->GetComponent<mnd::AnimationComponent>();
     }
 
-    m_audioComponent            = GetComponent<COA::AudioComponent>();
-    m_playerControllerComponent = GetComponent<COA::PlayerControllerComponent>();
+    m_audioComponent            = GetComponent<mnd::AudioComponent>();
+    m_playerControllerComponent = GetComponent<mnd::PlayerControllerComponent>();
 }
 
 void Player::Update(f32 deltaTime)
@@ -60,10 +60,10 @@ void Player::Update(f32 deltaTime)
             }
 
             auto bullet   = GetScene()->CreateObject<Bullet>("bullet");
-            auto material = COA::Material::Load("materials/bullet.mat");
-            auto mesh     = COA::Mesh::CreateSphere(0.1f, 32, 32);
+            auto material = mnd::Material::Load("materials/bullet.mat");
+            auto mesh     = mnd::Mesh::CreateSphere(0.1f, 32, 32);
 
-            bullet->AddComponent(new COA::MeshComponent(material, mesh));
+            bullet->AddComponent(new mnd::MeshComponent(material, mesh));
 
             vec3 pos = vec3(0.0f);
             if (auto child = FindChildByName(kChildBoomName))
@@ -72,9 +72,9 @@ void Player::Update(f32 deltaTime)
             }
             bullet->SetPosition(pos + GetRotation() * vec3(-0.2f, 0.2f, -1.75f));
 
-            auto collider  = std::make_shared<COA::SphereCollider>(0.2f);
-            auto rigidBody = std::make_shared<RigidBody>(COA::BodyType::Dynamic, collider, 5.0f, 1.0f);
-            bullet->AddComponent(new COA::PhysicsComponent(rigidBody));
+            auto collider  = std::make_shared<mnd::SphereCollider>(0.2f);
+            auto rigidBody = std::make_shared<RigidBody>(mnd::BodyType::Dynamic, collider, 5.0f, 1.0f);
+            bullet->AddComponent(new mnd::PhysicsComponent(rigidBody));
 
             vec3 front = GetRotation() * vec3(0.0f, 0.0f, -1.0f);
             rigidBody->ApplyImpulse(front * 500.0f);
@@ -118,5 +118,5 @@ void Player::Update(f32 deltaTime)
         m_playerControllerComponent->SetMoveSpeed(kPlayerWalkSpeed);
     }
 
-    COA::GameObject::Update(deltaTime);
+    mnd::GameObject::Update(deltaTime);
 }

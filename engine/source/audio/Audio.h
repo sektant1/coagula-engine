@@ -8,7 +8,7 @@
 struct ma_sound;
 struct ma_decoder;
 
-namespace COA
+namespace mnd
 {
 class Audio
 {
@@ -28,4 +28,4 @@ private:
     std::unique_ptr<ma_decoder> m_decoder;
     std::vector<char>           m_buffer;
 };
-}  // namespace COA
+}  // namespace mnd
