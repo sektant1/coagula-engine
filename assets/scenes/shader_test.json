@@ -1,0 +1,159 @@
+{
+  "name": "ShaderTest",
+  "camera": "MainPlayer",
+  "objects": [
+    {
+      "name": "MainPlayer",
+      "type": "Player",
+      "position": { "x": 0, "y": 2, "z": -8 },
+      "components": [
+        { "type": "CameraComponent" },
+        { "type": "PlayerControllerComponent" }
+      ]
+    },
+    {
+      "name": "Ground",
+      "position": { "x": 0, "y": 0, "z": 0 },
+      "components": [
+        {
+          "type": "MeshComponent",
+          "mesh": { "type": "box", "x": 30, "y": 1, "z": 30 },
+          "material": {
+            "path": "materials/lit_pixel.mat",
+            "params": {
+              "float": [
+                { "name": "uRimStrength", "value": 0.0 }
+              ],
+              "float3": [
+                { "name": "color", "value0": 0.55, "value1": 0.6, "value2": 0.7 }
+              ]
+            }
+          }
+        },
+        {
+          "type": "PhysicsComponent",
+          "collider": { "type": "box", "x": 30, "y": 1, "z": 30 },
+          "body": { "mass": 0, "friction": 0.5, "type": "static" }
+        }
+      ]
+    },
+    {
+      "name": "BoxRed",
+      "position": { "x": -4, "y": 1.5, "z": 0 },
+      "components": [
+        {
+          "type": "MeshComponent",
+          "mesh": { "type": "box", "x": 2, "y": 2, "z": 2 },
+          "material": {
+            "path": "materials/lit_pixel.mat",
+            "params": {
+              "float3": [
+                { "name": "color", "value0": 0.95, "value1": 0.25, "value2": 0.25 }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "BoxGreen",
+      "position": { "x": 0, "y": 1.5, "z": 0 },
+      "components": [
+        {
+          "type": "MeshComponent",
+          "mesh": { "type": "box", "x": 2, "y": 2, "z": 2 },
+          "material": {
+            "path": "materials/lit_pixel.mat",
+            "params": {
+              "float3": [
+                { "name": "color", "value0": 0.25, "value1": 0.85, "value2": 0.35 }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "BoxBlue",
+      "position": { "x": 4, "y": 1.5, "z": 0 },
+      "components": [
+        {
+          "type": "MeshComponent",
+          "mesh": { "type": "box", "x": 2, "y": 2, "z": 2 },
+          "material": {
+            "path": "materials/lit_pixel.mat",
+            "params": {
+              "float3": [
+                { "name": "color", "value0": 0.25, "value1": 0.45, "value2": 0.95 }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "SphereYellow",
+      "position": { "x": -4, "y": 1.5, "z": 4 },
+      "components": [
+        {
+          "type": "MeshComponent",
+          "mesh": { "type": "sphere", "r": 1.0 },
+          "material": {
+            "path": "materials/lit_pixel.mat",
+            "params": {
+              "float3": [
+                { "name": "color", "value0": 0.95, "value1": 0.85, "value2": 0.20 }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "SphereCyan",
+      "position": { "x": 0, "y": 1.5, "z": 4 },
+      "components": [
+        {
+          "type": "MeshComponent",
+          "mesh": { "type": "sphere", "r": 1.0 },
+          "material": {
+            "path": "materials/lit_pixel.mat",
+            "params": {
+              "float3": [
+                { "name": "color", "value0": 0.20, "value1": 0.85, "value2": 0.95 }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "SphereMagenta",
+      "position": { "x": 4, "y": 1.5, "z": 4 },
+      "components": [
+        {
+          "type": "MeshComponent",
+          "mesh": { "type": "sphere", "r": 1.0 },
+          "material": {
+            "path": "materials/lit_pixel.mat",
+            "params": {
+              "float3": [
+                { "name": "color", "value0": 0.90, "value1": 0.30, "value2": 0.85 }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Light",
+      "position": { "x": 3, "y": 6, "z": -3 },
+      "components": [
+        {
+          "type": "LightComponent",
+          "color": { "r": 1, "g": 1, "b": 1 }
+        }
+      ]
+    }
+  ]
+}

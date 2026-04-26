@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include "Constants.h"
 #include "Types.h"
 
 namespace mnd
@@ -35,6 +36,8 @@ struct CameraData
     mat4 viewMatrix;        ///< World → Camera space transform (glm::lookAt result).
     mat4 projectionMatrix;  ///< Camera → Clip space transform (perspective or ortho).
     vec3 position;          ///< Camera world-space position, used for specular calculations.
+    f32  nearPlane = kCameraNearPlane; ///< Frustum near distance — used by post passes for depth linearisation.
+    f32  farPlane  = kCameraFarPlane;
 };
 
 /**

@@ -1,0 +1,18 @@
+{
+    "shader": {
+        "vertex":   "shaders/lit_pixel.vert",
+        "fragment": "shaders/lit_pixel.frag"
+    },
+    "params": {
+        "float": [
+            { "name": "uAmbient",     "value": 0.35 },
+            { "name": "uRimPower",    "value": 6.0 },
+            { "name": "uRimStrength", "value": 1 },
+            { "name": "uRimSteps",    "value": 2 }
+        ],
+        "float3": [
+            { "name": "color",     "value0": 1.0, "value1": 1.0, "value2": 1.0 },
+            { "name": "uRimColor", "value0": 1.0, "value1": 1.0, "value2": 1.0 }
+        ]
+    }
+}

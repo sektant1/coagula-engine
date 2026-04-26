@@ -34,6 +34,7 @@
 #include "audio/AudioManager.h"
 #include "editor/Editor.h"
 #include "graphics/GraphicsAPI.h"
+#include "graphics/PostProcess.h"
 #include "graphics/RenderSettings.h"
 #include "graphics/RenderTarget.h"
 #include "graphics/Texture.h"
@@ -144,6 +145,9 @@ public:
     /// Offscreen low-res render target (only active when RenderSettings::useInternalRes is true).
     RenderTarget &GetSceneTarget() { return m_sceneTarget; }
 
+    /// Outline / highlight post-pass; tunables exposed via the Editor render panel.
+    PostProcess &GetPostProcess() { return m_postProcess; }
+
     GLFWwindow *GetWindow() { return m_window; }
 
     /// Game-time multiplier applied to deltaTime each frame (1.0 = realtime).
@@ -182,6 +186,7 @@ private:
 
     Editor         m_editor;          ///< ImGui overlay.
     RenderTarget   m_sceneTarget;     ///< Low-res FBO for pixelated look.
+    PostProcess    m_postProcess;     ///< Outline post-pass on the scene target.
     RenderSettings m_renderSettings;  ///< Editor-tweakable render params.
 };
 

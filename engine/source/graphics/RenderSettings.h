@@ -21,13 +21,38 @@ namespace mnd
  * @ingroup mnd_graphics
  * @brief Renderer tuning struct passed to the post-process shader each frame.
  */
+/// Which scene-target attachment the final blit shows. Used to verify
+/// the MRT G-buffer is producing sane normals/depth before the outline
+/// post-pass is wired in. Color = production view.
+enum class DebugView : int
+{
+    Color  = 0,
+    Normal = 1,
+    Depth  = 2,
+};
+
 struct RenderSettings
 {
     /// When true the scene renders to an internal-resolution FBO and is
     /// then nearest-blit upscaled to the window — gives a chunky, pixely look.
     bool useInternalRes = true;
-    int  internalW      = kDefaultInternalWidth;   ///< Internal target width  in pixels.
-    int  internalH      = kDefaultInternalHeight;  ///< Internal target height in pixels.
+
+    /// Which scene-target attachment to blit. Defaults to Color.
+    DebugView debugView = DebugView::Color;
+
+    /// When true, run the outline post-pass between the scene draw and the final blit.
+    /// Ignored when useInternalRes is false (the post-pass needs the MRT scene target).
+    bool useOutline = true;
+
+    /// Window-pixels per scene-pixel. 1 = native resolution; higher values
+    /// downsample more aggressively for a chunkier look. Drives the internal
+    /// target size each frame as window/pixelSize.
+    int pixelSize = 3;
+
+    /// Resolved each frame from window size / pixelSize. Editor reads them
+    /// for display only; setting them directly has no effect.
+    int internalW = kDefaultInternalWidth;
+    int internalH = kDefaultInternalHeight;
 
     /// RGBA value used by `glClear` at the start of each frame.
     vec4 clearColor = vec4(0.0F, 0.0F, 0.0F, 1.0F);

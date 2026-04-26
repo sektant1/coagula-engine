@@ -3,16 +3,14 @@
 #include "Types.h"
 
 // -- Window ------------------------------------------------------------------
-inline constexpr mnd::i32 kWindowWidth  = 1280;
-inline constexpr mnd::i32 kWindowHeight = 720;
+inline constexpr mnd::i32 kWindowWidth  = 1920;
+inline constexpr mnd::i32 kWindowHeight = 1080;
 
 // -- Scene -------------------------------------------------------------------
-inline constexpr const char *kInitialScenePath = "scenes/scene.json";
-inline constexpr const char *kTestScenePath    = "scenes/testing.json";
-
-// -- Player ------------------------------------------------------------------
-inline constexpr mnd::f32 kPlayerWalkSpeed = 5.0F;
-inline constexpr mnd::f32 kPlayerRunSpeed  = 10.0F;
+inline constexpr const char *kInitialScenePath    = "scenes/scene.json";
+inline constexpr const char *kTestScenePath       = "scenes/testing.json";
+inline constexpr const char *kShaderTestScenePath = "scenes/shader_test.json";
+inline constexpr const char *kDungeonScenePath    = "scenes/dungeon.json";
 
 // Child object names looked up at Player::Init
 inline constexpr const char *kChildBulletName = "bullet_33";

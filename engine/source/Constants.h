@@ -40,8 +40,8 @@ inline constexpr const char *kAnsiError = "\033[31m";
 inline constexpr const char *kAnsiFatal = "\033[1;31m";
 
 // -- Renderer ----------------------------------------------------------------
-inline constexpr mnd::i32 kDefaultInternalWidth  = 640;
-inline constexpr mnd::i32 kDefaultInternalHeight = 480;
+inline constexpr mnd::i32 kDefaultInternalWidth  = 1920;
+inline constexpr mnd::i32 kDefaultInternalHeight = 1080;
 inline constexpr mnd::f32 kDefaultAmbient        = 0.35F;
 
 inline constexpr mnd::i32 kInternalPresetTinyW = 160;
@@ -64,16 +64,16 @@ inline constexpr mnd::i32 kMaxKeys         = 512;
 inline constexpr mnd::i32 kMaxMouseButtons = 16;
 
 // -- Physics -----------------------------------------------------------------
-inline constexpr mnd::f32 kGravity              = -9.81F;
+inline constexpr mnd::f32 kGravity              = -13.81F;
 inline constexpr mnd::f32 kDefaultCapsuleRadius = 0.4F;
 inline constexpr mnd::f32 kDefaultCapsuleHeight = 1.2F;
 inline constexpr mnd::f32 kDefaultStepHeight    = 0.35F;
 
 // -- Camera / controller -----------------------------------------------------
-inline constexpr mnd::f32 kPitchLimitDegrees       = 89.0F;
-inline constexpr mnd::f32 kCameraFov               = 60.0F;
-inline constexpr mnd::f32 kCameraNearPlane         = 0.01F;
-inline constexpr mnd::f32 kCameraFarPlane          = 1000.0F;
+inline constexpr mnd::f32 kPitchLimitDegrees = 89.0F;
+inline constexpr mnd::f32 kCameraFov         = 75.0F;
+inline constexpr mnd::f32 kCameraNearPlane   = 0.01F;
+inline constexpr mnd::f32 kCameraFarPlane    = 1000.0F;
 // Mouse-look: degrees per pixel of mouse delta. Raw (no deltaTime scaling)
 // matches GoldSrc/Source — each mouse count maps to a fixed angle regardless
 // of frame rate.
@@ -83,7 +83,7 @@ inline constexpr mnd::f32 kDefaultMouseSensitivity = 0.15F;
 inline constexpr mnd::f32 kDefaultMoveSpeed = 7.5F;
 // Jump impulse multiplier on moveSpeed. HL1 jump = 268 ups ≈ 6.8 m/s,
 // so 7.5 * 0.9 ≈ 6.75 m/s. Reaches ~2.3 m at gravity 9.81.
-inline constexpr mnd::f32 kDefaultJumpSpeed = 0.9F;
+inline constexpr mnd::f32 kDefaultJumpSpeed = 0.6F;
 
 // -- HL/GoldSrc-style movement -----------------------------------------------
 // Tuned to mirror sv_accelerate / sv_airaccelerate / sv_friction / sv_stopspeed.

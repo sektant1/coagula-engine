@@ -5,8 +5,8 @@
 #include <GLFW/glfw3.h>
 
 #include "Bullet.h"
-#include "Monad.h"
 #include "GameConstants.h"
+#include "Monad.h"
 #include "physics/Collider.h"
 #include "physics/RigidBody.h"
 #include "render/Material.h"
@@ -112,13 +112,6 @@ void Player::Update(f32 deltaTime)
         {
             m_audioComponent->Stop(kSfxStep);
         }
-    }
-    if (input.IsKeyPressed(Key::LeftShift) && walking)
-    {
-        m_playerControllerComponent->SetMoveSpeed(kPlayerRunSpeed);
-    } else
-    {
-        m_playerControllerComponent->SetMoveSpeed(kPlayerWalkSpeed);
     }
 
     mnd::GameObject::Update(deltaTime);

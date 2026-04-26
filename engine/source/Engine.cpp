@@ -133,6 +133,11 @@ bool Engine::Init(int width, int height)
     }
 
     m_sceneTarget.Create(m_renderSettings.internalW, m_renderSettings.internalH);
+    if (!m_postProcess.Init())
+    {
+        LOG_ERROR("PostProcess Init failed — outline pass disabled");
+        m_renderSettings.useOutline = false;
+    }
     if (!m_editor.Init(m_window))
     {
         LOG_ERROR("Editor Init failed");
@@ -184,6 +189,11 @@ void Engine::Run()
 
         if (m_renderSettings.useInternalRes)
         {
+            // Render at full window resolution. Pixelation is now done by
+            // the post-pass via UV snapping, so physics/picking/depth all
+            // run at native resolution.
+            m_renderSettings.internalW = (winW > 0) ? winW : kDefaultInternalWidth;
+            m_renderSettings.internalH = (winH > 0) ? winH : kDefaultInternalHeight;
             m_sceneTarget.Resize(m_renderSettings.internalW, m_renderSettings.internalH);
             m_sceneTarget.Bind();
         }
@@ -218,6 +228,8 @@ void Engine::Run()
                     cameraData.viewMatrix       = cameraComponent->GetViewMatrix();
                     cameraData.projectionMatrix = cameraComponent->GetProjectionMatrix(aspect);
                     cameraData.position         = cameraObject->GetWorldPosition();
+                    cameraData.nearPlane        = cameraComponent->GetNearPlane();
+                    cameraData.farPlane         = cameraComponent->GetFarPlane();
                 } else
                 {
                     static bool warned = false;
@@ -242,11 +254,41 @@ void Engine::Run()
 
         m_renderQueue.Draw(m_graphicsAPI, cameraData, lights);
 
-        // Blit offscreen low-res target to default framebuffer with nearest-neighbor upscale.
+        // Run outline post-pass on the low-res scene target, then nearest-blit
+        // the result to the window. Debug-view selector overrides this and shows
+        // raw MRT attachments instead.
         if (m_renderSettings.useInternalRes && m_sceneTarget.IsValid())
         {
+            const bool runOutline = m_renderSettings.useOutline
+                                    && m_renderSettings.debugView == DebugView::Color
+                                    && m_postProcess.IsValid();
+            if (runOutline)
+            {
+                m_postProcess.RunOutline(m_sceneTarget, cameraData);
+            }
+
             RenderTarget::BindDefault(winW, winH);
-            BlitNearest(m_sceneTarget.ColorTex(), winW, winH);
+            GLuint   tex  = m_sceneTarget.ColorTex();
+            BlitMode mode = BlitMode::Color;
+            switch (m_renderSettings.debugView)
+            {
+                case DebugView::Normal:
+                    tex  = m_sceneTarget.NormalTex();
+                    mode = BlitMode::DecodeNrm;
+                    break;
+                case DebugView::Depth:
+                    tex  = m_sceneTarget.DepthTex();
+                    mode = BlitMode::SplatRed;
+                    break;
+                case DebugView::Color:
+                default:
+                    if (runOutline)
+                    {
+                        tex = m_postProcess.OutputTex();
+                    }
+                    break;
+            }
+            BlitNearest(tex, winW, winH, mode);
         }
 
         // Editor overlays the scene on the default framebuffer.
@@ -267,6 +309,7 @@ void Engine::Destroy()
     if (m_application)
     {
         m_editor.Shutdown();
+        m_postProcess.Destroy();
         m_sceneTarget.Destroy();
         m_application->Destroy();
         m_application.reset();

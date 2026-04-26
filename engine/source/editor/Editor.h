@@ -41,7 +41,7 @@ class GameObject;
  */
 class Editor
 {
-public:
+ public:
     /// Custom-panel callback — render any ImGui widgets you like inside.
     using PanelFn = std::function<void()>;
 
@@ -54,8 +54,9 @@ public:
     void Draw();        ///< Builds all panels (no GL state changes yet).
     void EndFrame();    ///< Renders the ImGui draw data to the current framebuffer.
 
-    bool IsVisible() const { return m_visible; }       ///< Editor overlay currently shown?
-    void ToggleVisible() { m_visible = !m_visible; }   ///< Flip overlay visibility.
+    bool IsVisible() const { return m_visible; }  ///< Editor overlay currently shown?
+
+    void ToggleVisible() { m_visible = !m_visible; }  ///< Flip overlay visibility.
 
     /// Tell game code whether ImGui is consuming the mouse this frame
     /// (e.g. when hovering a panel) — skip your own click handling if so.
@@ -67,22 +68,19 @@ public:
     void NotifyDrawCount(int n) { m_lastDrawCount = n; }
 
     /// Register a custom ImGui panel rendered alongside the built-ins.
-    void RegisterPanel(std::string name, PanelFn fn)
-    {
-        m_customPanels.emplace_back(std::move(name), std::move(fn));
-    }
+    void RegisterPanel(std::string name, PanelFn fn) { m_customPanels.emplace_back(std::move(name), std::move(fn)); }
 
-private:
+ private:
     void DrawMenuBar();
     void DrawHierarchy();
     void DrawInspector();
     void DrawConsole();
     void DrawStats();
-    void DrawSettings();      ///< Tabbed left-column window holding the four bodies below.
-    void DrawRenderBody();    ///< Render tab content (no Begin/End).
-    void DrawEngineBody();    ///< Engine tab content.
-    void DrawPhysicsBody();   ///< Physics tab content.
-    void DrawPlayerBody();    ///< Player tab content.
+    void DrawSettings();     ///< Tabbed left-column window holding the four bodies below.
+    void DrawRenderBody();   ///< Render tab content (no Begin/End).
+    void DrawEngineBody();   ///< Engine tab content.
+    void DrawPhysicsBody();  ///< Physics tab content.
+    void DrawPlayerBody();   ///< Player tab content.
     void DrawObjectNode(GameObject *obj);
 
     bool        m_initialized   = false;
@@ -93,16 +91,16 @@ private:
     bool        m_showRender    = true;
     bool        m_showStats     = true;
     bool        m_showEngine    = true;
-    bool        m_showPhysics   = false;
-    bool        m_showPlayer    = false;
+    bool        m_showPhysics   = true;
+    bool        m_showPlayer    = true;
     bool        m_showDemo      = false;
     GameObject *m_selected      = nullptr;
     int         m_lastDrawCount = 0;
     f32         m_fpsSmoothed   = 0.0F;
 
-    bool m_vsyncEnabled  = true;
-    bool m_wireframe     = false;
-    bool m_cursorLocked  = true;
+    bool m_vsyncEnabled = false;
+    bool m_wireframe    = false;
+    bool m_cursorLocked = true;
 
     std::vector<std::pair<std::string, PanelFn>> m_customPanels;
 };

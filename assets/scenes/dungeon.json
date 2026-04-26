@@ -13,18 +13,9 @@
         {
           "type": "AudioComponent",
           "audio": [
-            {
-              "name": "shoot",
-              "path": "audio/shoot.wav"
-            },
-            {
-              "name": "step",
-              "path": "audio/step.wav"
-            },
-            {
-              "name": "jump",
-              "path": "audio/jump.wav"
-            }
+            { "name": "shoot", "path": "audio/shoot.wav" },
+            { "name": "step", "path": "audio/step.wav" },
+            { "name": "jump", "path": "audio/jump.wav" }
           ]
         }
       ],
@@ -46,7 +37,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 12, "y": 1, "z": 12 },
-          "material": "materials/dungeon_floor.mat"
+          "material": { "path": "materials/dungeon_floor.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -62,7 +53,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 12, "y": 1, "z": 12 },
-          "material": "materials/dungeon_ceiling.mat"
+          "material": { "path": "materials/dungeon_ceiling.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -78,7 +69,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 12, "y": 8, "z": 1 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -94,7 +85,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1, "y": 8, "z": 12 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -110,7 +101,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1, "y": 8, "z": 12 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -127,7 +118,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 20, "y": 1, "z": 20 },
-          "material": "materials/dungeon_floor.mat"
+          "material": { "path": "materials/dungeon_floor.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -143,7 +134,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 20, "y": 1, "z": 20 },
-          "material": "materials/dungeon_ceiling.mat"
+          "material": { "path": "materials/dungeon_ceiling.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -159,7 +150,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 8, "y": 8, "z": 1 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -175,7 +166,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 8, "y": 8, "z": 1 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -191,7 +182,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 6, "y": 8, "z": 1 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -207,7 +198,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 6, "y": 8, "z": 1 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -223,7 +214,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1, "y": 8, "z": 7 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -239,7 +230,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1, "y": 8, "z": 7 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -255,7 +246,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1, "y": 8, "z": 7 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -271,7 +262,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1, "y": 8, "z": 7 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -288,7 +279,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 8, "y": 1, "z": 6 },
-          "material": "materials/dungeon_floor.mat"
+          "material": { "path": "materials/dungeon_floor.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -304,7 +295,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 8, "y": 1, "z": 6 },
-          "material": "materials/dungeon_ceiling.mat"
+          "material": { "path": "materials/dungeon_ceiling.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -320,7 +311,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 8, "y": 8, "z": 1 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -336,7 +327,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 8, "y": 8, "z": 1 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -353,7 +344,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 10, "y": 1, "z": 12 },
-          "material": "materials/dungeon_floor.mat"
+          "material": { "path": "materials/dungeon_floor.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -369,7 +360,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 10, "y": 1, "z": 12 },
-          "material": "materials/dungeon_ceiling.mat"
+          "material": { "path": "materials/dungeon_ceiling.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -385,7 +376,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1, "y": 8, "z": 12 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -401,7 +392,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 10, "y": 8, "z": 1 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -417,7 +408,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 10, "y": 8, "z": 1 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -433,7 +424,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1, "y": 8, "z": 3 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -449,7 +440,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1, "y": 8, "z": 3 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -466,7 +457,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 8, "y": 1, "z": 6 },
-          "material": "materials/dungeon_floor.mat"
+          "material": { "path": "materials/dungeon_floor.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -482,7 +473,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 8, "y": 1, "z": 6 },
-          "material": "materials/dungeon_ceiling.mat"
+          "material": { "path": "materials/dungeon_ceiling.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -498,7 +489,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 8, "y": 8, "z": 1 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -514,7 +505,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 8, "y": 8, "z": 1 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -531,7 +522,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 10, "y": 1, "z": 12 },
-          "material": "materials/dungeon_floor.mat"
+          "material": { "path": "materials/dungeon_floor.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -547,7 +538,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 10, "y": 1, "z": 12 },
-          "material": "materials/dungeon_ceiling.mat"
+          "material": { "path": "materials/dungeon_ceiling.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -563,7 +554,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1, "y": 8, "z": 12 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -579,7 +570,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 10, "y": 8, "z": 1 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -595,7 +586,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 10, "y": 8, "z": 1 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -611,7 +602,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1, "y": 8, "z": 3 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -627,7 +618,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1, "y": 8, "z": 3 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -644,7 +635,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 8, "y": 1, "z": 8 },
-          "material": "materials/dungeon_floor.mat"
+          "material": { "path": "materials/dungeon_floor.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -660,7 +651,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 8, "y": 1, "z": 8 },
-          "material": "materials/dungeon_ceiling.mat"
+          "material": { "path": "materials/dungeon_ceiling.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -676,7 +667,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 8, "y": 8, "z": 1 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -692,7 +683,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1, "y": 8, "z": 8 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -708,7 +699,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1, "y": 8, "z": 8 },
-          "material": "materials/dungeon_wall.mat"
+          "material": { "path": "materials/dungeon_wall.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -725,7 +716,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1.5, "y": 8, "z": 1.5 },
-          "material": "materials/dungeon_pillar.mat"
+          "material": { "path": "materials/dungeon_pillar.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -741,7 +732,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1.5, "y": 8, "z": 1.5 },
-          "material": "materials/dungeon_pillar.mat"
+          "material": { "path": "materials/dungeon_pillar.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -757,7 +748,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1.5, "y": 8, "z": 1.5 },
-          "material": "materials/dungeon_pillar.mat"
+          "material": { "path": "materials/dungeon_pillar.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -773,7 +764,7 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1.5, "y": 8, "z": 1.5 },
-          "material": "materials/dungeon_pillar.mat"
+          "material": { "path": "materials/dungeon_pillar.mat" }
         },
         {
           "type": "PhysicsComponent",
@@ -784,13 +775,25 @@
     },
 
     {
-      "name": "Altar_PLACEHOLDER_Stone",
+      "name": "AltarStone",
       "position": { "x": 0, "y": 1.4, "z": -15 },
       "components": [
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 3, "y": 1.8, "z": 2 },
-          "material": "materials/dungeon_altar.mat"
+          "material": {
+            "path": "materials/lit_pixel.mat",
+            "params": {
+              "float3": [
+                {
+                  "name": "color",
+                  "value0": 0.32,
+                  "value1": 0.3,
+                  "value2": 0.36
+                }
+              ]
+            }
+          }
         },
         {
           "type": "PhysicsComponent",
@@ -800,13 +803,25 @@
       ]
     },
     {
-      "name": "Altar_PLACEHOLDER_Slab",
+      "name": "AltarSlab",
       "position": { "x": 0, "y": 2.4, "z": -15 },
       "components": [
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 3.4, "y": 0.2, "z": 2.4 },
-          "material": "materials/dungeon_wood.mat"
+          "material": {
+            "path": "materials/lit_pixel.mat",
+            "params": {
+              "float3": [
+                {
+                  "name": "color",
+                  "value0": 0.42,
+                  "value1": 0.27,
+                  "value2": 0.18
+                }
+              ]
+            }
+          }
         },
         {
           "type": "PhysicsComponent",
@@ -816,47 +831,96 @@
       ]
     },
     {
-      "name": "Altar_PLACEHOLDER_RitualCircle",
+      "name": "RitualCircle",
       "position": { "x": 0, "y": 0.55, "z": -14 },
       "components": [
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 6, "y": 0.05, "z": 6 },
-          "material": "materials/dungeon_ritual.mat"
+          "material": {
+            "path": "materials/lit_pixel.mat",
+            "params": {
+              "float": [{ "name": "uRimStrength", "value": 0.0 }],
+              "float3": [
+                {
+                  "name": "color",
+                  "value0": 0.55,
+                  "value1": 0.2,
+                  "value2": 0.55
+                }
+              ]
+            }
+          }
         }
       ]
     },
     {
-      "name": "Altar_PLACEHOLDER_BannerWest",
+      "name": "BannerWest",
       "position": { "x": -3.45, "y": 5, "z": -14 },
       "components": [
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 0.1, "y": 4, "z": 1.5 },
-          "material": "materials/dungeon_banner.mat"
+          "material": {
+            "path": "materials/lit_pixel.mat",
+            "params": {
+              "float3": [
+                {
+                  "name": "color",
+                  "value0": 0.55,
+                  "value1": 0.1,
+                  "value2": 0.18
+                }
+              ]
+            }
+          }
         }
       ]
     },
     {
-      "name": "Altar_PLACEHOLDER_BannerEast",
+      "name": "BannerEast",
       "position": { "x": 3.45, "y": 5, "z": -14 },
       "components": [
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 0.1, "y": 4, "z": 1.5 },
-          "material": "materials/dungeon_banner.mat"
+          "material": {
+            "path": "materials/lit_pixel.mat",
+            "params": {
+              "float3": [
+                {
+                  "name": "color",
+                  "value0": 0.55,
+                  "value1": 0.1,
+                  "value2": 0.18
+                }
+              ]
+            }
+          }
         }
       ]
     },
 
     {
-      "name": "Chest_PLACEHOLDER_Body",
+      "name": "ChestBody",
       "position": { "x": 24, "y": 1.1, "z": 0 },
       "components": [
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1.8, "y": 1.2, "z": 1.2 },
-          "material": "materials/dungeon_wood.mat"
+          "material": {
+            "path": "materials/lit_pixel.mat",
+            "params": {
+              "float3": [
+                {
+                  "name": "color",
+                  "value0": 0.45,
+                  "value1": 0.28,
+                  "value2": 0.16
+                }
+              ]
+            }
+          }
         },
         {
           "type": "PhysicsComponent",
@@ -866,25 +930,50 @@
       ]
     },
     {
-      "name": "Chest_PLACEHOLDER_Bands",
+      "name": "ChestBands",
       "position": { "x": 24, "y": 1.1, "z": 0 },
       "components": [
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1.85, "y": 0.25, "z": 1.25 },
-          "material": "materials/dungeon_metal.mat"
+          "material": {
+            "path": "materials/lit_pixel.mat",
+            "params": {
+              "float": [{ "name": "uRimStrength", "value": 1.5 }],
+              "float3": [
+                {
+                  "name": "color",
+                  "value0": 0.85,
+                  "value1": 0.72,
+                  "value2": 0.3
+                }
+              ]
+            }
+          }
         }
       ]
     },
 
     {
-      "name": "Coffin_PLACEHOLDER_1",
+      "name": "Coffin1",
       "position": { "x": -26, "y": 0.9, "z": -3 },
       "components": [
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1.2, "y": 0.8, "z": 2.2 },
-          "material": "materials/dungeon_wood.mat"
+          "material": {
+            "path": "materials/lit_pixel.mat",
+            "params": {
+              "float3": [
+                {
+                  "name": "color",
+                  "value0": 0.4,
+                  "value1": 0.26,
+                  "value2": 0.16
+                }
+              ]
+            }
+          }
         },
         {
           "type": "PhysicsComponent",
@@ -894,13 +983,25 @@
       ]
     },
     {
-      "name": "Coffin_PLACEHOLDER_2",
+      "name": "Coffin2",
       "position": { "x": -26, "y": 0.9, "z": 0 },
       "components": [
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1.2, "y": 0.8, "z": 2.2 },
-          "material": "materials/dungeon_wood.mat"
+          "material": {
+            "path": "materials/lit_pixel.mat",
+            "params": {
+              "float3": [
+                {
+                  "name": "color",
+                  "value0": 0.4,
+                  "value1": 0.26,
+                  "value2": 0.16
+                }
+              ]
+            }
+          }
         },
         {
           "type": "PhysicsComponent",
@@ -910,13 +1011,25 @@
       ]
     },
     {
-      "name": "Coffin_PLACEHOLDER_3",
+      "name": "Coffin3",
       "position": { "x": -26, "y": 0.9, "z": 3 },
       "components": [
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1.2, "y": 0.8, "z": 2.2 },
-          "material": "materials/dungeon_wood.mat"
+          "material": {
+            "path": "materials/lit_pixel.mat",
+            "params": {
+              "float3": [
+                {
+                  "name": "color",
+                  "value0": 0.4,
+                  "value1": 0.26,
+                  "value2": 0.16
+                }
+              ]
+            }
+          }
         },
         {
           "type": "PhysicsComponent",
@@ -926,24 +1039,50 @@
       ]
     },
     {
-      "name": "Grave_PLACEHOLDER_Dirt1",
+      "name": "GraveDirt1",
       "position": { "x": -22, "y": 0.55, "z": -4 },
       "components": [
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1.5, "y": 0.1, "z": 2.2 },
-          "material": "materials/dungeon_dirt.mat"
+          "material": {
+            "path": "materials/lit_pixel.mat",
+            "params": {
+              "float": [{ "name": "uRimStrength", "value": 0.0 }],
+              "float3": [
+                {
+                  "name": "color",
+                  "value0": 0.3,
+                  "value1": 0.22,
+                  "value2": 0.14
+                }
+              ]
+            }
+          }
         }
       ]
     },
     {
-      "name": "Grave_PLACEHOLDER_Dirt2",
+      "name": "GraveDirt2",
       "position": { "x": -22, "y": 0.55, "z": 4 },
       "components": [
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1.5, "y": 0.1, "z": 2.2 },
-          "material": "materials/dungeon_dirt.mat"
+          "material": {
+            "path": "materials/lit_pixel.mat",
+            "params": {
+              "float": [{ "name": "uRimStrength", "value": 0.0 }],
+              "float3": [
+                {
+                  "name": "color",
+                  "value0": 0.3,
+                  "value1": 0.22,
+                  "value2": 0.14
+                }
+              ]
+            }
+          }
         }
       ]
     },
@@ -956,7 +1095,19 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1.2, "y": 1.2, "z": 1.2 },
-          "material": "materials/dungeon_wood.mat"
+          "material": {
+            "path": "materials/lit_pixel.mat",
+            "params": {
+              "float3": [
+                {
+                  "name": "color",
+                  "value0": 0.55,
+                  "value1": 0.36,
+                  "value2": 0.18
+                }
+              ]
+            }
+          }
         },
         {
           "type": "PhysicsComponent",
@@ -972,7 +1123,19 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1.2, "y": 1.2, "z": 1.2 },
-          "material": "materials/dungeon_wood.mat"
+          "material": {
+            "path": "materials/lit_pixel.mat",
+            "params": {
+              "float3": [
+                {
+                  "name": "color",
+                  "value0": 0.55,
+                  "value1": 0.36,
+                  "value2": 0.18
+                }
+              ]
+            }
+          }
         },
         {
           "type": "PhysicsComponent",
@@ -988,7 +1151,19 @@
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1.2, "y": 1.2, "z": 1.2 },
-          "material": "materials/dungeon_wood.mat"
+          "material": {
+            "path": "materials/lit_pixel.mat",
+            "params": {
+              "float3": [
+                {
+                  "name": "color",
+                  "value0": 0.55,
+                  "value1": 0.36,
+                  "value2": 0.18
+                }
+              ]
+            }
+          }
         },
         {
           "type": "PhysicsComponent",
@@ -998,18 +1173,93 @@
       ]
     },
     {
-      "name": "Crate_Entry",
+      "name": "CrateEntry",
       "position": { "x": 4, "y": 1.1, "z": 19 },
       "components": [
         {
           "type": "MeshComponent",
           "mesh": { "type": "box", "x": 1.2, "y": 1.2, "z": 1.2 },
-          "material": "materials/dungeon_wood.mat"
+          "material": {
+            "path": "materials/lit_pixel.mat",
+            "params": {
+              "float3": [
+                {
+                  "name": "color",
+                  "value0": 0.55,
+                  "value1": 0.36,
+                  "value2": 0.18
+                }
+              ]
+            }
+          }
         },
         {
           "type": "PhysicsComponent",
           "collider": { "type": "box", "x": 1.2, "y": 1.2, "z": 1.2 },
           "body": { "mass": 5, "friction": 0.7, "type": "dynamic" }
+        }
+      ]
+    },
+
+    {
+      "name": "OrbAltar",
+      "position": { "x": 0, "y": 3.0, "z": -15 },
+      "components": [
+        {
+          "type": "MeshComponent",
+          "mesh": { "type": "sphere", "r": 0.45 },
+          "material": {
+            "path": "materials/lit_pixel.mat",
+            "params": {
+              "float": [
+                { "name": "uRimStrength", "value": 2.0 },
+                { "name": "uRimPower", "value": 3.0 }
+              ],
+              "float3": [
+                {
+                  "name": "color",
+                  "value0": 0.25,
+                  "value1": 0.15,
+                  "value2": 0.55
+                },
+                {
+                  "name": "uRimColor",
+                  "value0": 0.7,
+                  "value1": 0.6,
+                  "value2": 1.0
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "LootCoinPile",
+      "position": { "x": 22, "y": 0.85, "z": 0 },
+      "components": [
+        {
+          "type": "MeshComponent",
+          "mesh": { "type": "sphere", "r": 0.6 },
+          "material": {
+            "path": "materials/lit_pixel.mat",
+            "params": {
+              "float": [{ "name": "uRimStrength", "value": 1.8 }],
+              "float3": [
+                {
+                  "name": "color",
+                  "value0": 0.85,
+                  "value1": 0.72,
+                  "value2": 0.25
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "PhysicsComponent",
+          "collider": { "type": "sphere", "r": 0.6 },
+          "body": { "mass": 0, "friction": 0.6, "type": "static" }
         }
       ]
     },
@@ -1026,7 +1276,12 @@
             "path": "materials/light_bulb.mat",
             "params": {
               "float3": [
-                { "name": "uEmissive", "value0": 1.0, "value1": 0.75, "value2": 0.45 }
+                {
+                  "name": "uEmissive",
+                  "value0": 1.0,
+                  "value1": 0.75,
+                  "value2": 0.45
+                }
               ]
             }
           }
@@ -1045,7 +1300,12 @@
             "path": "materials/light_bulb.mat",
             "params": {
               "float3": [
-                { "name": "uEmissive", "value0": 1.0, "value1": 0.7, "value2": 0.4 }
+                {
+                  "name": "uEmissive",
+                  "value0": 1.0,
+                  "value1": 0.7,
+                  "value2": 0.4
+                }
               ]
             }
           }
@@ -1056,7 +1316,10 @@
       "name": "TorchLight_Altar",
       "position": { "x": 0, "y": 5, "z": -14 },
       "components": [
-        { "type": "LightComponent", "color": { "r": 0.6, "g": 0.55, "b": 1.0 } },
+        {
+          "type": "LightComponent",
+          "color": { "r": 0.6, "g": 0.55, "b": 1.0 }
+        },
         {
           "type": "MeshComponent",
           "mesh": { "type": "sphere", "r": 0.2 },
@@ -1064,7 +1327,12 @@
             "path": "materials/light_bulb.mat",
             "params": {
               "float3": [
-                { "name": "uEmissive", "value0": 0.6, "value1": 0.55, "value2": 1.0 }
+                {
+                  "name": "uEmissive",
+                  "value0": 0.6,
+                  "value1": 0.55,
+                  "value2": 1.0
+                }
               ]
             }
           }
@@ -1083,7 +1351,12 @@
             "path": "materials/light_bulb.mat",
             "params": {
               "float3": [
-                { "name": "uEmissive", "value0": 1.0, "value1": 0.8, "value2": 0.5 }
+                {
+                  "name": "uEmissive",
+                  "value0": 1.0,
+                  "value1": 0.8,
+                  "value2": 0.5
+                }
               ]
             }
           }
@@ -1102,7 +1375,12 @@
             "path": "materials/light_bulb.mat",
             "params": {
               "float3": [
-                { "name": "uEmissive", "value0": 0.7, "value1": 0.8, "value2": 1.0 }
+                {
+                  "name": "uEmissive",
+                  "value0": 0.7,
+                  "value1": 0.8,
+                  "value2": 1.0
+                }
               ]
             }
           }

@@ -620,31 +620,20 @@ void Editor::DrawRenderBody()
     ImGui::SeparatorText("Clear");
     ImGui::ColorEdit4("Clear color", glm::value_ptr(rs.clearColor));
 
-    ImGui::SeparatorText("Internal resolution (pixelation)");
-    ImGui::Checkbox("Use internal resolution FBO", &rs.useInternalRes);
-    ImGui::DragInt("Internal width", &rs.internalW, 1, kInternalResMin, kInternalResMax);
-    ImGui::DragInt("Internal height", &rs.internalH, 1, kInternalResMin, kInternalResMax);
-    if (ImGui::Button("160x120"))
+    ImGui::SeparatorText("Pixel art");
+    ImGui::SliderInt("pixelSize", &rs.pixelSize, 1, 16);
     {
-        rs.internalW = kInternalPresetTinyW;
-        rs.internalH = kInternalPresetTinyH;
+        PostProcess &pp = Engine::GetInstance().GetPostProcess();
+        ImGui::SliderFloat("normalEdgeStrength", &pp.normalEdgeStrength, 0.0F, 2.0F);
+        ImGui::SliderFloat("depthEdgeStrength",  &pp.depthEdgeStrength,  0.0F, 1.0F);
     }
-    ImGui::SameLine();
-    if (ImGui::Button("320x240"))
+
+    ImGui::SeparatorText("Debug view");
+    const char *kDebugViewLabels[] = { "Color", "Normals (view-space)", "Depth (linearised preview)" };
+    int debugViewIdx = static_cast<int>(rs.debugView);
+    if (ImGui::Combo("Scene target", &debugViewIdx, kDebugViewLabels, IM_ARRAYSIZE(kDebugViewLabels)))
     {
-        rs.internalW = kInternalPresetLowW;
-        rs.internalH = kInternalPresetLowH;
-    }
-    ImGui::SameLine();
-    if (ImGui::Button("640x480"))
-    {
-        rs.internalW = kInternalPresetMedW;
-        rs.internalH = kInternalPresetMedH;
-    }
-    ImGui::SameLine();
-    if (ImGui::Button("Native"))
-    {
-        rs.useInternalRes = false;
+        rs.debugView = static_cast<DebugView>(debugViewIdx);
     }
 
     ImGui::SeparatorText("Display");
