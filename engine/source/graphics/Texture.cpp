@@ -101,4 +101,26 @@ std::shared_ptr<Texture> Texture::Load(const std::string &path)
     return result;
 }
 
+std::shared_ptr<Texture> Texture::LoadFromMemory(const unsigned char *data, int sizeBytes)
+{
+    if (data == nullptr || sizeBytes <= 0)
+    {
+        return nullptr;
+    }
+
+    int width       = 0;
+    int height      = 0;
+    int numChannels = 0;
+
+    unsigned char *decoded = stbi_load_from_memory(data, sizeBytes, &width, &height, &numChannels, 0);
+    if (decoded == nullptr)
+    {
+        return nullptr;
+    }
+
+    auto result = std::make_shared<Texture>(width, height, numChannels, decoded);
+    stbi_image_free(decoded);
+    return result;
+}
+
 }  // namespace mnd

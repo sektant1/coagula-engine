@@ -15,6 +15,11 @@ file(
   "source/*.cpp"
   "source/*.h")
 
+# The Vulkan preview scaffold lives under source/graphics/vulkan/ but is *not*
+# part of the engine library — the engine still uses OpenGL. Strip those files
+# from the engine's TU list so they only build under MONAD_VULKAN_PREVIEW.
+list(FILTER PROJECT_SOURCE_FILES EXCLUDE REGEX "/graphics/vulkan/")
+
 include_directories(source)
 include_directories(thirdparty/glm)
 option(ENGINE_UNITY_BUILD "Enable unity build for Engine" OFF)
@@ -154,6 +159,21 @@ set(USE_GRAPHICAL_BENCHMARK
 set(BUILD_SHARED_LIBS
     OFF
     CACHE BOOL "" FORCE)
+# Extra Bullet trims — these targets are unused by the engine, and skipping
+# them eliminates a significant chunk of cold-build wall time.
+set(BUILD_PYBULLET                OFF CACHE BOOL "" FORCE)
+set(BUILD_PYBULLET_NUMPY          OFF CACHE BOOL "" FORCE)
+set(INSTALL_LIBS                  OFF CACHE BOOL "" FORCE)
+set(INSTALL_CMAKE_FILES           OFF CACHE BOOL "" FORCE)
+set(BUILD_BULLET_ROBOTICS_EXTRA   OFF CACHE BOOL "" FORCE)
+set(BUILD_BULLET_ROBOTICS_GUI_EXTRA OFF CACHE BOOL "" FORCE)
+set(BUILD_OBJ2GLTF_EXTRA          OFF CACHE BOOL "" FORCE)
+set(BUILD_SERIALIZE_EXTRA         OFF CACHE BOOL "" FORCE)
+set(BUILD_INVERSE_DYNAMIC_EXTRA   OFF CACHE BOOL "" FORCE)
+set(BUILD_GIMPACTUTILS_EXTRA      OFF CACHE BOOL "" FORCE)
+set(BUILD_HACD_EXTRA              OFF CACHE BOOL "" FORCE)
+set(USE_DOUBLE_PRECISION          OFF CACHE BOOL "" FORCE)
+set(USE_MSVC_RUNTIME_LIBRARY_DLL  OFF CACHE BOOL "" FORCE)
 add_subdirectory(thirdparty/bullet EXCLUDE_FROM_ALL)
 target_include_directories(${PROJECT_NAME} PRIVATE thirdparty/bullet/src)
 
@@ -163,7 +183,6 @@ target_link_libraries(
   glew_s
   nlohmann_json
   cgltf
-  glm
   BulletDynamics
   BulletCollision
   LinearMath
@@ -175,3 +194,37 @@ add_custom_command(
   TARGET ${PROJECT_NAME}
   POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E create_symlink ${ASSETS_DIR} ${CMAKE_BINARY_DIR}/assets)
+
+# -- Vulkan preview (off by default) -----------------------------------------
+# Builds a standalone `vulkan_preview` executable that exercises the scaffold
+# under engine/source/graphics/vulkan/. It is intentionally *not* linked into
+# the engine library or game executable — this is for iterating on a future
+# Vulkan backend without disturbing the working OpenGL path.
+#
+# Enable with:  cmake -B bin/debug -S . -DMONAD_VULKAN_PREVIEW=ON
+# Run    with:  ./bin/debug/vulkan_preview
+
+
+option(MONAD_VULKAN_PREVIEW "Build the standalone Vulkan preview tool" ON )
+if(MONAD_VULKAN_PREVIEW)
+  # Soft-find: Arch ships the loader (vulkan-icd-loader) and headers
+  # (vulkan-headers) in separate packages. Don't fail configure if headers
+  # are missing — print a clear hint and skip the target instead.
+  find_package(Vulkan QUIET)
+  if(Vulkan_FOUND)
+    add_executable(vulkan_preview
+        source/graphics/vulkan/Context.cpp
+        source/graphics/vulkan/Swapchain.cpp
+        source/graphics/vulkan/Renderer.cpp
+        source/graphics/vulkan/preview_main.cpp)
+    target_include_directories(vulkan_preview PRIVATE source)
+    target_link_libraries(vulkan_preview PRIVATE Vulkan::Vulkan glfw)
+    message(STATUS "Vulkan preview enabled: target 'vulkan_preview'")
+  else()
+    message(WARNING
+      "MONAD_VULKAN_PREVIEW=ON but Vulkan headers were not found. "
+      "Install them and reconfigure:\n"
+      "    Arch:   sudo pacman -S vulkan-headers\n"
+      "    Debian: sudo apt install libvulkan-dev")
+  endif()
+endif()

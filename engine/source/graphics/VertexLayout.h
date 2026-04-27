@@ -25,7 +25,7 @@
 #include <cstdint>
 #include <vector>
 
-#include <GL/glew.h>
+#include "graphics/GLForward.h"
 
 namespace mnd
 {

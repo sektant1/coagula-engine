@@ -25,8 +25,8 @@
 #include <memory>
 #include <vector>
 
-#include "GL/glew.h"
 #include "Types.h"
+#include "graphics/GLForward.h"
 #include "graphics/VertexLayout.h"
 
 namespace mnd

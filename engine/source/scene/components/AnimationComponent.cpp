@@ -1,11 +1,26 @@
 #include "scene/components/AnimationComponent.h"
 
+#include <algorithm>
+#include <unordered_set>
+
 #include "animation/SkeletalAnimationClip.h"
 #include "animation/Skeleton.h"
 #include "scene/GameObject.h"
 
 namespace mnd
 {
+std::vector<std::string> AnimationComponent::GetClipNames() const
+{
+    std::unordered_set<std::string> seen;
+    seen.reserve(m_clips.size() + m_skelClips.size());
+    for (const auto &kv : m_clips)     { seen.insert(kv.first); }
+    for (const auto &kv : m_skelClips) { seen.insert(kv.first); }
+
+    std::vector<std::string> out(seen.begin(), seen.end());
+    std::sort(out.begin(), out.end());
+    return out;
+}
+
 void AnimationComponent::Update(float deltaTime)
 {
     if (!m_isPlaying)

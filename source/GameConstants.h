@@ -19,11 +19,14 @@ inline constexpr const char *kChildGunName    = "Gun";
 inline constexpr const char *kChildHandsName  = "Hands";
 
 // Audio / animation cue names
-inline constexpr const char *kSfxShoot  = "shoot";
-inline constexpr const char *kSfxJump   = "jump";
-inline constexpr const char *kSfxStep   = "step";
-inline constexpr const char *kAnimShoot = "shoot";
-inline constexpr const char *kAnimIdle  = "idle";
+inline constexpr const char *kSfxShoot       = "shoot";
+inline constexpr const char *kSfxJump        = "jump";
+inline constexpr const char *kSfxStep        = "step";
+inline constexpr const char *kSfxSwordSwing  = "sword_swing";
+inline constexpr const char *kSfxSwordMiss   = "sword_miss";
+inline constexpr const char *kSfxSwordBlock  = "sword_block";
+inline constexpr const char *kAnimShoot      = "shoot";
+inline constexpr const char *kAnimIdle       = "idle";
 
 // -- Bullet ------------------------------------------------------------------
 inline constexpr mnd::f32 kBulletLifetime = 4.0F;

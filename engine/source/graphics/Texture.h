@@ -23,9 +23,10 @@
 #pragma once
 
 #include <memory>
+#include <string>
 #include <unordered_map>
 
-#include "graphics/GraphicsAPI.h"
+#include "graphics/GLForward.h"
 
 namespace mnd
 {
@@ -66,6 +67,14 @@ public:
      * @return Shared pointer to the loaded Texture, or nullptr on failure.
      */
     static std::shared_ptr<Texture> Load(const std::string &path);
+
+    /**
+     * @brief Decode an in-memory image (PNG/JPG/...) into a GPU texture.
+     *
+     * Used for textures embedded inside model containers (.glb, FBX with
+     * embedded media), where there's no path to read from disk.
+     */
+    static std::shared_ptr<Texture> LoadFromMemory(const unsigned char *data, int sizeBytes);
 
 private:
     int    m_width       = 0;  ///< Image width in pixels.

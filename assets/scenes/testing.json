@@ -34,6 +34,18 @@
             {
               "name": "jump",
               "path": "audio/jump.wav"
+            },
+            {
+              "name": "sword_swing",
+              "path": "audio/07_human_atk_sword_1.wav"
+            },
+            {
+              "name": "sword_miss",
+              "path": "audio/27_sword_miss_1.wav"
+            },
+            {
+              "name": "sword_block",
+              "path": "audio/26_sword_hit_1.wav"
             }
           ]
         }
@@ -56,11 +68,11 @@
         },
         {
           "name": "Hands",
-          "type": "fbx",
-          "path": "models/arms/arms.fbx",
-          "position": { "x": 0.0, "y": 0.095, "z": -1.785 },
-          "rotation_deg": { "x": 29.0, "y": 0.0, "z": 0.0 },
-          "scale": { "x": 0.5245, "y": 0.5245, "z": 0.5245 }
+          "type": "model",
+          "path": "models/medieval_weapons/MedievalWeaponsPack/Sword.glb",
+          "position": { "x": 0.51, "y": -0.45, "z": -0.7 },
+          "rotation_deg": { "x": -14.0, "y": -104.0, "z": 16.0 },
+          "scale": { "x": 0.045, "y": 0.045, "z": 0.045 }
         }
       ]
     },

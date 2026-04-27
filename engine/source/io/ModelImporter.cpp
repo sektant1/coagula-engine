@@ -174,7 +174,9 @@ void NormalizeBoneSlots(std::array<VertexBoneSlot, kMaxBonesPerVertex> &slots)
     }
 }
 
-std::shared_ptr<Texture> LoadDiffuseTexture(const aiMaterial *mat, const std::filesystem::path &assetFolder)
+std::shared_ptr<Texture> LoadDiffuseTexture(const aiMaterial            *mat,
+                                            const aiScene               *aiscene,
+                                            const std::filesystem::path &assetFolder)
 {
     if (mat->GetTextureCount(aiTextureType_DIFFUSE) == 0 &&
         mat->GetTextureCount(aiTextureType_BASE_COLOR) == 0)
@@ -190,11 +192,37 @@ std::shared_ptr<Texture> LoadDiffuseTexture(const aiMaterial *mat, const std::fi
     }
 
     std::string raw = aiPath.C_Str();
-    if (raw.empty() || raw[0] == '*')
+    if (raw.empty())
     {
-        // Embedded textures (e.g. "*0") not supported in v1.
-        LOG_WARN("ModelImporter: embedded textures not supported, skipping '%s'", raw.c_str());
         return nullptr;
+    }
+
+    // Embedded texture: GLB and FBX-with-media reference media as "*N" or by
+    // name; Assimp resolves both via GetEmbeddedTexture.
+    if (const aiTexture *embedded = aiscene->GetEmbeddedTexture(raw.c_str()))
+    {
+        if (embedded->mHeight == 0)
+        {
+            // Compressed bytes (PNG/JPG) — decode via stb.
+            const auto *bytes    = reinterpret_cast<const unsigned char *>(embedded->pcData);
+            const int   numBytes = static_cast<int>(embedded->mWidth);
+            return Texture::LoadFromMemory(bytes, numBytes);
+        }
+        // Uncompressed BGRA pixel array. Repack to RGBA so the GL upload sees
+        // the channels in the order the rest of the engine assumes.
+        const u32                  pixelCount = embedded->mWidth * embedded->mHeight;
+        std::vector<unsigned char> rgba(pixelCount * 4);
+        for (u32 i = 0; i < pixelCount; ++i)
+        {
+            rgba[i * 4 + 0] = embedded->pcData[i].r;
+            rgba[i * 4 + 1] = embedded->pcData[i].g;
+            rgba[i * 4 + 2] = embedded->pcData[i].b;
+            rgba[i * 4 + 3] = embedded->pcData[i].a;
+        }
+        return std::make_shared<Texture>(static_cast<int>(embedded->mWidth),
+                                         static_cast<int>(embedded->mHeight),
+                                         4,
+                                         rgba.data());
     }
 
     // FBX exporters often emit absolute Windows paths. Reduce to filename
@@ -371,7 +399,7 @@ ImportedMesh ImportMesh(const aiMesh                                        *aim
     if (aimesh->mMaterialIndex < aiscene->mNumMaterials)
     {
         auto *aiMat = aiscene->mMaterials[aimesh->mMaterialIndex];
-        if (auto tex = LoadDiffuseTexture(aiMat, assetFolder))
+        if (auto tex = LoadDiffuseTexture(aiMat, aiscene, assetFolder))
         {
             material->SetParam("baseColorTexture", tex);
         }

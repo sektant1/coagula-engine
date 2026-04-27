@@ -14,6 +14,22 @@ if(NOT MONAD_DOCS_ONLY)
     set(CMAKE_CXX_COMPILER_LAUNCHER ${CCACHE_PROGRAM})
   endif()
 
+  # Prefer mold (then lld) over the system linker — debug links pull dozens of
+  # static archives (Bullet, Assimp, GLEW, GLFW) and the default `ld` dominates
+  # incremental rebuild time. mold is typically 5–10x faster with no semantic
+  # difference. Falls back gracefully if neither is installed.
+  find_program(MOLD_PROGRAM mold)
+  find_program(LLD_PROGRAM ld.lld)
+  if(MOLD_PROGRAM)
+    add_link_options(-fuse-ld=mold)
+    message(STATUS "Linker: mold (${MOLD_PROGRAM})")
+  elseif(LLD_PROGRAM)
+    add_link_options(-fuse-ld=lld)
+    message(STATUS "Linker: lld (${LLD_PROGRAM})")
+  else()
+    message(STATUS "Linker: system default (install mold for ~10x faster links)")
+  endif()
+
   set(PROJECT_SOURCE_FILES
       source/main.cpp
       source/Game.h
@@ -38,6 +54,20 @@ if(NOT MONAD_DOCS_ONLY)
 
   include_directories(engine/thirdparty/stb_image)
   target_link_libraries(${PROJECT_NAME} Engine)
+
+  # PCH for the game executable. Mirrors what the engine library precompiles —
+  # game TUs already pull glm + STL via Monad.h, so PCH'ing them once saves
+  # parsing tens of thousands of lines per source file.
+  target_precompile_headers(
+    ${PROJECT_NAME}
+    PRIVATE
+    <vector>
+    <string>
+    <memory>
+    <unordered_map>
+    <functional>
+    <algorithm>
+    <glm/glm.hpp>)
 
   # Symlink compile_commands.json into the repo root so clangd / IDEs find it
   # regardless of which machine or build directory (bin/debug, bin/release) is used.

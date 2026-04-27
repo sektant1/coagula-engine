@@ -153,6 +153,14 @@ public:
      */
     void Play(const std::string &name, bool loop = true);
 
+    /**
+     * @brief List every clip name registered on this component (node + skeletal).
+     *
+     * Names are deduplicated and returned sorted. Useful for editor UIs that
+     * want to enumerate available animations without poking at the maps.
+     */
+    std::vector<std::string> GetClipNames() const;
+
 private:
     /// Linear interpolation between the two surrounding vec3 keyframes.
     glm::vec3 Interpolate(const std::vector<KeyFrameVec3> &keys, float time);
