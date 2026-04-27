@@ -5,6 +5,7 @@
 
 #include "Constants.h"
 #include "physics/CollisionObject.h"
+#include "physics/Raycast.h"
 #include "physics/RigidBody.h"
 
 namespace mnd
@@ -94,5 +95,39 @@ void PhysicsManager::RemoveRigidBody(RigidBody *body)
 btDiscreteDynamicsWorld *PhysicsManager::GetWorld()
 {
     return m_world.get();
+}
+
+bool PhysicsManager::Raycast(const vec3 &from, const vec3 &to, RayHit &out)
+{
+    if (!m_world)
+    {
+        return false;
+    }
+
+    const btVector3 btFrom(btScalar(from.x), btScalar(from.y), btScalar(from.z));
+    const btVector3 btTo(btScalar(to.x), btScalar(to.y), btScalar(to.z));
+
+    btCollisionWorld::ClosestRayResultCallback cb(btFrom, btTo);
+    m_world->rayTest(btFrom, btTo, cb);
+
+    if (!cb.hasHit())
+    {
+        return false;
+    }
+
+    out.point    = vec3(cb.m_hitPointWorld.x(), cb.m_hitPointWorld.y(), cb.m_hitPointWorld.z());
+    out.normal   = vec3(cb.m_hitNormalWorld.x(), cb.m_hitNormalWorld.y(), cb.m_hitNormalWorld.z());
+    out.fraction = cb.m_closestHitFraction;
+    out.object   = nullptr;
+
+    if (cb.m_collisionObject)
+    {
+        if (auto *co = reinterpret_cast<CollisionObject *>(cb.m_collisionObject->getUserPointer()))
+        {
+            out.object = co->GetOwner();
+        }
+    }
+
+    return true;
 }
 }  // namespace mnd

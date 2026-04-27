@@ -39,7 +39,12 @@ if(NOT MONAD_DOCS_ONLY)
       source/Bullet.h
       source/Bullet.cpp
       source/JumpPlatform.h
-      source/JumpPlatform.cpp)
+      source/JumpPlatform.cpp
+      source/run/Rng.h
+      source/run/Rng.cpp
+      source/combat/DamageEvent.h
+      source/combat/DamageSystem.h
+      source/combat/DamageSystem.cpp)
 
   # Add the application
   include_directories(source)

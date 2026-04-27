@@ -8,6 +8,8 @@
 
 #include <memory>
 
+#include "Types.h"
+
 class btBroadphaseInterface;
 class btDefaultCollisionConfiguration;
 class btCollisionDispatcher;
@@ -17,6 +19,7 @@ class btDiscreteDynamicsWorld;
 namespace mnd
 {
 class RigidBody;
+struct RayHit;
 
 /**
  * @ingroup mnd_physics
@@ -44,6 +47,12 @@ public:
 
     /// Unregister a rigid body (e.g. when its owning component is destroyed).
     void RemoveRigidBody(RigidBody *body);
+
+    /// Cast a ray from @p from to @p to and fill @p out with the closest hit.
+    /// `out.object` is the GameObject behind the hit collision object, when one
+    /// has been set via CollisionObject::SetOwner; otherwise null.
+    /// @return true if any collider was hit.
+    bool Raycast(const vec3 &from, const vec3 &to, RayHit &out);
 
     /// Raw pointer to the underlying Bullet world (for advanced/internal use).
     btDiscreteDynamicsWorld *GetWorld();

@@ -457,6 +457,7 @@ void Player::Update(f32 deltaTime)
                 }
 
                 auto bullet   = GetScene()->CreateObject<Bullet>("bullet");
+                bullet->SetShooter(this);
                 auto material = mnd::Material::Load("materials/bullet.mat");
                 auto mesh     = mnd::Mesh::CreateSphere(0.1f, 32, 32);
 

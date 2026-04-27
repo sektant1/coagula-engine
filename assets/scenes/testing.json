@@ -978,6 +978,11 @@
             "friction": 0.5,
             "type": "dynamic"
           }
+        },
+        {
+          "type": "HealthComponent",
+          "max": 100,
+          "destroyOnDeath": true
         }
       ]
     },

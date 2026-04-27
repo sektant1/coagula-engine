@@ -61,6 +61,7 @@
 #include "scene/Scene.h"
 #include "scene/components/AnimationComponent.h"
 #include "scene/components/CameraComponent.h"
+#include "scene/components/HealthComponent.h"
 #include "scene/components/LightComponent.h"
 #include "scene/components/MeshComponent.h"
 #include "scene/components/PhysicsComponent.h"

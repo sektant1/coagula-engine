@@ -77,7 +77,7 @@ inline constexpr mnd::f32 kCameraFarPlane    = 1000.0F;
 // Mouse-look: degrees per pixel of mouse delta. Raw (no deltaTime scaling)
 // matches GoldSrc/Source — each mouse count maps to a fixed angle regardless
 // of frame rate.
-inline constexpr mnd::f32 kDefaultMouseSensitivity = 0.15F;
+inline constexpr mnd::f32 kDefaultMouseSensitivity = 15.0F;
 // Top run speed: HL1 sv_maxspeed=320 ups ≈ 8.13 m/s. 7.5 m/s feels close
 // while reading better at 1u≈1m scenes.
 inline constexpr mnd::f32 kDefaultMoveSpeed = 7.5F;

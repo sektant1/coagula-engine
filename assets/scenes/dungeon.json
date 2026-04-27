@@ -1124,6 +1124,11 @@
           "type": "PhysicsComponent",
           "collider": { "type": "box", "x": 1.2, "y": 1.2, "z": 1.2 },
           "body": { "mass": 5, "friction": 0.7, "type": "dynamic" }
+        },
+        {
+          "type": "HealthComponent",
+          "max": 100,
+          "destroyOnDeath": true
         }
       ]
     },

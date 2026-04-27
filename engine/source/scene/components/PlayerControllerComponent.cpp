@@ -77,13 +77,11 @@ void PlayerControllerComponent::Update(f32 deltaTime)
         f32 deltaX = currentPos.x - oldPos.x;
         f32 deltaY = currentPos.y - oldPos.y;
 
-        // Mouse-look is frame-rate independent (HL/Source convention): each
-        // mouse count = fixed angle, no deltaTime scaling.
-        f32 yDeltaAngle = -deltaX * m_sensitivity;
+        f32 yDeltaAngle = -deltaX * m_sensitivity * deltaTime;
         m_yRot += yDeltaAngle;
         glm::quat yRot = glm::angleAxis(glm::radians(m_yRot), glm::vec3(0, 1, 0));
 
-        f32 xDeltaAngle = -deltaY * m_sensitivity;
+        f32 xDeltaAngle = -deltaY * m_sensitivity * deltaTime;
         m_xRot += xDeltaAngle;
         m_xRot         = std::clamp(m_xRot, -kPitchLimitDegrees, kPitchLimitDegrees);
         glm::quat xRot = glm::angleAxis(glm::radians(m_xRot), glm::vec3(1, 0, 0));

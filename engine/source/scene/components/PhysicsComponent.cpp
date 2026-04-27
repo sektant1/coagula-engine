@@ -83,6 +83,7 @@ void PhysicsComponent::Init()
 
     m_rigidBody->SetPosition(pos);
     m_rigidBody->SetRotation(rot);
+    m_rigidBody->SetOwner(m_owner);
 
     Engine::GetInstance().GetPhysicsManager().AddRigidBody(m_rigidBody.get());
 }

@@ -15,6 +15,7 @@
 #include "scene/components/AudioComponent.h"
 #include "scene/components/AudioListenerComponent.h"
 #include "scene/components/CameraComponent.h"
+#include "scene/components/HealthComponent.h"
 #include "scene/components/LightComponent.h"
 #include "scene/components/MeshComponent.h"
 #include "scene/components/SkinnedMeshComponent.h"
@@ -28,6 +29,7 @@ void Scene::RegisterTypes()
 {
     AnimationComponent::Register();
     CameraComponent::Register();
+    HealthComponent::Register();
     LightComponent::Register();
     MeshComponent::Register();
     SkinnedMeshComponent::Register();
