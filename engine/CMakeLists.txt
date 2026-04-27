@@ -18,7 +18,12 @@ file(
 # The Vulkan preview scaffold lives under source/graphics/vulkan/ but is *not*
 # part of the engine library — the engine still uses OpenGL. Strip those files
 # from the engine's TU list so they only build under MONAD_VULKAN_PREVIEW.
-list(FILTER PROJECT_SOURCE_FILES EXCLUDE REGEX "/graphics/vulkan/")
+list(
+  FILTER
+  PROJECT_SOURCE_FILES
+  EXCLUDE
+  REGEX
+  "/graphics/vulkan/")
 
 include_directories(source)
 include_directories(thirdparty/glm)
@@ -103,19 +108,45 @@ add_library(cgltf INTERFACE)
 target_include_directories(cgltf INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/cgltf)
 
 # -- Third party: Assimp (FBX + glTF + OBJ importers only) --
-set(ASSIMP_BUILD_TESTS                    OFF CACHE BOOL "" FORCE)
-set(ASSIMP_BUILD_ASSIMP_TOOLS             OFF CACHE BOOL "" FORCE)
-set(ASSIMP_BUILD_SAMPLES                  OFF CACHE BOOL "" FORCE)
-set(ASSIMP_INSTALL                        OFF CACHE BOOL "" FORCE)
-set(ASSIMP_INSTALL_PDB                    OFF CACHE BOOL "" FORCE)
-set(ASSIMP_NO_EXPORT                      ON  CACHE BOOL "" FORCE)
-set(ASSIMP_WARNINGS_AS_ERRORS             OFF CACHE BOOL "" FORCE)
-set(ASSIMP_BUILD_ZLIB                     ON  CACHE BOOL "" FORCE)
-set(ASSIMP_BUILD_ALL_IMPORTERS_BY_DEFAULT OFF CACHE BOOL "" FORCE)
-set(ASSIMP_BUILD_ALL_EXPORTERS_BY_DEFAULT OFF CACHE BOOL "" FORCE)
-set(ASSIMP_BUILD_FBX_IMPORTER             ON  CACHE BOOL "" FORCE)
-set(ASSIMP_BUILD_GLTF_IMPORTER            ON  CACHE BOOL "" FORCE)
-set(ASSIMP_BUILD_OBJ_IMPORTER             ON  CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_TESTS
+    OFF
+    CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_ASSIMP_TOOLS
+    OFF
+    CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_SAMPLES
+    OFF
+    CACHE BOOL "" FORCE)
+set(ASSIMP_INSTALL
+    OFF
+    CACHE BOOL "" FORCE)
+set(ASSIMP_INSTALL_PDB
+    OFF
+    CACHE BOOL "" FORCE)
+set(ASSIMP_NO_EXPORT
+    ON
+    CACHE BOOL "" FORCE)
+set(ASSIMP_WARNINGS_AS_ERRORS
+    OFF
+    CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_ZLIB
+    ON
+    CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_ALL_IMPORTERS_BY_DEFAULT
+    OFF
+    CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_ALL_EXPORTERS_BY_DEFAULT
+    OFF
+    CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_FBX_IMPORTER
+    ON
+    CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_GLTF_IMPORTER
+    ON
+    CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_OBJ_IMPORTER
+    ON
+    CACHE BOOL "" FORCE)
 add_subdirectory(thirdparty/assimp EXCLUDE_FROM_ALL)
 
 set(BUILD_UTILS
@@ -161,19 +192,45 @@ set(BUILD_SHARED_LIBS
     CACHE BOOL "" FORCE)
 # Extra Bullet trims — these targets are unused by the engine, and skipping
 # them eliminates a significant chunk of cold-build wall time.
-set(BUILD_PYBULLET                OFF CACHE BOOL "" FORCE)
-set(BUILD_PYBULLET_NUMPY          OFF CACHE BOOL "" FORCE)
-set(INSTALL_LIBS                  OFF CACHE BOOL "" FORCE)
-set(INSTALL_CMAKE_FILES           OFF CACHE BOOL "" FORCE)
-set(BUILD_BULLET_ROBOTICS_EXTRA   OFF CACHE BOOL "" FORCE)
-set(BUILD_BULLET_ROBOTICS_GUI_EXTRA OFF CACHE BOOL "" FORCE)
-set(BUILD_OBJ2GLTF_EXTRA          OFF CACHE BOOL "" FORCE)
-set(BUILD_SERIALIZE_EXTRA         OFF CACHE BOOL "" FORCE)
-set(BUILD_INVERSE_DYNAMIC_EXTRA   OFF CACHE BOOL "" FORCE)
-set(BUILD_GIMPACTUTILS_EXTRA      OFF CACHE BOOL "" FORCE)
-set(BUILD_HACD_EXTRA              OFF CACHE BOOL "" FORCE)
-set(USE_DOUBLE_PRECISION          OFF CACHE BOOL "" FORCE)
-set(USE_MSVC_RUNTIME_LIBRARY_DLL  OFF CACHE BOOL "" FORCE)
+set(BUILD_PYBULLET
+    OFF
+    CACHE BOOL "" FORCE)
+set(BUILD_PYBULLET_NUMPY
+    OFF
+    CACHE BOOL "" FORCE)
+set(INSTALL_LIBS
+    OFF
+    CACHE BOOL "" FORCE)
+set(INSTALL_CMAKE_FILES
+    OFF
+    CACHE BOOL "" FORCE)
+set(BUILD_BULLET_ROBOTICS_EXTRA
+    OFF
+    CACHE BOOL "" FORCE)
+set(BUILD_BULLET_ROBOTICS_GUI_EXTRA
+    OFF
+    CACHE BOOL "" FORCE)
+set(BUILD_OBJ2GLTF_EXTRA
+    OFF
+    CACHE BOOL "" FORCE)
+set(BUILD_SERIALIZE_EXTRA
+    OFF
+    CACHE BOOL "" FORCE)
+set(BUILD_INVERSE_DYNAMIC_EXTRA
+    OFF
+    CACHE BOOL "" FORCE)
+set(BUILD_GIMPACTUTILS_EXTRA
+    OFF
+    CACHE BOOL "" FORCE)
+set(BUILD_HACD_EXTRA
+    OFF
+    CACHE BOOL "" FORCE)
+set(USE_DOUBLE_PRECISION
+    OFF
+    CACHE BOOL "" FORCE)
+set(USE_MSVC_RUNTIME_LIBRARY_DLL
+    OFF
+    CACHE BOOL "" FORCE)
 add_subdirectory(thirdparty/bullet EXCLUDE_FROM_ALL)
 target_include_directories(${PROJECT_NAME} PRIVATE thirdparty/bullet/src)
 
@@ -204,27 +261,27 @@ add_custom_command(
 # Enable with:  cmake -B bin/debug -S . -DMONAD_VULKAN_PREVIEW=ON
 # Run    with:  ./bin/debug/vulkan_preview
 
-
-option(MONAD_VULKAN_PREVIEW "Build the standalone Vulkan preview tool" ON )
+option(MONAD_VULKAN_PREVIEW "Build the standalone Vulkan preview tool" OFF)
 if(MONAD_VULKAN_PREVIEW)
   # Soft-find: Arch ships the loader (vulkan-icd-loader) and headers
   # (vulkan-headers) in separate packages. Don't fail configure if headers
   # are missing — print a clear hint and skip the target instead.
   find_package(Vulkan QUIET)
   if(Vulkan_FOUND)
-    add_executable(vulkan_preview
-        source/graphics/vulkan/Context.cpp
-        source/graphics/vulkan/Swapchain.cpp
-        source/graphics/vulkan/Renderer.cpp
-        source/graphics/vulkan/preview_main.cpp)
+    add_executable(
+      vulkan_preview
+      source/graphics/vulkan/Context.cpp
+      source/graphics/vulkan/Swapchain.cpp
+      source/graphics/vulkan/Renderer.cpp
+      source/graphics/vulkan/preview_main.cpp)
     target_include_directories(vulkan_preview PRIVATE source)
     target_link_libraries(vulkan_preview PRIVATE Vulkan::Vulkan glfw)
     message(STATUS "Vulkan preview enabled: target 'vulkan_preview'")
   else()
-    message(WARNING
-      "MONAD_VULKAN_PREVIEW=ON but Vulkan headers were not found. "
-      "Install them and reconfigure:\n"
-      "    Arch:   sudo pacman -S vulkan-headers\n"
-      "    Debian: sudo apt install libvulkan-dev")
+    message(
+      WARNING "MONAD_VULKAN_PREVIEW=ON but Vulkan headers were not found. "
+              "Install them and reconfigure:\n"
+              "    Arch:   sudo pacman -S vulkan-headers\n"
+              "    Debian: sudo apt install libvulkan-dev")
   endif()
 endif()
